@@ -1,4 +1,4 @@
-app/lib/*/*
+app/lib/
 
 npm-debug.log
 node_modules/
