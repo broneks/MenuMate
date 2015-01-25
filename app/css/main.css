@@ -11,3 +11,115 @@ html {
   -webkit-box-sizing: inherit;
   -moz-box-sizing: inherit;
   box-sizing: inherit; }
+
+html {
+  height: 100%; }
+
+body {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+  margin: 0;
+  padding: 0; }
+  body:after {
+    content: "";
+    display: table;
+    clear: both; }
+  body:before {
+    max-width: 100%; }
+  body.light .section {
+    color: #222222;
+    border-color: #BDC3C7;
+    background-color: #ECF0F1; }
+    body.light .section h1, body.light .section h2, body.light .section h3, body.light .section h4, body.light .section h5, body.light .section h6 {
+      color: #2C3E50; }
+  body.dark .section {
+    color: #ECF0F1;
+    border-color: #BDC3C7;
+    background-color: #2C3E50; }
+    body.dark .section h1, body.dark .section h2, body.dark .section h3, body.dark .section h4, body.dark .section h5, body.dark .section h6 {
+      color: #E67E22; }
+
+.list-unstyled {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+  .list-unstyled a {
+    text-decoration: none; }
+
+.top-nav {
+  width: 100%;
+  height: 5%;
+  max-height: 5%;
+  border-bottom: 1px solid #BDC3C7; }
+  .top-nav ul {
+    height: 100%; }
+    .top-nav ul li {
+      float: left;
+      display: block;
+      width: 12.71973%;
+      height: 100%;
+      border-right: 1px solid #BDC3C7; }
+      .top-nav ul li:last-child {
+        width: 10.96186%; }
+      .top-nav ul li a {
+        height: 100%;
+        display: block;
+        padding: 0.5em;
+        text-align: center; }
+
+.sidebar-left {
+  float: left;
+  display: block;
+  width: 25.58941%;
+  height: 95%;
+  border-right: 1px solid #ccc; }
+  .sidebar-left:last-child {
+    width: 23.23176%; }
+  .sidebar-left .table-info {
+    padding: 0.5em;
+    height: 30%;
+    max-height: 30%;
+    border-bottom: 1px solid #ccc; }
+  .sidebar-left .patrons-nav {
+    padding: 0.5em;
+    height: 70%;
+    max-height: 70%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch; }
+    .sidebar-left .patrons-nav::-webkit-scrollbar {
+      display: none; }
+
+.main-content {
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 74.41059%;
+  margin-right: 0;
+  height: 95%; }
+  .main-content:last-child {
+    margin-right: 0; }
+  .main-content .patron-info {
+    padding: 0.5em;
+    height: 30%;
+    max-height: 30%;
+    border-bottom: 1px solid #ccc; }
+  .main-content .menu {
+    height: 70%;
+    max-height: 70%; }
+  .main-content .menu-nav {
+    padding: 0.5em;
+    height: 12%;
+    max-height: 12%;
+    border-bottom: 1px solid #ccc; }
+  .main-content .menu-items {
+    padding: 0.5em;
+    height: 88%;
+    max-height: 88%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch; }
+    .main-content .menu-items::-webkit-scrollbar {
+      display: none; }

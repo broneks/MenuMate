@@ -1,7 +1,8 @@
 var gulp    = require('gulp');
 var path    = require('path');
+var plumber = require('gulp-plumber');
 var watch   = require('gulp-watch');
-var sass    = require('gulp-sass');
+var scss    = require('gulp-sass');
 var neat    = require('node-neat').includePaths;
 var jshint  = require('gulp-jshint');
 
@@ -16,8 +17,10 @@ var jshintConfig = {
 
 gulp.task('scss', function() {
 	gulp.src('./app/scss/*.scss')
-    .pipe(sass({
-    	includePaths: neat
+		.pipe(plumber())
+    .pipe(scss({
+    	includePaths: neat,
+    	outputStyle: 'nested' //'compressed'
     }))
     .pipe(gulp.dest('./app/css'));
 });
@@ -27,6 +30,7 @@ gulp.task('jshint', function() {
 			'./app/js/**/*.js',
 			'!./app/js/tags/**/*.js'
      ])
+		.pipe(plumber())
 		.pipe(jshint(jshintConfig))
 		.pipe(jshint.reporter('default'), {
 			verbose: true
