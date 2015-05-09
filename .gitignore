@@ -1,11 +1,5 @@
-app/lib/
+node_modules
+public/js/*
+public/css/*
 
 npm-debug.log
-node_modules/
-
-sftp-config*
-*.sublime-*
-
-/bower.json
-/component.json
-app/bower_components 
