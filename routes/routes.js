@@ -6,7 +6,10 @@ var MenuItem = require('../models/menu-item');
 
 var validateMenuItems = function(req) {
   req.checkBody('name', 'name is required').notEmpty()
-  req.checkBody('name', 'name must only contain letters').isAlpha();
+
+  req.checkBody('type', 'type is required').notEmpty();
+
+  req.checkBody('ingredients', 'ingredients must only contain letters').optional();  
 
   req.checkBody('description', 'description must be between 5 and 255 characters').optional().len(5, 255);
 
@@ -44,6 +47,7 @@ module.exports = function(app, router) {
 
     .post(function(req, res) {
       var item   = new MenuItem();
+      var image  = req.files.image.path.replace('public', '');
       var errors = validateMenuItems(req).validationErrors();
 
       if (errors) {
@@ -51,9 +55,19 @@ module.exports = function(app, router) {
         return;
       }
 
+      if (image) {
+        gm(image)
+          .resize(imageSize.width, imageSize.height)
+          .noProfile();
+      }
+
       item.name        = req.body.name;
+      item.type        = req.body.type;
+      item.ingredients = req.body.ingredients || '';
       item.description = req.body.description || '';
+      item.image       = image || '';
       item.price       = parseFloat(req.body.price);
+
 
       item.save(function(err) {
         if (err) res.send(err);
@@ -75,6 +89,7 @@ module.exports = function(app, router) {
       MenuItem.findById(req.params.item_id, function(err, item) {
         if (err) res.send(err);
 
+        var image = req.files.image.path.replace('public', '');
         var errors = validateMenuItems(req).validationErrors();
 
         if (errors) {
@@ -83,7 +98,10 @@ module.exports = function(app, router) {
         }
 
         item.name        = req.body.name;
+        item.type        = req.body.type;
+        item.ingredients = req.body.ingredients || '';
         item.description = req.body.description || '';
+        item.image       = image || '';
         item.price       = parseFloat(req.body.price);
 
         item.save(function() {

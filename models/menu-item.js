@@ -12,7 +12,10 @@ var MenuItemSchema = new mongoose.Schema({
     type: String,
     unique: true
   },
+  type: String,
+  ingredients: String,
   description: String,
+  image: String,
   price: Number,
   created: {
     type: Date,

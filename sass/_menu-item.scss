@@ -1,0 +1,25 @@
+.menu-item {
+  padding: 15px;
+  border: 1px solid #ddd;
+
+  float: left;
+  width: 25%;
+  margin: 5px;
+
+  // & + & {
+  //   margin-top: 15px;
+  // }
+
+  &-name {
+    margin: 0 0 15px;
+    text-transform: capitalize;
+  }
+
+  &-image {
+    // temporary
+    // width: 200px;
+    // height: 125px;
+    width: 100%;
+    margin: 15px auto;
+  }
+}

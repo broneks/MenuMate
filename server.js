@@ -13,6 +13,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var validator    = require('express-validator');
 
+var multer = require('multer');
+// var gm     = require('gm');
+
 require('node-jsx').install({ extension: '.jsx' });
 
 var mongoose  = require('mongoose');
@@ -21,6 +24,7 @@ var config = {
   database:  require('./config/database'),
   validator: require('./config/validator')
 };
+
 
 //
 // Config
@@ -32,6 +36,22 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(validator(config.validator));
+
+
+//
+// Image uploading
+//
+app.use(multer({
+  dest: './public/img/',
+  rename: function(fieldname, filename) {
+    return filename.replace(/\W+/g, '-').toLowerCase() + '-' + Date.now();
+  },
+  onFileUploadComplete: function(file) {
+    // gm(file.path)
+      // .resize(200, 125)
+      // .noProfile();
+  }
+}));
 
 
 //

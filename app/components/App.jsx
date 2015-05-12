@@ -7,18 +7,44 @@ var request = require('superagent');
 
 var api = require('../utility/api-endpoints');
 
+var MenuItemDetails = React.createClass({
+    render: function() {
+        var item = this.props.item;
+
+        return (
+            <div className='menu-item-details'>
+                <div className='menu-item-type'>{item.type}</div>
+                <div className='menu-item-description'>{item.description}</div>
+                <div className='menu-item-ingredients'>{item.ingredients}</div>
+            </div>
+        );
+    }
+});
+
 var MenuItem = React.createClass({
+    getInitialState: function() {
+        return {
+            showDetails: false
+        };
+    },
+
     handleClick: function() {
-        this.props.onClick(this.props.item._id);
+        this.setState({
+            showDetails: !this.state.showDetails
+        });
     },
 
     render: function() {
-        var item  = this.props.item;
-        var price = parseFloat(item.price).toFixed(2);
+        var item    = this.props.item;
+        var price   = parseFloat(item.price).toFixed(2);
+        var details = this.state.showDetails ? <MenuItemDetails item={item} /> : null;
 
         return (
-            <div className="menu-item" onClick={this.handleClick}>
-                <span>{item.name} - ${price}</span>
+            <div className='menu-item' onClick={this.handleClick}>
+                <h4 className='menu-item-name'>{item.name}</h4>
+                <div className='menu-item-price'>${price}</div>
+                <img className='menu-item-image' src={item.image} alt="" />
+                {details}
             </div>
         );
     }
@@ -31,42 +57,31 @@ var Menu = React.createClass({
         };
     },
 
-    getData: function(url) {
+    getMenuItems: function() {
         request
-        .get(url)
+        .get(api.menuItems)
         .end(function(err, res) {
             if (err) console.log(err);
 
-            var data = Array.isArray(res.body) ? res.body : [res.body];
-
             if (this.isMounted()) {
-                this.setState({ items: data });
+                this.setState({ items: res.body });
             }
         }.bind(this));
     },
 
-    loadMenuItems: function() {
-        this.getData(api.menuItems);
-    },
-
-    loadItem: function(id) {
-        this.getData(api.menuItems + id);
-    },
-
     componentDidMount: function() {
-        this.loadMenuItems();
+        this.getMenuItems();
     },
 
     render: function() {
         var itemNodes = this.state.items.map(function (item) {          
           return (
-            <MenuItem key={item._id} item={item} onClick={this.loadItem} />
+            <MenuItem key={item._id} item={item} />
           );
-        }, this);
+        });
 
         return (
           <div className="menu-wrapper">
-            <button onClick={this.loadMenuItems}>Load All</button>
             <div className="menu">{itemNodes}</div>
           </div>
         );

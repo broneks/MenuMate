@@ -34,6 +34,8 @@
     "node-bourbon": "~4.2.2",
     "gulp-sass": "~2.0.0",
     "normalize.css": "~3.0.3",
-    "gulp-minify-css": "~1.1.1"
+    "gulp-minify-css": "~1.1.1",
+    "multer": "~0.1.8",
+    "gm": "~1.17.0"
   }
 }

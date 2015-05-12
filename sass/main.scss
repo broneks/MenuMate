@@ -2,10 +2,6 @@
 
 @import 'bourbon';
 
-:root {
-  padding: 15px;
-}
-
-.menu-item {
-  margin: 15px 0 0;
-}
+@import '_settings';
+@import '_global';
+@import '_menu-item';
