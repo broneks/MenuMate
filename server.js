@@ -47,9 +47,13 @@ app.use(multer({
     return filename.replace(/\W+/g, '-').toLowerCase() + '-' + Date.now();
   },
   onFileUploadComplete: function(file) {
-    // gm(file.path)
-      // .resize(200, 125)
-      // .noProfile();
+    // var dir = __dirname + '/';
+    // gm(dir + file.path)
+    //   .resize(25, 25)
+    //   .noProfile()
+    //   .write(dir + 'public/img/test/resized.jpg', function() {
+    //     console.log(this.outname)
+    //   });
   }
 }));
 
@@ -74,11 +78,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 //
 require('./routes/routes.js')(app, router);
 
-
 app.get('*',function(req, res) {
-  res.json({
-    "route": "Page does not exist. Sorry."
-  });
+  res.redirect('/');
 });
 
 

@@ -22,7 +22,6 @@
     "serve-favicon": "~2.2.0",
     "react": "~0.13.1",
     "react-router": "~0.13.2",
-    "react-router-component": "~0.24.4",
     "superagent": "~1.2.0",
     "node-jsx": "~0.12.4",
     "browserify": "~10.1.3",

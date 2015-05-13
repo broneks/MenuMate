@@ -1,14 +1,10 @@
 .menu-item {
   padding: 15px;
   border: 1px solid #ddd;
-
-  float: left;
   width: 25%;
   margin: 5px;
-
-  // & + & {
-  //   margin-top: 15px;
-  // }
+  display: inline-block;
+  vertical-align: top;
 
   &-name {
     margin: 0 0 15px;

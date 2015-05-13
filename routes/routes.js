@@ -19,17 +19,22 @@ var validateMenuItems = function(req) {
   return req;
 };
 
-var React    = require('react');
-var ReactApp = React.createFactory(require('../app/components/App.jsx'));
+var React  = require('react');
+var Router = require('react-router');
+
+var App    = require('../app/components/App.jsx').App;
+var routes = require('../app/components/App.jsx').routes;
 
 module.exports = function(app, router) {
   //
   //  React App
   //
   app.get('/', function(req, res) {
-    var reactHtml = React.renderToString(ReactApp({}));
+    Router.run(routes, req.path, function (Handler) {
+      var reactHtml = React.renderToString(React.createElement(Handler));
 
-    res.render('index', { reactOutput: reactHtml });
+      res.render('index', { reactOutput: reactHtml });
+    });
   });
 
 
@@ -53,12 +58,6 @@ module.exports = function(app, router) {
       if (errors) {
         res.status(400).send(errors);
         return;
-      }
-
-      if (image) {
-        gm(image)
-          .resize(imageSize.width, imageSize.height)
-          .noProfile();
       }
 
       item.name        = req.body.name;
@@ -89,26 +88,26 @@ module.exports = function(app, router) {
       MenuItem.findById(req.params.item_id, function(err, item) {
         if (err) res.send(err);
 
-        var image = req.files.image.path.replace('public', '');
-        var errors = validateMenuItems(req).validationErrors();
+        // var image = req.files.image.path.replace('public', '');
+        // var errors = validateMenuItems(req).validationErrors();
 
-        if (errors) {
-          res.status(400).send(errors);
-          return;
-        }
+        // if (errors) {
+        //   res.status(400).send(errors);
+        //   return;
+        // }
 
-        item.name        = req.body.name;
-        item.type        = req.body.type;
-        item.ingredients = req.body.ingredients || '';
-        item.description = req.body.description || '';
-        item.image       = image || '';
-        item.price       = parseFloat(req.body.price);
+        // item.name        = req.body.name;
+        // item.type        = req.body.type;
+        // item.ingredients = req.body.ingredients || '';
+        // item.description = req.body.description || '';
+        // item.image       = image || '';
+        // item.price       = parseFloat(req.body.price);
 
-        item.save(function() {
-          if (err) res.send(err);
+        // item.save(function() {
+        //   if (err) res.send(err);
 
-          res.json({ message: 'MenuItem updated!' });
-        });
+        //   res.json({ message: 'MenuItem updated!' });
+        // });
       });
     })
 

@@ -1,6 +1,11 @@
-var React = require('react');
-var ReactApp = React.createFactory(require('./components/App.jsx'));
+var React  = require('react');
+var Router = require('react-router');
+
+var App    = require('./components/App.jsx').App;
+var routes = require('./components/App.jsx').routes; 
 
 var mountNode = document.getElementById('react-main-mount');
 
-React.render(new ReactApp({}), mountNode);
+Router.run(routes, Router.HistoryLocation, function (Handler) {
+  React.render(React.createElement(Handler), mountNode);
+});
