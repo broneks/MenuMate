@@ -21,12 +21,13 @@ var BasketItem = React.createClass({
 
     return (
       <li className='basket-item'>
-        <span className='basket-item-remove-wrapper field'>
-          <button className='basket-item-remove' onClick={this.remove}>X</button>
-        </span>
+        <span className='basket-item-quantity field'>1</span>
         <span className='basket-item-name field text-clip'>{item.name}</span>
         <span className='basket-item-type field text-clip'>{item.type}</span>
         <span className='basket-item-price field'>{price}</span>            
+        <span className='basket-item-remove-wrapper field'>
+          <button className='basket-item-remove' onClick={this.remove}>X</button>
+        </span>
       </li>
     );
   }
@@ -118,9 +119,14 @@ var Basket = React.createClass({
             <ul className='basket-items list-unstyled'>{items}</ul>
           </div>
         </div>
-        <div className='basket-summary'>
-          <span className='basket-summary-subtotal'>{subtotal}</span>
-          <span className='basket-summary-total'>{total}</span>
+        <div className='basket-summary-wrapper'>
+          <div className='basket-summary'>
+            <div className='basket-summary-quantity field'>{items.length || 0} Item(s)</div>
+            <div className='basket-summary-price field'>
+              <span className='subtotal'>{subtotal}</span>
+              <span className='total'>{total}</span>
+            </div>
+          </div>
         </div>
       </div>
     );
