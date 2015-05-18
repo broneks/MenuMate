@@ -12,9 +12,10 @@ var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var validator    = require('express-validator');
+var cors         = require('cors');
 
 var multer = require('multer');
-// var gm     = require('gm');
+var gm     = require('gm');
 
 require('node-jsx').install({ extension: '.jsx' });
 
@@ -36,6 +37,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(validator(config.validator));
+// app.use(cors());
 
 
 //
@@ -47,13 +49,14 @@ app.use(multer({
     return filename.replace(/\W+/g, '-').toLowerCase() + '-' + Date.now();
   },
   onFileUploadComplete: function(file) {
-    // var dir = __dirname + '/';
-    // gm(dir + file.path)
-    //   .resize(25, 25)
-    //   .noProfile()
-    //   .write(dir + 'public/img/test/resized.jpg', function() {
-    //     console.log(this.outname)
-    //   });
+    var dest = this.dest;
+
+    gm(file.path)
+      .noProfile()
+      .resize('200^', '125^')
+      .gravity('center')
+      .crop(200, 125)
+      .write(dest + file.name, function() {});
   }
 }));
 

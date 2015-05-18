@@ -1,0 +1,53 @@
+.menu {
+  height: 500px;
+  max-height: 500px;
+  overflow-y: auto;
+  border: 1px solid $border-c;
+
+  &-item {
+    padding: 15px;
+    margin: 5px;
+    border: 1px solid $border-c;
+    width: 25%;
+    display: inline-block;
+    vertical-align: top;
+
+    &-name {
+      margin: 0 0 15px;
+      text-transform: capitalize;
+    }
+
+    &-image {
+      width: 100%;
+      height: auto;
+      max-width: 200px;
+      max-height: 125px;
+      display: block;
+      margin: 15px auto;
+    }
+
+    &-add {
+      width: 100%;
+      padding: 5px 0;
+    }
+  }
+
+  &.list-view &-item {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid $border-c;
+    display: table;
+
+    .field {
+      width: 35%;
+      padding: 8px;
+      display: table-cell;
+    }
+
+    .menu-item-add-wrapper {
+      width: 30%;
+    }
+  }
+}

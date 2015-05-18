@@ -1,0 +1,60 @@
+.basket-wrapper {
+  margin: 30px 0;
+}
+
+.basket {
+  position: relative;
+  height: 150px;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid $border-c;
+
+  .basket-empty-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-style: italic;
+    color: $muted-c;
+  }
+
+  &-items {
+    width: 100%;
+    max-width: 100%;
+    display: table;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+
+  &-item {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid $border-c;
+    display: table-row;
+
+    &.text-clip {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-transform: capitalize;
+    }
+
+    &-remove {
+      width: 100%;
+    }
+
+    .field {
+      width: 30%;
+      max-width: 45%;
+      padding: 8px;
+      display: table-cell;
+    }
+
+    .basket-item-remove-wrapper {
+      width: 10%;
+    }
+  }
+}

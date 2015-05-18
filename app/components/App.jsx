@@ -2,7 +2,7 @@
  * @jsx React.DOM
  */
 
-var React  = require('react');
+var React  = require('react/addons');
 var Router = require('react-router');
 
 var DefaultRoute  = Router.DefaultRoute;
@@ -11,16 +11,16 @@ var Link          = Router.Link;
 var Route         = Router.Route;
 var RouteHandler  = Router.RouteHandler;
 
-var Menu     = require('./Menu.jsx');
-var Checkout = require('./Checkout.jsx');
+var Home     = require('../views/Home.jsx');
+var Checkout = require('../views/Checkout.jsx');
 
 var App = React.createClass({
   render: function() {
     return (
       <div>
         <header>
-          <ul>
-            <li><Link to="menu">Menu</Link></li>
+          <ul className='list-unstyled'>
+            <li><Link to="home">Home</Link></li>
             <li><Link to="checkout">Checkout</Link></li>
           </ul>
         </header>
@@ -32,8 +32,8 @@ var App = React.createClass({
 });
 
 var routes = (
-  <Route name="menu" path="/" handler={App}>
-    <DefaultRoute handler={Menu}/>
+  <Route name="home" path="/" handler={App}>
+    <DefaultRoute handler={Home}/>
     <Route name="checkout" path="/checkout" handler={Checkout}/>
   </Route>
 );
