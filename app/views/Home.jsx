@@ -10,7 +10,8 @@ var Menu   = require('../components/Menu.jsx');
 Home = React.createClass({
   getInitialState: function() {
     return {
-      basketItem: null
+      basketItem: null,
+      reactivatedMenuItem: null
     };
   },
 
@@ -20,11 +21,18 @@ Home = React.createClass({
     });
   },
 
+  reactivateMenuItem: function(id) {
+    this.setState({
+      basketItem: null,
+      reactivatedMenuItem: id
+    });
+  },
+
   render: function() {
     return (
       <div>
-        <Basket item={this.state.basketItem} />
-        <Menu addToBasket={this.transferBasketItem} />
+        <Basket item={this.state.basketItem} reactivateMenuItem={this.reactivateMenuItem} />
+        <Menu addToBasket={this.transferBasketItem} reactivated={this.state.reactivatedMenuItem} />
       </div>
     );
   }

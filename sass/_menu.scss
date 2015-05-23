@@ -5,10 +5,11 @@
   border: 1px solid $border-c;
 
   &-item {
+    box-sizing: border-box;
     padding: 15px;
     margin: 5px;
     border: 1px solid $border-c;
-    width: 25%;
+    width: 31%;
     display: inline-block;
     vertical-align: top;
 
@@ -50,4 +51,16 @@
       width: 30%;
     }
   }
+
+  &-item-details {
+    .field {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.menu-display {
+  border: 1px solid $border-c;
+  border-top: 0;
+  padding: 8px;
 }

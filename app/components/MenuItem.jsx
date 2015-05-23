@@ -12,9 +12,9 @@ var MenuItemDetails = React.createClass({
 
         return (
             <div className='menu-item-details'>
-                <div className='menu-item-type'>{item.type}</div>
-                <div className='menu-item-description'>{item.description}</div>
-                <div className='menu-item-ingredients'>{item.ingredients}</div>
+                <div className='menu-item-type field'>{item.type}</div>
+                <div className='menu-item-description field'>{item.description}</div>
+                <div className='menu-item-ingredients field'>{item.ingredients}</div>
             </div>
         );
     }
@@ -23,7 +23,8 @@ var MenuItemDetails = React.createClass({
 var MenuItem = React.createClass({
     getInitialState: function() {
         return {
-            showDetails: false
+            showDetails: false,
+            addedToBasket: false
         };
     },
 
@@ -39,12 +40,22 @@ var MenuItem = React.createClass({
         e.stopPropagation();
 
         props.addToBasket(props.item);
+
+        this.setState({
+            addedToBasket: true
+        });
     },
 
     componentWillReceiveProps: function(nextProps) {
         if (nextProps.showAsList) {
             this.setState({
                 showDetails: false
+            });
+        }
+
+        if (nextProps.reactivated) {
+            this.setState({
+                addedToBasket: false
             });
         }
     },
@@ -57,7 +68,9 @@ var MenuItem = React.createClass({
         var price   = util.asCurrency(item.price);
         var image   = props.showAsList ? null : <img className='menu-item-image' src={item.image} alt="" />;
         var details = state.showDetails  ? <MenuItemDetails item={item} /> : null;
-        var toggleDetails = props.showAsList ? null : this.toggleDetails ;
+        var toggleDetails = props.showAsList ? null : this.toggleDetails;
+
+        var buttonText = this.state.addedToBasket ? 'Added' : 'Add';
 
         return (
             <div className='menu-item' onClick={toggleDetails}>
@@ -66,7 +79,7 @@ var MenuItem = React.createClass({
                 {image}
                 {details}
                 <div className='menu-item-add-wrapper field'>
-                    <button className='menu-item-add' onClick={this.addToBasket}>Add</button>
+                    <button className='menu-item-add' disabled={this.state.addedToBasket} onClick={this.addToBasket}>{buttonText}</button>
                 </div>
             </div>
         );

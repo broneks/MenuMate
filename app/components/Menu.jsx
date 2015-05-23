@@ -49,12 +49,16 @@ var Menu = React.createClass({
     render: function() {
         var self  = this;
         var state = this.state;
+        var props = this.props;
 
         var itemNodes = state.items.map(function (item) {          
+          var reactivated = props.reactivated === item._id;
+
           return (
             <MenuItem 
                 key={item._id} 
                 item={item} 
+                reactivated={reactivated}
                 showAsList={state.listView} 
                 addToBasket={self.addToBasket} />
           );

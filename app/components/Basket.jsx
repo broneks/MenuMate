@@ -7,12 +7,34 @@ var React = require('react/addons');
 var util = require('../utility/util');
 
 var BasketItem = React.createClass({
+  getInitialState: function() {
+    return {
+      quantity: "1"
+    };
+  },
+
   remove: function(e) {
-    var props = this.props;
+    var props    = this.props;
+    var quantity = parseInt(this.state.quantity);
 
     e.stopPropagation();
 
-    props.removeFromBasket(props.item);
+    props.removeFromBasket(props.item, quantity);
+  },
+
+  updateQuantity: function(e) {
+    var props            = this.props;
+    var originalQuantity = parseInt(this.state.quantity);
+    var newQuantity      = parseInt(e.target.value);
+    var difference;
+
+    this.setState({
+      quantity: e.target.value
+    });
+
+    difference = newQuantity - originalQuantity;
+
+    props.updateSummary(difference, props.item.price);
   },
 
   render: function() {
@@ -21,7 +43,20 @@ var BasketItem = React.createClass({
 
     return (
       <li className='basket-item'>
-        <span className='basket-item-quantity field'>1</span>
+        <span className='basket-item-quantity field'>
+          <select defaultValue={this.state.quantity} onChange={this.updateQuantity}>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        </span>
         <span className='basket-item-name field text-clip'>{item.name}</span>
         <span className='basket-item-type field text-clip'>{item.type}</span>
         <span className='basket-item-price field'>{price}</span>            
@@ -37,7 +72,8 @@ var Basket = React.createClass({
   getInitialState: function() {
     return {
       items: [],
-      total: 0
+      total: 0,
+      quantity: 0
     };
   },
 
@@ -66,33 +102,51 @@ var Basket = React.createClass({
       });
 
       updatedTotal = this.state.total + item.price;
+      updatedQuantity = this.state.quantity += 1;
 
       this.setState({
         items: updatedItems,
-        total: updatedTotal
+        total: updatedTotal,
+        quantity: updatedQuantity
       });
     }
   },
 
-  removeItem: function(item) {
+  removeItem: function(item, quantity) {
     var itemIndex    = this.findIndexById(item._id);
     var updatedItems = React.addons.update(this.state.items, {
       '$splice': [[itemIndex, 1]]
     });
-    var updatedTotal = this.state.total - item.price;
+    var updatedTotal    = this.state.total - item.price * quantity;
+    var updatedQuantity = this.state.quantity - quantity;
 
     this.setState({
       items: updatedItems,
+      total: updatedTotal,
+      quantity: updatedQuantity
+    });
+
+    this.props.reactivateMenuItem(item._id);
+  },
+
+  updateSummary: function(quantity, price) {
+    var updatedQuantity = this.state.quantity + quantity;
+    var updatedTotal    = this.state.total + price * quantity;
+
+    this.setState({
+      quantity: updatedQuantity,
       total: updatedTotal
     });
   },
 
   componentWillReceiveProps: function(nextProps) {
-    this.addItem(nextProps.item);
+    if (nextProps.item) {
+      this.addItem(nextProps.item);
+    }
   },
 
   render: function() {
-    var state = this.state;
+    var state    = this.state;
     var subtotal = util.asCurrency(state.total);
     var total    = util.asCurrency(state.total * util.tax);
     var emptyMessageClass = '';
@@ -104,6 +158,7 @@ var Basket = React.createClass({
           <BasketItem 
             key={item._id} 
             item={item} 
+            updateSummary={this.updateSummary}
             removeFromBasket={this.removeItem} />
         );
       }, this);
@@ -121,7 +176,7 @@ var Basket = React.createClass({
         </div>
         <div className='basket-summary-wrapper'>
           <div className='basket-summary'>
-            <div className='basket-summary-quantity field'>{items.length || 0} Item(s)</div>
+            <div className='basket-summary-quantity field'>{this.state.quantity} Item(s)</div>
             <div className='basket-summary-price field'>
               <span className='subtotal'>{subtotal}</span>
               <span className='total'>{total}</span>

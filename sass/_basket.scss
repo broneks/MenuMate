@@ -32,6 +32,10 @@
     border-bottom: 1px solid $border-c;
     display: table-row;
 
+    &-name {
+      text-transform: capitalize;
+    }
+
     &.text-clip {
       white-space: nowrap;
       overflow: hidden;
@@ -79,6 +83,10 @@
     &-quantity {
       width: ((80 / 3) * 2 + 10) + %;
       max-width: ((80 / 3) * 2 + 10) + %;
+
+      &.field {
+        padding-right: 0;
+      }
     }
 
     .basket-summary-price {
@@ -96,6 +104,10 @@
       display: inline-block;
       width: 50%;
       padding: 8px;
+    }
+
+    .subtotal {
+      padding-left: 0;
     }
 
     .total {
