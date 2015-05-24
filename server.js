@@ -12,7 +12,7 @@ var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var validator    = require('express-validator');
-var cors         = require('cors');
+var favicon      = require('serve-favicon');
 
 var multer = require('multer');
 var gm     = require('gm');
@@ -37,14 +37,13 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(validator(config.validator));
-// app.use(cors());
 
 
 //
 // Image uploading
 //
 app.use(multer({
-  dest: './public/img/',
+  dest: './public/img/uploads/',
   rename: function(fieldname, filename) {
     return filename.replace(/\W+/g, '-').toLowerCase() + '-' + Date.now();
   },
@@ -73,7 +72,7 @@ mongoose.connect(config.database.url);
 app.set('views', path.join(__dirname + '/views'));
 app.set('view engine', 'jade');
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/img/favicon.ico'));
 
 
 //
@@ -109,6 +108,6 @@ app.use(function(err, req, res, next) {
       title  : output.error,
       output : output
     });
-}); 
+});
 
 module.exports = app;

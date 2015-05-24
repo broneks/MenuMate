@@ -35,7 +35,7 @@ var App = React.createClass({
 var routes = (
   <Route name="home" path="/" handler={App}>
     <DefaultRoute handler={Home}/>
-    <Route name="checkout" path="/checkout" handler={Checkout}/>
+    <Route name="checkout" path="/checkout" handler={Checkout} />
   </Route>
 );
 

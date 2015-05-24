@@ -43,7 +43,7 @@
 
     .field {
       width: 35%;
-      padding: 8px;
+      padding: @general-pad;
       display: table-cell;
     }
 
@@ -62,5 +62,5 @@
 .menu-display {
   border: 1px solid $border-c;
   border-top: 0;
-  padding: 8px;
+  padding: @general-pad;
 }

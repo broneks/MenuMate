@@ -6,14 +6,21 @@ var React = require('react/addons');
 
 var util = require('../utility/util');
 
-var BasketItem = require('./BasketItem.jsx');
+var BasketActions = require('./BasketActions.jsx');
+var BasketItem    = require('./BasketItem.jsx');
+var BasketSummary = require('./BasketSummary.jsx');
 
 
 var Basket = React.createClass({
+  propTypes: {
+    item:               React.PropTypes.object,
+    reactivateMenuItem: React.PropTypes.func
+  },
+
   getInitialState: function() {
     return {
-      items: [],
-      total: 0,
+      items:    [],
+      total:    0,
       quantity: 0
     };
   },
@@ -46,8 +53,8 @@ var Basket = React.createClass({
       updatedQuantity = this.state.quantity += 1;
 
       this.setState({
-        items: updatedItems,
-        total: updatedTotal,
+        items:    updatedItems,
+        total:    updatedTotal,
         quantity: updatedQuantity
       });
     }
@@ -62,12 +69,16 @@ var Basket = React.createClass({
     var updatedQuantity = this.state.quantity - quantity;
 
     this.setState({
-      items: updatedItems,
-      total: updatedTotal,
+      items:    updatedItems,
+      total:    updatedTotal,
       quantity: updatedQuantity
     });
 
     this.props.reactivateMenuItem(item._id);
+  },
+
+  clearItems: function() {
+    console.log('clearing');
   },
 
   updateSummary: function(quantity, price) {
@@ -76,7 +87,7 @@ var Basket = React.createClass({
 
     this.setState({
       quantity: updatedQuantity,
-      total: updatedTotal
+      total:    updatedTotal
     });
   },
 
@@ -87,9 +98,8 @@ var Basket = React.createClass({
   },
 
   render: function() {
-    var state    = this.state;
-    var subtotal = util.asCurrency(state.total);
-    var total    = util.asCurrency(state.total * util.tax);
+    var state = this.state;
+
     var emptyMessageClass = '';
     var items;
 
@@ -100,7 +110,8 @@ var Basket = React.createClass({
             key={item._id}
             item={item}
             updateSummary={this.updateSummary}
-            removeFromBasket={this.removeItem} />
+            removeFromBasket={this.removeItem}
+          />
         );
       }, this);
     } else {
@@ -110,20 +121,15 @@ var Basket = React.createClass({
 
     return (
       <div className='basket-wrapper'>
+        <BasketActions items={state.items} clearBasket={this.clearItems} />
+
         <div className={'basket' + emptyMessageClass}>
           <div className='basket-items-wrapper'>
             <ul className='basket-items list-unstyled'>{items}</ul>
           </div>
         </div>
-        <div className='basket-summary-wrapper'>
-          <div className='basket-summary'>
-            <div className='basket-summary-quantity field'>{this.state.quantity} Item(s)</div>
-            <div className='basket-summary-price field'>
-              <span className='subtotal'>{subtotal}</span>
-              <span className='total'>{total}</span>
-            </div>
-          </div>
-        </div>
+
+        <BasketSummary quantity={state.quantity} total={state.total} />
       </div>
     );
   }

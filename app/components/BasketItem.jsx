@@ -8,6 +8,12 @@ var util = require('../utility/util');
 
 
 var BasketItem = React.createClass({
+  propTypes: {
+    item:             React.PropTypes.object.isRequired,
+    updateSummary:    React.PropTypes.func,
+    removeFromBasket: React.PropTypes.func
+  },
+
   getInitialState: function() {
     return {
       quantity: "1"
@@ -15,10 +21,10 @@ var BasketItem = React.createClass({
   },
 
   remove: function(e) {
+    e.stopPropagation();
+
     var props    = this.props;
     var quantity = parseInt(this.state.quantity);
-
-    e.stopPropagation();
 
     props.removeFromBasket(props.item, quantity);
   },
@@ -27,25 +33,26 @@ var BasketItem = React.createClass({
     var props            = this.props;
     var originalQuantity = parseInt(this.state.quantity);
     var newQuantity      = parseInt(e.target.value);
-    var difference;
+    var difference       = newQuantity - originalQuantity;
 
     this.setState({
       quantity: e.target.value
     });
 
-    difference = newQuantity - originalQuantity;
-
     props.updateSummary(difference, props.item.price);
   },
 
   render: function() {
-    var item  = this.props.item;
+    var state = this.state;
+    var props = this.props;
+
+    var item  = props.item;
     var price = util.asCurrency(item.price);
 
     return (
       <li className='basket-item'>
         <span className='basket-item-quantity field'>
-          <select defaultValue={this.state.quantity} onChange={this.updateQuantity}>
+          <select defaultValue={state.quantity} onChange={this.updateQuantity}>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>

@@ -11,73 +11,80 @@ var MenuItem = require('./MenuItem.jsx');
 
 
 var Menu = React.createClass({
-    getInitialState: function() {
-        return {
-            listView: true,
-            items: []
-        };
-    },
+  propTypes: {
+    addToBasket:      React.PropTypes.func,
+    reactivated:      React.PropTypes.number,
+    clearReactivated: React.PropTypes.func
+  },
 
-    getMenuItems: function() {
-        request
-        .get(api.menuItems)
-        .end(function(err, res) {
-            if (err) console.log(err);
+  getInitialState: function() {
+    return {
+      listView: true,
+      items: []
+    };
+  },
 
-            if (this.isMounted()) {
-                this.setState({ items: res.body });
-            }
-        }.bind(this));
-    },
+  getMenuItems: function() {
+    request
+    .get(api.menuItems)
+    .end(function(err, res) {
+      if (err) console.log(err);
 
-    componentDidMount: function() {
-        this.getMenuItems();
-    },
-
-    toggleView: function(e) {
-        e.stopPropagation();
-
+      if (this.isMounted()) {
         this.setState({
-            listView: !this.state.listView
+          items: res.body
         });
-    },
+      }
+    }.bind(this));
+  },
 
-    addToBasket: function(item) {
-        this.props.addToBasket(item);
-    },
+  componentDidMount: function() {
+    this.getMenuItems();
+  },
 
-    render: function() {
-        var self  = this;
-        var state = this.state;
-        var props = this.props;
+  toggleView: function(e) {
+    e.stopPropagation();
 
-        var itemNodes = state.items.map(function (item) {
-          var reactivated = props.reactivated === item._id;
+    this.setState({
+      listView: !this.state.listView
+    });
+  },
 
-          return (
-            <MenuItem
-              key={item._id}
-              item={item}
-              clearReactivated={self.props.clearReactivated}
-              reactivated={reactivated}
-              showAsList={state.listView}
-              addToBasket={self.addToBasket}
-            />
-          );
-        });
+  addToBasket: function(item) {
+    this.props.addToBasket(item);
+  },
 
-        var listViewClass  = state.listView ? ' list-view' : '';
-        var toggleViewText = state.listView ? 'grid view' : 'list view';
+  render: function() {
+    var state = this.state;
+    var props = this.props;
 
-        return (
-          <div className='menu-wrapper'>
-            <div className={'menu' + listViewClass}>{itemNodes}</div>
-            <div className='menu-display'>
-                <button onClick={this.toggleView}>{toggleViewText}</button>
-            </div>
-          </div>
-        );
-    }
+    var itemNodes = state.items.map(function (item) {
+      var reactivated = props.reactivated === item._id;
+
+      return (
+        <MenuItem
+          key={item._id}
+          item={item}
+          clearReactivated={props.clearReactivated}
+          reactivated={reactivated}
+          showAsList={state.listView}
+          addToBasket={this.addToBasket}
+        />
+      );
+    }, this);
+
+    var listViewClass  = state.listView ? ' list-view' : '';
+    var toggleViewText = state.listView ? 'grid view' : 'list view';
+
+    return (
+      <div className='menu-wrapper'>
+        <div className={'menu' + listViewClass}>{itemNodes}</div>
+        <div className='menu-display'>
+            <button onClick={this.toggleView}>{toggleViewText}</button>
+        </div>
+      </div>
+    );
+  }
 });
 
 module.exports = Menu;
