@@ -14,6 +14,7 @@ var RouteHandler  = Router.RouteHandler;
 var Home     = require('../views/Home.jsx');
 var Checkout = require('../views/Checkout.jsx');
 
+
 var App = React.createClass({
   render: function() {
     return (

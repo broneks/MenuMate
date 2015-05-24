@@ -6,6 +6,7 @@ var React = require('react/addons');
 
 var util = require('../utility/util');
 
+
 var MenuItemDetails = React.createClass({
     render: function() {
         var item = this.props.item;
@@ -39,11 +40,12 @@ var MenuItem = React.createClass({
 
         e.stopPropagation();
 
-        props.addToBasket(props.item);
-
         this.setState({
             addedToBasket: true
         });
+
+        props.addToBasket(props.item);
+
     },
 
     componentWillReceiveProps: function(nextProps) {
@@ -57,6 +59,7 @@ var MenuItem = React.createClass({
             this.setState({
                 addedToBasket: false
             });
+            this.props.clearReactivated();
         }
     },
 
@@ -67,7 +70,8 @@ var MenuItem = React.createClass({
         var item    = props.item;
         var price   = util.asCurrency(item.price);
         var image   = props.showAsList ? null : <img className='menu-item-image' src={item.image} alt="" />;
-        var details = state.showDetails  ? <MenuItemDetails item={item} /> : null;
+
+        var details       = state.showDetails  ? <MenuItemDetails item={item} /> : null;
         var toggleDetails = props.showAsList ? null : this.toggleDetails;
 
         var buttonText = this.state.addedToBasket ? 'Added' : 'Add';
@@ -79,7 +83,10 @@ var MenuItem = React.createClass({
                 {image}
                 {details}
                 <div className='menu-item-add-wrapper field'>
-                    <button className='menu-item-add' disabled={this.state.addedToBasket} onClick={this.addToBasket}>{buttonText}</button>
+                    <button
+                      className='menu-item-add'
+                      disabled={this.state.addedToBasket}
+                      onClick={this.addToBasket}>{buttonText}</button>
                 </div>
             </div>
         );

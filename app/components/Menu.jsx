@@ -12,7 +12,7 @@ var MenuItem = require('./MenuItem.jsx');
 
 var Menu = React.createClass({
     getInitialState: function() {
-        return { 
+        return {
             listView: true,
             items: []
         };
@@ -51,21 +51,23 @@ var Menu = React.createClass({
         var state = this.state;
         var props = this.props;
 
-        var itemNodes = state.items.map(function (item) {          
+        var itemNodes = state.items.map(function (item) {
           var reactivated = props.reactivated === item._id;
 
           return (
-            <MenuItem 
-                key={item._id} 
-                item={item} 
-                reactivated={reactivated}
-                showAsList={state.listView} 
-                addToBasket={self.addToBasket} />
+            <MenuItem
+              key={item._id}
+              item={item}
+              clearReactivated={self.props.clearReactivated}
+              reactivated={reactivated}
+              showAsList={state.listView}
+              addToBasket={self.addToBasket}
+            />
           );
         });
 
         var listViewClass  = state.listView ? ' list-view' : '';
-        var toggleViewText = state.listView ? 'grid view' : 'list view'; 
+        var toggleViewText = state.listView ? 'grid view' : 'list view';
 
         return (
           <div className='menu-wrapper'>

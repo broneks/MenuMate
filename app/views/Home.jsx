@@ -7,6 +7,7 @@ var React = require('react/addons');
 var Basket = require('../components/Basket.jsx');
 var Menu   = require('../components/Menu.jsx');
 
+
 Home = React.createClass({
   getInitialState: function() {
     return {
@@ -28,11 +29,24 @@ Home = React.createClass({
     });
   },
 
+  clearReactivated: function() {
+    this.setState({
+      reactivatedMenuItem: null
+    });
+  },
+
   render: function() {
     return (
       <div>
-        <Basket item={this.state.basketItem} reactivateMenuItem={this.reactivateMenuItem} />
-        <Menu addToBasket={this.transferBasketItem} reactivated={this.state.reactivatedMenuItem} />
+        <Basket
+          item={this.state.basketItem}
+          reactivateMenuItem={this.reactivateMenuItem}
+        />
+        <Menu
+          addToBasket={this.transferBasketItem}
+          reactivated={this.state.reactivatedMenuItem}
+          clearReactivated={this.clearReactivated}
+        />
       </div>
     );
   }

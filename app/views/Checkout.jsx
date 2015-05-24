@@ -4,6 +4,7 @@
 
 var React = require('react/addons');
 
+
 var Checkout = React.createClass({
   render: function() {
     return (
