@@ -2,7 +2,8 @@
 // Routes
 //
 
-var menuAPI = require('./menu-routes');
+var APImenu     = require('./menu-routes');
+var APIcategory = require('./category-routes');
 
 var React  = require('react/addons');
 var Router = require('react-router');
@@ -26,8 +27,9 @@ module.exports = function(app, router) {
   //
   // Rest API
   //
-  menuAPI(router);
-  
+  APImenu(router);
+  APIcategory(router);
+
 
   // route prefix
   app.use('/api', router);

@@ -2,7 +2,7 @@
 // Menu Item
 //
 
-var mongoose = require('mongoose');
+var mongoose      = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
 
 autoIncrement.initialize(mongoose);
@@ -12,12 +12,19 @@ var MenuItemSchema = new mongoose.Schema({
     type: String,
     unique: true
   },
-  type: String,
+  category: {
+    type: Number,
+    ref: 'Category'
+  },
   ingredients: String,
   description: String,
   image: String,
   price: Number,
   created: {
+    type: Date,
+    default: Date.now
+  },
+  updated: {
     type: Date,
     default: Date.now
   }

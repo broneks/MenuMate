@@ -7,9 +7,9 @@ var MenuItem = require('../models/menu-item');
 var validateMenuItems = function(req) {
   req.checkBody('name', 'name is required').notEmpty()
 
-  req.checkBody('type', 'type is required').notEmpty();
+  req.checkBody('category', 'category is required').notEmpty();
 
-  req.checkBody('ingredients', 'ingredients must only contain letters').optional();  
+  req.checkBody('ingredients', 'ingredients must be between 5 and 255 characters').optional().len(5, 255);
 
   req.checkBody('description', 'description must be between 5 and 255 characters').optional().len(5, 255);
 
@@ -23,16 +23,20 @@ module.exports = function(router) {
 
   router.route('/menu-items')
     .get(function(req, res) {
-      MenuItem.find(function(err, items) {
-        if (err) res.send(err);
+      MenuItem
+        .find()
+        .populate('category')
+        .exec(function (err, items) {
+          if (err) res.send(err);
 
-        res.json(items);
-      });
+          res.json(items);
+        });
     })
 
     .post(function(req, res) {
+      console.log(req.files);
+
       var item   = new MenuItem();
-      var image  = req.files.image.path.replace('public', '');
       var errors = validateMenuItems(req).validationErrors();
 
       if (errors) {
@@ -40,35 +44,40 @@ module.exports = function(router) {
         return;
       }
 
+      if (req.files.image) {
+        item.image = req.files.image.path.replace('public', '');
+      }
+
       item.name        = req.body.name;
-      item.type        = req.body.type;
+      item.category    = req.body.category;
       item.ingredients = req.body.ingredients || '';
       item.description = req.body.description || '';
-      item.image       = image || '';
       item.price       = parseFloat(req.body.price);
 
 
       item.save(function(err) {
         if (err) res.send(err);
 
-        res.json({ message: 'MenuItem created!' });
+        res.json({ message: 'menu item created!' });
       });
     });
 
   router.route('/menu-items/:item_id')
     .get(function(req, res) {
-      MenuItem.findById(req.params.item_id, function(err, item) {
-        if (err) res.send(err);
+      MenuItem
+        .findById(req.params.item_id)
+        .populate('category')
+        .exec(function(err, item) {
+          if (err) res.send(err);
 
-        res.json(item);
-      })
+          res.json(item);
+        });
     })
 
     .put(function(req, res) {
       MenuItem.findById(req.params.item_id, function(err, item) {
         if (err) res.send(err);
 
-        var image = req.files.image.path.replace('public', '');
         var errors = validateMenuItems(req).validationErrors();
 
         if (errors) {
@@ -76,17 +85,21 @@ module.exports = function(router) {
           return;
         }
 
+        if (req.files.image) {
+          item.image = req.files.image.path.replace('public', '');
+        }
+
         item.name        = req.body.name;
-        item.type        = req.body.type;
-        item.ingredients = req.body.ingredients || '';
-        item.description = req.body.description || '';
-        item.image       = image || '';
+        item.category    = req.body.category;
+        item.ingredients = req.body.ingredients;
+        item.description = req.body.description;
         item.price       = parseFloat(req.body.price);
+        item.updated     = Date.now();
 
         item.save(function() {
           if (err) res.send(err);
 
-          res.json({ message: 'MenuItem updated!' });
+          res.json({ message: 'menu item updated!' });
         });
       });
     })
@@ -94,10 +107,10 @@ module.exports = function(router) {
     .delete(function(req, res) {
       MenuItem.remove({
         _id: req.params.item_id
-      }, function(err, bear) {
+      }, function(err) {
         if (err) res.send(err);
 
-        res.json({ message: 'Successfully deleted' });
+        res.json({ message: 'successfully deleted menu item' });
       })
     });
 };

@@ -13,7 +13,7 @@ var MenuItemDetails = React.createClass({
 
     return (
       <div className='menu-item-details'>
-        <div className='menu-item-type field'>{item.type}</div>
+        <div className='menu-item-category field'>{item.category.name}</div>
         <div className='menu-item-description field'>{item.description}</div>
         <div className='menu-item-ingredients field'>{item.ingredients}</div>
       </div>
