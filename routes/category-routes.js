@@ -3,6 +3,7 @@
 //
 
 var Category = require('../models/category');
+var MenuItem = require('../models/menu-item');
 
 var validateCategory = function(req) {
   req.checkBody('name', 'name is required').notEmpty();
@@ -35,7 +36,7 @@ module.exports = function(router) {
       category.save(function(err) {
         if (err) res.send(err);
 
-        res.json({ message: 'category created!' });
+        res.json({ message: 'category created' });
       });
     });
 
@@ -65,18 +66,30 @@ module.exports = function(router) {
         category.save(function() {
           if (err) res.send(err);
 
-          res.json({ message: 'category updated!' });
+          res.json({ message: 'category updated' });
         });
       });
     })
 
     .delete(function(req, res) {
-      Category.remove({
-        _id: req.params.category_id
-      }, function(err) {
-        if (err) res.send(err);
+      MenuItem.count({
+        category: req.params.category_id
+      }, function (err, count) {
+        if (count) {
+          if (err) res.send(err);
 
-        res.json({ message: 'successfully deleted category' });
-      })
+          res.status(400).send({ message: 'cannot delete a category that being' +
+          'used in the menu. Remove all assignments before continuing.' });
+        } else {
+          Category.remove({
+            _id: req.params.category_id
+          }, function(err) {
+            if (err) res.send(err);
+
+            res.json({ message: 'category deleted' });
+          })
+        }
+      });
+
     });
 };

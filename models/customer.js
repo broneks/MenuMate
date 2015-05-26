@@ -13,6 +13,10 @@ var CustomerSchema = new mongoose.Schema({
     ref: 'MenuItem'
   }],
   total: Number,
+  status: {
+    type: String,
+    default: 'pending'
+  },
   method: String,
   postal: String,
   email: String,

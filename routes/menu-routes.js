@@ -58,7 +58,7 @@ module.exports = function(router) {
       item.save(function(err) {
         if (err) res.send(err);
 
-        res.json({ message: 'menu item created!' });
+        res.json({ message: 'menu item created' });
       });
     });
 
@@ -99,7 +99,7 @@ module.exports = function(router) {
         item.save(function() {
           if (err) res.send(err);
 
-          res.json({ message: 'menu item updated!' });
+          res.json({ message: 'menu item updated' });
         });
       });
     })
@@ -110,7 +110,7 @@ module.exports = function(router) {
       }, function(err) {
         if (err) res.send(err);
 
-        res.json({ message: 'successfully deleted menu item' });
-      })
+        res.json({ message: 'menu item deleted' });
+      });
     });
 };

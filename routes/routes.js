@@ -4,6 +4,7 @@
 
 var APImenu     = require('./menu-routes');
 var APIcategory = require('./category-routes');
+var APIcustomer = require('./customer-routes');
 
 var React  = require('react/addons');
 var Router = require('react-router');
@@ -29,6 +30,7 @@ module.exports = function(app, router) {
   //
   APImenu(router);
   APIcategory(router);
+  APIcustomer(router);
 
 
   // route prefix
