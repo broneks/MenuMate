@@ -31,7 +31,10 @@ var Menu = React.createClass({
     request
     .get(api.menuItems)
     .end(function(err, res) {
-      if (err) console.log(err);
+      if (err) {
+        console.log('Error');
+        return;
+      }
 
       if (this.isMounted()) {
         this.setState({

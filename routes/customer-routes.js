@@ -7,6 +7,8 @@ var Customer = require('../models/customer');
 var validateCustomer = function(req) {
   req.checkBody('items', 'basket items are required').notEmpty();
 
+  req.checkBody('quantities', 'item quantities are required').notEmpty();
+
   req.checkBody('total', 'price is required').notEmpty();
   req.checkBody('total', 'price must be a number').isNumberStr();
 
@@ -25,11 +27,22 @@ module.exports = function(router) {
 
   router.route('/customers')
     .get(function(req, res) {
-      Customer.find(function(err, customers) {
-        if (err) res.send(err);
+      Customer
+        .find()
+        .lean()
+        .populate('items')
+        .exec(function(err, docs) {
+          if (err) res.send(err);
 
-        res.json(customers);
-      });
+          var options = {
+            path:  'items.category',
+            model: 'Category'
+          };
+
+          Customer.populate(docs, options, function(err, customers) {
+            res.json(customers);
+          });
+        });
     })
 
     .post(function(req, res) {
@@ -37,34 +50,51 @@ module.exports = function(router) {
       var errors   = validateCustomer(req).validationErrors();
 
       if (errors) {
-        res.status(400).send(errors);
+        res.status(400).json({ 'errors': errors });
         return;
       }
 
-      customer.items  = req.body.items;
-      customer.total  = req.body.total;
-      customer.method = req.body.method || '';
-      customer.postal = req.body.postal || '';
-      customer.email  = req.body.email  || '';
+      customer.items      = req.body.items;
+      customer.quantities = req.body.quantities;
+      customer.total      = req.body.total;
+      customer.method     = req.body.method || '';
+      customer.postal     = req.body.postal || '';
+      customer.email      = req.body.email  || '';
 
       if (req.body.status) {
         customer.status = req.body.status;
       }
 
-      customer.save(function(err) {
+      customer.save(function(err, customer) {
         if (err) res.send(err);
 
-        res.json({ message: 'customer created' });
+        res.json({
+          message: 'customer created',
+          context: {
+            id: customer._id
+          }
+        });
       });
     });
 
   router.route('/customers/:customer_id')
     .get(function(req, res) {
-      Customer.findById(req.params.customer_id, function(err, customer) {
-        if (err) res.send(err);
+      Customer
+        .findById(req.params.customer_id)
+        .lean()
+        .populate('items')
+        .exec(function(err, doc) {
+          if (err) res.send(err);
 
-        res.json(customer);
-      });
+          var options = {
+            path:  'items.category',
+            model: 'Category'
+          };
+
+          Customer.populate(doc, options, function(err, customer) {
+            res.json(customer);
+          });
+        });
     })
 
     .put(function(req, res) {
@@ -74,14 +104,15 @@ module.exports = function(router) {
         var errors = validateMenuItems(req).validationErrors();
 
         if (errors) {
-          res.status(400).send(errors);
+          res.status(400).json({ 'errors': errors });
           return;
         }
 
         // cannot update items or total (for now)
         //
-        // customer.items  = req.body.items;
-        // customer.total  = req.body.total
+        // customer.items      = req.body.items;
+        // customer.quantities = req.body.quantities;
+        // customer.total      = req.body.total
         customer.method = req.body.method || '';
         customer.postal = req.body.postal || '';
         customer.email  = req.body.email  || '';

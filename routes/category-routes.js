@@ -27,7 +27,7 @@ module.exports = function(router) {
       var errors   = validateCategory(req).validationErrors();
 
       if (errors) {
-        res.status(400).send(errors);
+        res.status(400).json({ 'errors': errors });
         return;
       }
 
@@ -56,7 +56,7 @@ module.exports = function(router) {
         var errors = validateCategory(req).validationErrors();
 
         if (errors) {
-          res.status(400).send(errors);
+          res.status(400).json({ 'errors': errors });
           return;
         }
 
