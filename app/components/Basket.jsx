@@ -19,9 +19,9 @@ var Basket = React.createClass({
 
   getInitialState: function() {
     return {
-      items:    [],
-      total:    0,
-      quantity: 0
+      items:      [],
+      quantities: [],
+      total:      0
     };
   },
 
@@ -45,49 +45,63 @@ var Basket = React.createClass({
     var updatedTotal;
 
     if (this.checkForNoDuplicates(item._id)) {
-      updatedItems = React.addons.update(this.state.items, {
-        '$push': [item]
-      });
-
-      updatedTotal = this.state.total + item.price;
-      updatedQuantity = this.state.quantity += 1;
+      updatedItems      = React.addons.update(this.state.items, { '$push': [item] });
+      updatedQuantities = React.addons.update(this.state.quantities, { '$push': [1] });
+      updatedTotal      = this.state.total + item.price;
 
       this.setState({
-        items:    updatedItems,
-        total:    updatedTotal,
-        quantity: updatedQuantity
+        items:      updatedItems,
+        quantities: updatedQuantities,
+        total:      updatedTotal
       });
     }
   },
 
   removeItem: function(item, quantity) {
-    var itemIndex    = this.findIndexById(item._id);
-    var updatedItems = React.addons.update(this.state.items, {
+    var itemIndex = this.findIndexById(item._id);
+    var splice    = {
       '$splice': [[itemIndex, 1]]
-    });
-    var updatedTotal    = this.state.total - item.price * quantity;
-    var updatedQuantity = this.state.quantity - quantity;
+    };
+    var updatedItems      = React.addons.update(this.state.items, splice);
+    var updatedQuantities = React.addons.update(this.state.quantities, splice);
+    var updatedTotal      = this.state.total - item.price * quantity;
 
     this.setState({
-      items:    updatedItems,
-      total:    updatedTotal,
-      quantity: updatedQuantity
+      items:      updatedItems,
+      quantities: updatedQuantities,
+      total:      updatedTotal
     });
 
     this.props.reactivateMenuItem(item._id);
   },
 
   clearItems: function() {
-    console.log('clearing');
-  },
+    var idList = this.state.items.map(function(item) {
+      return item._id;
+    });
 
-  updateSummary: function(quantity, price) {
-    var updatedQuantity = this.state.quantity + quantity;
-    var updatedTotal    = this.state.total + price * quantity;
+    this.props.reactivateMenuItem(idList);
 
     this.setState({
-      quantity: updatedQuantity,
-      total:    updatedTotal
+      items:      [],
+      quantities: [],
+      total:      0
+    });
+  },
+
+  updateSummary: function(item, quantity, price) {
+    var itemIndex         = this.findIndexById(item._id);
+    var updatedQuantities = React.addons.update(this.state.quantities, {
+      '$apply': function(quantities) {
+        quantities[itemIndex] += quantity;
+        return quantities;
+      }
+    });
+    var updatedTotal = this.state.total + price * quantity;
+
+    this.setState({
+      quantities: updatedQuantities,
+      total:      updatedTotal
     });
   },
 
@@ -121,7 +135,12 @@ var Basket = React.createClass({
 
     return (
       <div className='basket-wrapper'>
-        <BasketActions items={state.items} clearBasket={this.clearItems} />
+        <BasketActions
+          items={state.items}
+          quantities={state.quantities}
+          total={state.total}
+          clearBasket={this.clearItems}
+        />
 
         <div className={'basket' + emptyMessageClass}>
           <div className='basket-items-wrapper'>
@@ -129,7 +148,7 @@ var Basket = React.createClass({
           </div>
         </div>
 
-        <BasketSummary quantity={state.quantity} total={state.total} />
+        <BasketSummary quantities={state.quantities} total={state.total} />
       </div>
     );
   }

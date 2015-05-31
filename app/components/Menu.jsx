@@ -13,7 +13,10 @@ var MenuItem = require('./MenuItem.jsx');
 var Menu = React.createClass({
   propTypes: {
     addToBasket:      React.PropTypes.func,
-    reactivated:      React.PropTypes.number,
+    reactivated:      React.PropTypes.oneOfType([
+                        React.PropTypes.number,
+                        React.PropTypes.array
+                      ]),
     clearReactivated: React.PropTypes.func
   },
 
@@ -59,7 +62,9 @@ var Menu = React.createClass({
     var props = this.props;
 
     var itemNodes = state.items.map(function (item) {
-      var reactivated = props.reactivated === item._id;
+
+      var reactivated = props.reactivated &&
+        props.reactivated.toString().indexOf(item._id) > -1;
 
       return (
         <MenuItem

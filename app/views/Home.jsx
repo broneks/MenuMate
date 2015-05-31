@@ -22,10 +22,10 @@ Home = React.createClass({
     });
   },
 
-  reactivateMenuItem: function(id) {
+  reactivateMenuItem: function(ids) {
     this.setState({
       basketItem:          null,
-      reactivatedMenuItem: id
+      reactivatedMenuItem: ids
     });
   },
 

@@ -39,7 +39,7 @@ var BasketItem = React.createClass({
       quantity: e.target.value
     });
 
-    props.updateSummary(difference, props.item.price);
+    props.updateSummary(props.item, difference, props.item.price);
   },
 
   render: function() {

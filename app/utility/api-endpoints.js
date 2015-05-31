@@ -2,8 +2,10 @@
 // API Endpoints
 //
 
-var host = 'http://localhost:3000';
+var base = 'http://localhost:3000/api/';
 
 module.exports = {
-  menuItems : host + '/api/menu-items/'
+  menuItems:  base + 'menu-items',
+  categories: base + 'categories',
+  customers:  base + 'customers'
 };

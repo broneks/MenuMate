@@ -12,6 +12,9 @@ var CustomerSchema = new mongoose.Schema({
     type: Number,
     ref: 'MenuItem'
   }],
+  quantities: [{
+    type: Number
+  }],
   total: Number,
   status: {
     type: String,
