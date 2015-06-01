@@ -77,6 +77,27 @@ module.exports = function(router) {
       });
     });
 
+  router.route('/customers/pending')
+    .get(function(req, res) {
+      Customer
+        .find()
+        .lean()
+        .where('status').equals('pending')
+        .populate('items')
+        .exec(function(err, docs) {
+          if (err) res.send(err);
+
+          var options = {
+            path:  'items.category',
+            model: 'Category'
+          };
+
+          Customer.populate(docs, options, function(err, customers) {
+            res.json(customers);
+          });
+        });
+    });
+
   router.route('/customers/:customer_id')
     .get(function(req, res) {
       Customer

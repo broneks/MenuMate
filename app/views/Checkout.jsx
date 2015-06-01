@@ -5,17 +5,32 @@
 var React = require('react/addons');
 var State = require('react-router').State;
 
+var PendingCustomers = require('../components/PendingCustomers.jsx');
+
 
 var Checkout = React.createClass({
   mixins: [State],
 
-  render: function() {
-    var id = this.getParams().id;
+  getId: function() {
+    var id    = this.getParams().id;
+    var isInt = /^\d+$/g.test(id);
 
-    var withParam = id ? 'for customer number ' + id : '';
+    if (isInt) return id;
+
+    return false;
+  },
+
+  render: function() {
+    var id = this.getId();
+
+    if (id) {
+      return (
+        <div>Customer Number {id}</div>
+      );
+    }
 
     return (
-      <div>this is the checkout page {withParam}</div>
+      <PendingCustomers />
     );
   }
 });

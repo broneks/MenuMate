@@ -29,19 +29,19 @@ var Menu = React.createClass({
 
   getMenuItems: function() {
     request
-    .get(api.menuItems)
-    .end(function(err, res) {
-      if (err) {
-        console.log('Error');
-        return;
-      }
+      .get(api.menuItems)
+      .end(function(err, res) {
+        if (err) {
+          console.log('Error');
+          return;
+        }
 
-      if (this.isMounted()) {
-        this.setState({
-          items: res.body
-        });
-      }
-    }.bind(this));
+        if (this.isMounted()) {
+          this.setState({
+            items: res.body
+          });
+        }
+      }.bind(this));
   },
 
   componentDidMount: function() {
