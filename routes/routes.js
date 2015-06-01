@@ -14,18 +14,6 @@ var routes = require('../app/components/App.jsx').routes;
 
 module.exports = function(app, router) {
   //
-  //  React App
-  //
-  app.get('/', function(req, res) {
-    Router.run(routes, req.path, function (Handler) {
-      var reactHtml = React.renderToString(React.createElement(Handler));
-
-      res.render('index', { reactOutput: reactHtml });
-    });
-  });
-
-
-  //
   // Rest API
   //
   APImenu(router);
@@ -35,4 +23,16 @@ module.exports = function(app, router) {
 
   // route prefix
   app.use('/api', router);
+
+
+  //
+  //  React App
+  //
+  app.get('*', function(req, res) {
+    Router.run(routes, req.path, function (Handler) {
+      var reactHtml = React.renderToString(React.createElement(Handler));
+
+      res.render('index', { reactOutput: reactHtml });
+    });
+  });
 };

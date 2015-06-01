@@ -80,10 +80,6 @@ app.use(favicon(__dirname + '/public/img/favicon.ico'));
 //
 require('./routes/routes.js')(app, router);
 
-app.get('*',function(req, res) {
-  res.redirect('/');
-});
-
 
 //
 // Error Handlers

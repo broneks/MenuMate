@@ -13,6 +13,7 @@ var RouteHandler  = Router.RouteHandler;
 
 var Home     = require('../views/Home.jsx');
 var Checkout = require('../views/Checkout.jsx');
+var NotFound = require('../views/NotFound.jsx');
 
 
 var App = React.createClass({
@@ -36,6 +37,8 @@ var routes = (
   <Route name="home" path="/" handler={App}>
     <DefaultRoute handler={Home}/>
     <Route name="checkout" path="/checkout/:id?" handler={Checkout} />
+
+    <NotFoundRoute handler={NotFound} />
   </Route>
 );
 

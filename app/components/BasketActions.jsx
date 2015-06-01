@@ -25,6 +25,8 @@ var BasketActions = React.createClass({
     var props    = this.props;
     var customer = {};
 
+    if (!this.props.items.length) return;
+
     customer.items = props.items.map(function(item) {
       return item._id;
     });
@@ -32,25 +34,27 @@ var BasketActions = React.createClass({
     customer.total = props.total * util.tax;
 
     request
-    .post(api.customers)
-    .send(customer)
-    .set('Accept', 'application/json')
-    .end(function(err, res) {
-      if (err) {
-        console.log('Error');
-        return;
-      }
+      .post(api.customers)
+      .send(customer)
+      .set('Accept', 'application/json')
+      .end(function(err, res) {
+        if (err) {
+          console.log('Error');
+          return;
+        }
 
-      var response = JSON.parse(res.text);
+        var response = JSON.parse(res.text);
 
-      this.transitionTo('checkout', { id: response.context.id });
-    }.bind(this));
+        this.transitionTo('checkout', { id: response.context.id });
+      }.bind(this));
   },
 
   clearBasket: function(e) {
     e.stopPropagation();
 
-    if (confirm('Cancel the current order?')) {
+    if (!this.props.items.length) return;
+
+    if(confirm('Cancel the current order?')) {
       this.props.clearBasket();
     }
   },
