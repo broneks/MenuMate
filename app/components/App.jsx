@@ -19,7 +19,7 @@ var NotFound = require('../views/NotFound.jsx');
 var App = React.createClass({
   render: function() {
     return (
-      <div>
+      <div id='main-wrapper'>
         <header>
           <ul className='list-unstyled'>
             <li><Link to="home">Home</Link></li>

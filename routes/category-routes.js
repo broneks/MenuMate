@@ -15,11 +15,14 @@ module.exports = function(router) {
 
   router.route('/categories')
     .get(function(req, res) {
-      Category.find(function(err, categories) {
-        if (err) res.send(err);
+      Category
+        .find()
+        .lean()
+        .exec(function(err, categories) {
+          if (err) res.send(err);
 
-        res.json(categories);
-      });
+          res.json(categories);
+        });
     })
 
     .post(function(req, res) {
@@ -42,11 +45,14 @@ module.exports = function(router) {
 
   router.route('/categories/:category_id')
     .get(function(req, res) {
-      Category.findById(req.params.category_id, function(err, category) {
-        if (err) res.send(err);
+      Category
+        .findById(req.params.category_id)
+        .lean()
+        .exec(function(err, category) {
+          if (err) res.send(err);
 
-        res.json(category);
-      })
+          res.json(category);
+        });
     })
 
     .put(function(req, res) {

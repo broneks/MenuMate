@@ -25,6 +25,7 @@ module.exports = function(router) {
     .get(function(req, res) {
       MenuItem
         .find()
+        .lean()
         .populate('category')
         .exec(function (err, items) {
           if (err) res.send(err);
@@ -66,6 +67,7 @@ module.exports = function(router) {
     .get(function(req, res) {
       MenuItem
         .findById(req.params.item_id)
+        .lean()
         .populate('category')
         .exec(function(err, item) {
           if (err) res.send(err);

@@ -30,6 +30,7 @@ module.exports = function(router) {
       Customer
         .find()
         .lean()
+        .sort({ created: 'desc' })
         .populate('items')
         .exec(function(err, docs) {
           if (err) res.send(err);
@@ -83,6 +84,51 @@ module.exports = function(router) {
         .find()
         .lean()
         .where('status').equals('pending')
+        .sort({ created: 'desc' })
+        .populate('items')
+        .exec(function(err, docs) {
+          if (err) res.send(err);
+
+          var options = {
+            path:  'items.category',
+            model: 'Category'
+          };
+
+          Customer.populate(docs, options, function(err, customers) {
+            res.json(customers);
+          });
+        });
+    });
+
+  router.route('/customers/paid')
+    .get(function(req, res) {
+      Customer
+        .find()
+        .lean()
+        .where('status').equals('paid')
+        .sort({ created: 'desc' })
+        .populate('items')
+        .exec(function(err, docs) {
+          if (err) res.send(err);
+
+          var options = {
+            path:  'items.category',
+            model: 'Category'
+          };
+
+          Customer.populate(docs, options, function(err, customers) {
+            res.json(customers);
+          });
+        });
+    });
+
+  router.route('/customers/cancelled')
+    .get(function(req, res) {
+      Customer
+        .find()
+        .lean()
+        .where('status').equals('cancelled')
+        .sort({ created: 'desc' })
         .populate('items')
         .exec(function(err, docs) {
           if (err) res.send(err);
@@ -134,9 +180,10 @@ module.exports = function(router) {
         // customer.items      = req.body.items;
         // customer.quantities = req.body.quantities;
         // customer.total      = req.body.total
-        customer.method = req.body.method || '';
-        customer.postal = req.body.postal || '';
-        customer.email  = req.body.email  || '';
+        customer.method  = req.body.method || '';
+        customer.postal  = req.body.postal || '';
+        customer.email   = req.body.email  || '';
+        customer.updated = Date.now();
 
         if (req.body.status) {
           customer.status = req.body.status;

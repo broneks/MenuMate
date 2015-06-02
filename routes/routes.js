@@ -9,7 +9,6 @@ var APIcustomer = require('./customer-routes');
 var React  = require('react/addons');
 var Router = require('react-router');
 
-var App    = require('../app/components/App.jsx').App;
 var routes = require('../app/components/App.jsx').routes;
 
 module.exports = function(app, router) {
