@@ -1,0 +1,9 @@
+.is-disabled {
+  background: url('/img/stripe-bg.png');
+}
+
+button[disabled]:hover,
+button[disabled]:focus {
+  border: 1px solid $c-button-border;
+  color: $c-button-text;
+}

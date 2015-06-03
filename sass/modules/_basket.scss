@@ -1,13 +1,17 @@
 .basket-wrapper {
-  margin: 30px 0;
+  margin: $s-general * 3 0;
 }
 
 .basket {
   position: relative;
-  height: 225px;
-  max-height: 225px;
+  height: 35vh;
+  max-height: 35vh;
   overflow-y: auto;
-  border: 1px solid $border-c;
+  border: 1px solid $c-border;
+
+  select {
+    margin-bottom: 0;
+  }
 
   .basket-empty-message {
     position: absolute;
@@ -16,7 +20,8 @@
     transform: translate(-50%, -50%);
     text-align: center;
     font-style: italic;
-    color: $muted-c;
+    color: $c-muted;
+    letter-spacing: 1px;
   }
 
   &-items {
@@ -29,7 +34,7 @@
 
   &-item {
     border: 0;
-    border-bottom: 1px solid $border-c;
+    border-bottom: 1px solid $c-border;
     display: table-row;
 
     &-name {
@@ -48,17 +53,24 @@
     }
 
     .field {
-      width: (80 / 3) + %;
-      max-width: (80 / 3) + %;
-      padding: $general-pad;
+      width: (85 / 3) + %;
+      max-width: (85 / 3) + %;
+      padding: $s-general;
       display: table-cell;
+      vertical-align: middle;
     }
 
     .basket-item-quantity,
     .basket-item-remove-wrapper {
-      width: 10%;
+      width: 15%;
     }
   }
+}
+
+.basket-actions {
+  padding: $s-general;
+  border: 1px solid $c-border;
+  border-bottom: 0;
 }
 
 .basket-summary-wrapper {
@@ -70,48 +82,31 @@
   border-collapse: collapse;
 
   .basket-summary {
-    border-left: 1px solid $border-c;
-    border-bottom: 1px solid $border-c;
-    border-right: 1px solid $border-c;
+    border-left: 1px solid $c-border;
+    border-bottom: 1px solid $c-border;
+    border-right: 1px solid $c-border;
     display: table-row;
 
     .field {
       display: table-cell;
-      padding: 0 $general-pad;
+      padding: 0 $s-general;
     }
 
     &-quantity {
-      width: ((80 / 3) * 2 + 10) + %;
-      max-width: ((80 / 3) * 2 + 10) + %;
-
-      &.field {
-        padding-right: 0;
-      }
+      width: ((85 / 3) * 2) + 5  + %;
+      max-width: ((85 / 3) * 2) + 5  + %;
     }
-
-    .basket-summary-price {
-      padding: 0;
-    }
-
-    // &-price {
-    //   width: (80 / 3) + "%";
-    //   max-width: (80 / 3) + "%";
-    // }
 
     .subtotal,
     .total {
       box-sizing: border-box;
       display: inline-block;
       width: 50%;
-      padding: $general-pad;
-    }
-
-    .subtotal {
-      padding-left: 0;
+      padding: $s-general;
     }
 
     .total {
-      border-left: 1px solid $border-c;
+      border-left: 1px solid $c-border;
     }
   }
 }

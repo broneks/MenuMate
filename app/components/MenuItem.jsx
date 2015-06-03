@@ -81,8 +81,10 @@ var MenuItem = React.createClass({
 
     var buttonText = this.state.addedToBasket ? 'Added' : 'Add';
 
+    var disabledClass = this.state.addedToBasket ? ' is-disabled' : '';
+
     return (
-      <div className='menu-item' onClick={toggleDetails}>
+      <div className={'menu-item' + disabledClass} onClick={toggleDetails}>
         <h4 className='menu-item-name field'>{item.name}</h4>
 
         <div className='menu-item-price field'>{price}</div>

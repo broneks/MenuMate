@@ -20,23 +20,29 @@ var App = React.createClass({
   render: function() {
     return (
       <div id='main-wrapper'>
-        <header>
-          <ul className='list-unstyled'>
-            <li><Link to="home">Home</Link></li>
-            <li><Link to="checkout">Checkout</Link></li>
-          </ul>
+        <header id='main-header'>
+          <h1 id='logo'>MenuMate</h1>
+
+          <nav>
+            <ul className='list-unstyled'>
+              <li><Link to='home'>Home</Link></li>
+              <li><Link to='checkout'>Checkout</Link></li>
+            </ul>
+          </nav>
         </header>
 
-        <RouteHandler/>
+        <div className='container'>
+          <RouteHandler/>
+        </div>
       </div>
     );
   }
 });
 
 var routes = (
-  <Route name="home" path="/" handler={App}>
+  <Route name='home' path='/' handler={App}>
     <DefaultRoute handler={Home}/>
-    <Route name="checkout" path="/checkout/:id?" handler={Checkout} />
+    <Route name='checkout' path='/checkout/:id?' handler={Checkout} />
 
     <NotFoundRoute handler={NotFound} />
   </Route>

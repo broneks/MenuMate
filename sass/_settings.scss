@@ -1,6 +1,34 @@
 // colors
-$muted-c: #999;
-$border-c: #ddd;
+$c-muted: #999;
+$c-border: #ddd;
+
+$c-gray: #555;
+$c-blue: #1EAEDB;
+$c-blue-dark: darken($c-blue, 5%);
+
+// $c-red: #CC1448;
+
+
+// applied colors
+$c-link: $c-blue;
+$c-link-dark: $c-blue-dark;
+
+$c-button-primary: $c-blue;
+$c-button-primary-dark: $c-blue-dark;
+$c-button-primary-border: $c-blue;
+$c-button-primary-border-dark: $c-blue-dark;
+$c-button-primary-text: #fff;
+$c-button-primary-text-dark: #fff;
+
+$c-button: transparent;
+$c-button-dark: transparent;
+$c-button-border: #bbb;
+$c-button-border-dark: #888;
+$c-button-text: #888;
+$c-button-text-dark: $c-gray;
+
+// $c-button-danger: $c-red;
+
 
 // spacing
-$general-pad: 8px;
+$s-general: 8px;

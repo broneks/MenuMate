@@ -1,0 +1,28 @@
+#main-header {
+  border-bottom: 1px solid $c-border;
+
+  nav {
+    ul {
+      @include clearfix;
+    }
+
+    li {
+      float: left;
+      margin: 0;
+    }
+
+    a {
+      display: block;
+      padding: $s-general;
+    }
+  }
+}
+
+#logo {
+  float: left;
+  font-size: 2rem;
+  border-right: 1px solid $c-border;
+  margin: 0;
+  padding: $s-general $s-general * 2;
+  letter-spacing: 2px;
+}

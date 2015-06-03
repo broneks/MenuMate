@@ -20,13 +20,13 @@ gulp.task('scripts', function() {
 });
 
 gulp.task('sass', function() {
-  gulp.src('sass/main.scss')
+  gulp.src('sass/base.scss')
     .pipe(plumber())
     .pipe(sass({
       includePaths: bourbon,
       outputStyle: 'compressed'
     }))
-    .pipe(gulp.dest('public/css/'))
+    .pipe(gulp.dest('public/css/'));
 });
 
 gulp.task('normalize', function() {

@@ -1,35 +1,31 @@
 .menu {
-  height: 500px;
-  max-height: 500px;
+  height: 50vh;
   overflow-y: auto;
-  border: 1px solid $border-c;
+  border: 1px solid $c-border;
 
   &-item {
     box-sizing: border-box;
-    padding: 15px;
-    margin: 5px;
-    border: 1px solid $border-c;
-    width: 31%;
+    padding: $s-general * 2;
+    margin: $s-general;
+    border: 1px solid $c-border;
+    width: 30%;
     display: inline-block;
     vertical-align: top;
 
     &-name {
-      margin: 0 0 15px;
+      margin: 0 0 $s-general;
       text-transform: capitalize;
     }
 
     &-image {
       width: 100%;
       height: auto;
-      max-width: 200px;
-      max-height: 125px;
       display: block;
-      margin: 15px auto;
+      margin: $s-general auto;
     }
 
     &-add {
       width: 100%;
-      padding: 5px 0;
     }
   }
 
@@ -38,12 +34,12 @@
     padding: 0;
     margin: 0;
     border: 0;
-    border-bottom: 1px solid $border-c;
+    border-bottom: 1px solid $c-border;
     display: table;
 
     .field {
       width: 35%;
-      padding: $general-pad;
+      padding: $s-general;
       display: table-cell;
     }
 
@@ -54,13 +50,18 @@
 
   &-item-details {
     .field {
-      margin-bottom: 15px;
+      margin-bottom: $s-general * 2;
     }
   }
 }
 
+.menu-item-name {
+  font-size: 1.9rem;
+  font-weight: bold;
+}
+
 .menu-display {
-  border: 1px solid $border-c;
+  border: 1px solid $c-border;
   border-top: 0;
-  padding: $general-pad;
+  padding: $s-general;
 }
