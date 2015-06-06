@@ -45,27 +45,36 @@ var PendingCustomers = React.createClass({
 
   render: function() {
     var customers = this.state.customers;
+    var emptyMessageClass = '';
+    var links;
 
-    var links = customers.map(function(customer) {
-      var id   = customer._id;
-      var date = util.formatDate(customer.created);
+    if (customers.length) {
+      links = customers.map(function(customer) {
+        var id   = customer._id;
+        var date = util.formatDate(customer.created, {
+          time: true
+        });
 
-      return (
-        <li key={id}>
-          <Link to='checkout' params={{ id: id }}>
-            <div>Customer #{id}</div>
-            <div>Items: {customer.items.length}</div>
-            <div>Created: {date}</div>
-          </Link>
-        </li>
-      );
-    });
+        return (
+          <li key={id} className='pending-customer-item'>
+            <Link to='checkout' params={{ id: id }} className='row'>
+              <div className='four columns'>Customer #{id}</div>
+              <div className='five columns'>{date}</div>
+              <div className='three columns'>Items: {customer.items.length}</div>
+            </Link>
+          </li>
+        );
+      });
+    } else {
+      links = <li className='empty-message'>no pending customers</li>;
+      emptyMessageClass = ' is-empty';
+    }
 
     return (
       <div>
-        <p>Pending Customers</p>
+        <h4>Pending Customers</h4>
 
-        <ul>
+        <ul className={'pending-customers list-unstyled' + emptyMessageClass}>
           {links}
         </ul>
       </div>

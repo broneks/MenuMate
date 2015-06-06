@@ -9,6 +9,7 @@ var jade    = require('jade');
 
 var path         = require('path');
 var logger       = require('morgan');
+var cors         = require('cors');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var validator    = require('express-validator');
@@ -33,6 +34,7 @@ var config = {
 app.set('env', 'dev');
 
 app.use(logger('dev'));
+app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -94,7 +96,7 @@ app.use(function(err, req, res, next) {
     var output = {
       message: err.message,
       error: err.status || 500
-    }
+    };
 
     if (app.get('env') === 'dev') {
       output.stack = err.stack;

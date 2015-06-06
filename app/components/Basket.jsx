@@ -13,8 +13,10 @@ var BasketSummary = require('./BasketSummary.jsx');
 
 var Basket = React.createClass({
   propTypes: {
+    customer:           React.PropTypes.object,
     item:               React.PropTypes.object,
-    reactivateMenuItem: React.PropTypes.func
+    reactivateMenuItem: React.PropTypes.func,
+    renderOnlyItems:    React.PropTypes.bool
   },
 
   getInitialState: function() {
@@ -106,13 +108,21 @@ var Basket = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps) {
-    if (nextProps.item) {
+    if (nextProps.customer) {
+      this.setState({
+        items:      nextProps.items,
+        quantities: nextProps.quantities,
+        total:      nextProps.total
+      });
+    }
+    else if (nextProps.item) {
       this.addItem(nextProps.item);
     }
   },
 
   render: function() {
     var state = this.state;
+    var props = this.props;
 
     var emptyMessageClass = '';
     var items;
@@ -129,9 +139,21 @@ var Basket = React.createClass({
         );
       }, this);
     } else {
-      items = <li className='basket-empty-message'>basket is empty</li>
+      items = <li className='empty-message'>basket is empty</li>
       emptyMessageClass = ' is-empty';
     }
+
+    // if (props.renderOnlyItems) {
+    //   return (
+    //     <div className="basket-wrapper">
+    //       <div className={'basket' + emptyMessageClass}>
+    //         <div className='basket-items-wrapper'>
+    //           <ul className='basket-items list-unstyled'>{items}</ul>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   );
+    // }
 
     return (
       <div className='basket-wrapper'>

@@ -8,16 +8,20 @@ module.exports = {
     return '$' + parseFloat(str).toFixed(2);
   },
   formatDate: (function() {
-    var months = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split(' ');
+    var months = 'Jan Feb Mar Apr May June July Aug Sept Oct Nov Dec'.split(' ');
 
-    return function(date) {
-      var date = new Date(date);
+    return function(date, options) {
+      date    = new Date(date);
+      options = options || {};
+
 
       var day   = date.getDate();
       var month = months[date.getMonth()];
       var year  = date.getFullYear();
 
-      return month + ' ' + day + ', ' + year;
-    }
+      var time = options.time ? date.getHours() + ':' + date.getMinutes() : '';
+
+      return month + ' ' + day + ', ' + year + ' at ' + time;
+    };
   })()
 };
