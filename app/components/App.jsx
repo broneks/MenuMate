@@ -12,6 +12,7 @@ var Route         = Router.Route;
 var RouteHandler  = Router.RouteHandler;
 
 var Home     = require('../views/Home.jsx');
+var Pending  = require('../views/Pending.jsx');
 var Checkout = require('../views/Checkout.jsx');
 var NotFound = require('../views/NotFound.jsx');
 
@@ -26,7 +27,7 @@ var App = React.createClass({
           <nav>
             <ul className='list-unstyled'>
               <li><Link to='home'>Home</Link></li>
-              <li><Link to='checkout'>Checkout</Link></li>
+              <li><Link to='pending'>Pending</Link></li>
             </ul>
           </nav>
         </header>
@@ -42,7 +43,10 @@ var App = React.createClass({
 var routes = (
   <Route name='home' path='/' handler={App}>
     <DefaultRoute handler={Home}/>
-    <Route name='checkout' path='/checkout/:id?' handler={Checkout} />
+
+    <Route name='pending' path='/pending' handler={Pending} />
+
+    <Route name='checkout' path='/checkout/:id' handler={Checkout} />
 
     <NotFoundRoute handler={NotFound} />
   </Route>
