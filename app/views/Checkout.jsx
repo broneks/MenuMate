@@ -21,8 +21,8 @@ var Checkout = React.createClass({
     };
   },
 
-  getId: function(nextProps) {
-    var id    = nextProps ? nextProps.params.id : this.getParams().id;
+  getId: function() {
+    var id    = this.getParams().id;
     var isInt = /^\d+$/g.test(id);
 
     if (isInt) {
