@@ -107,15 +107,20 @@ var Basket = React.createClass({
     });
   },
 
-  componentWillReceiveProps: function(nextProps) {
-    if (nextProps.customer) {
+  componentWillMount: function() {
+    var props = this.props;
+
+    if (props.customer) {
       this.setState({
-        items:      nextProps.items,
-        quantities: nextProps.quantities,
-        total:      nextProps.total
+        items:      props.customer.items,
+        quantities: props.customer.quantities,
+        total:      props.customer.total
       });
     }
-    else if (nextProps.item) {
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    if (nextProps.item) {
       this.addItem(nextProps.item);
     }
   },
@@ -128,13 +133,15 @@ var Basket = React.createClass({
     var items;
 
     if (state.items.length) {
-      items = state.items.map(function(item) {
+      items = state.items.map(function(item, index) {
         return (
           <BasketItem
             key={item._id}
             item={item}
+            quantity={state.quantities[index]}
             updateSummary={this.updateSummary}
             removeFromBasket={this.removeItem}
+            renderOnlyItems={props.renderOnlyItems}
           />
         );
       }, this);
@@ -143,17 +150,19 @@ var Basket = React.createClass({
       emptyMessageClass = ' is-empty';
     }
 
-    // if (props.renderOnlyItems) {
-    //   return (
-    //     <div className="basket-wrapper">
-    //       <div className={'basket' + emptyMessageClass}>
-    //         <div className='basket-items-wrapper'>
-    //           <ul className='basket-items list-unstyled'>{items}</ul>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   );
-    // }
+    if (props.renderOnlyItems) {
+      return (
+        <div className='basket-wrapper'>
+          <div className={'basket' + emptyMessageClass}>
+            <div className='basket-items-wrapper'>
+              <ul className='basket-items list-unstyled'>{items}</ul>
+            </div>
+          </div>
+
+          <BasketSummary quantities={state.quantities} total={state.total} />
+        </div>
+      );
+    }
 
     return (
       <div className='basket-wrapper'>

@@ -11,7 +11,9 @@ var BasketItem = React.createClass({
   propTypes: {
     item:             React.PropTypes.object.isRequired,
     updateSummary:    React.PropTypes.func,
-    removeFromBasket: React.PropTypes.func
+    removeFromBasket: React.PropTypes.func,
+    quantity:         React.PropTypes.number,
+    renderOnlyItems:  React.PropTypes.bool
   },
 
   getInitialState: function() {
@@ -42,12 +44,33 @@ var BasketItem = React.createClass({
     props.updateSummary(props.item, difference, props.item.price);
   },
 
+  componentWillMount: function() {
+    var props = this.props;
+
+    if (props.quantity) {
+      this.setState({
+        quantity: props.quantity
+      });
+    }
+  },
+
   render: function() {
     var state = this.state;
     var props = this.props;
 
     var item  = props.item;
     var price = util.asCurrency(item.price);
+
+    if (props.renderOnlyItems) {
+      return (
+        <li className='basket-item checkout-item'>
+          <span className='basket-item-quantity field'>{state.quantity}</span>
+          <span className='basket-item-name field text-clip'>{item.name}</span>
+          <span className='basket-item-category field text-clip'>{item.category.name}</span>
+          <span className='basket-item-price field'>{price}</span>
+        </li>
+      );
+    }
 
     return (
       <li className='basket-item'>

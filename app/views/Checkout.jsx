@@ -58,10 +58,19 @@ var Checkout = React.createClass({
   },
 
   render: function() {
-    if (this.state.customer) {
+    var state = this.state;
+
+    if (state.customer) {
       return (
-        // TODO: add basket
-        <div>customer</div>
+        <div className='checkout'>
+          <Basket
+            customer={state.customer}
+            renderOnlyItems={true}
+          />
+
+          <p><strong>Status:</strong> {state.customer.status}</p>
+        </div>
+        // TODO: add more info
       );
     }
 

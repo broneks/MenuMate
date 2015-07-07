@@ -8,6 +8,8 @@ var host     = 'localhost';
 var port     = '27017';
 var database = 'menumate';
 
+var auth = (username && password) ? username + ':' + password + '@' : '';
+
 module.exports = {
-  'url': 'mongodb://' + username + password + host + ':' + port + '/' + database
+  'url': 'mongodb://' + auth + host + ':' + port + '/' + database
 };
