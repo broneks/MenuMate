@@ -4,9 +4,11 @@
 
 module.exports = {
   tax: 1.15,
+
   asCurrency: function(str) {
     return '$' + parseFloat(str).toFixed(2);
   },
+
   formatDate: (function() {
     var months = 'Jan Feb Mar Apr May June July Aug Sept Oct Nov Dec'.split(' ');
 
@@ -23,5 +25,11 @@ module.exports = {
 
       return month + ' ' + day + ', ' + year + ' at ' + time;
     };
-  })()
+  })(),
+
+  capitalize: function(str) {
+    return str.toLowerCase().replace(/\b\w/g, function(m) {
+      return m.toUpperCase();
+    });
+  }
 };

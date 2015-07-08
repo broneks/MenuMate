@@ -153,7 +153,7 @@ var Basket = React.createClass({
     if (props.renderOnlyItems) {
       return (
         <div className='basket-wrapper'>
-          <div className={'basket' + emptyMessageClass}>
+          <div className={'basket only-items' + emptyMessageClass}>
             <div className='basket-items-wrapper'>
               <ul className='basket-items list-unstyled'>{items}</ul>
             </div>

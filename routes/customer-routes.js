@@ -175,7 +175,7 @@ module.exports = function(router) {
           return;
         }
 
-        // cannot update items or total (for now)
+        // cannot update items, quantites or total (for now)
         //
         // customer.items      = req.body.items;
         // customer.quantities = req.body.quantities;

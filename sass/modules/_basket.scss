@@ -9,6 +9,11 @@
   overflow-y: auto;
   border: 1px solid $c-border;
 
+  &.only-items {
+    height: 25vh;
+    max-height: 25vh;
+  }
+
   select {
     margin-bottom: 0;
   }
@@ -28,6 +33,7 @@
 
     &-name {
       text-transform: capitalize;
+      font-weight: bold;
     }
 
     &.text-clip {
@@ -78,7 +84,7 @@
 
     .field {
       display: table-cell;
-      padding: 0 $s-general;
+      padding: 0 0 0 $s-general;
     }
 
     &-quantity {
@@ -98,4 +104,9 @@
       border-left: 1px solid $c-border;
     }
   }
+}
+
+.basket-summary-price .total {
+  background-color: $c-light-gray;
+  font-weight: bold;
 }

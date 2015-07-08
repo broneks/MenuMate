@@ -10,6 +10,7 @@ var Navigation = require('react-router').Navigation;
 var Basket = require('../components/Basket.jsx');
 
 var api = require('../utility/api-endpoints');
+var util = require('../utility/util');
 
 
 var Checkout = React.createClass({
@@ -59,23 +60,34 @@ var Checkout = React.createClass({
 
   render: function() {
     var state = this.state;
+    var status;
+    var created;
 
     if (state.customer) {
+      status  = util.capitalize(state.customer.status);
+      created = util.formatDate(state.customer.created, {
+        time: true
+      });
+
       return (
         <div className='checkout'>
+          <div className='order-info row'>
+            <div className='six columns'><strong>Status:</strong> {status}</div>
+            <div className='six columns'><strong>Order Created:</strong> {created}</div>
+          </div>
+
           <Basket
             customer={state.customer}
             renderOnlyItems={true}
           />
 
-          <p><strong>Status:</strong> {state.customer.status}</p>
         </div>
         // TODO: add more info
       );
     }
 
     return (
-      <div>no customer</div>
+      <div className='text-center'>No customer order was found</div>
     );
   }
 });

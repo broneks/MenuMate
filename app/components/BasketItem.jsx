@@ -44,16 +44,6 @@ var BasketItem = React.createClass({
     props.updateSummary(props.item, difference, props.item.price);
   },
 
-  componentWillMount: function() {
-    var props = this.props;
-
-    if (props.quantity) {
-      this.setState({
-        quantity: props.quantity
-      });
-    }
-  },
-
   render: function() {
     var state = this.state;
     var props = this.props;
@@ -64,7 +54,7 @@ var BasketItem = React.createClass({
     if (props.renderOnlyItems) {
       return (
         <li className='basket-item checkout-item'>
-          <span className='basket-item-quantity field'>{state.quantity}</span>
+          <span className='basket-item-quantity field'>{props.quantity}</span>
           <span className='basket-item-name field text-clip'>{item.name}</span>
           <span className='basket-item-category field text-clip'>{item.category.name}</span>
           <span className='basket-item-price field'>{price}</span>
