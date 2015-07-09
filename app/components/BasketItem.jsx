@@ -9,11 +9,11 @@ var util = require('../utility/util');
 
 var BasketItem = React.createClass({
   propTypes: {
-    item:             React.PropTypes.object.isRequired,
-    updateSummary:    React.PropTypes.func,
-    removeFromBasket: React.PropTypes.func,
-    quantity:         React.PropTypes.number,
-    renderOnlyItems:  React.PropTypes.bool
+    item:              React.PropTypes.object.isRequired,
+    updateSummary:     React.PropTypes.func,
+    removeFromBasket:  React.PropTypes.func,
+    quantity:          React.PropTypes.number,
+    renderStaticItems: React.PropTypes.bool
   },
 
   getInitialState: function() {
@@ -51,7 +51,7 @@ var BasketItem = React.createClass({
     var item  = props.item;
     var price = util.asCurrency(item.price);
 
-    if (props.renderOnlyItems) {
+    if (props.renderStaticItems) {
       return (
         <li className='basket-item checkout-item'>
           <span className='basket-item-quantity field'>{props.quantity}</span>

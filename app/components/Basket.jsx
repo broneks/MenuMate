@@ -16,7 +16,7 @@ var Basket = React.createClass({
     customer:           React.PropTypes.object,
     item:               React.PropTypes.object,
     reactivateMenuItem: React.PropTypes.func,
-    renderOnlyItems:    React.PropTypes.bool
+    renderStaticItems:  React.PropTypes.bool
   },
 
   getInitialState: function() {
@@ -141,7 +141,7 @@ var Basket = React.createClass({
             quantity={state.quantities[index]}
             updateSummary={this.updateSummary}
             removeFromBasket={this.removeItem}
-            renderOnlyItems={props.renderOnlyItems}
+            renderStaticItems={props.renderStaticItems}
           />
         );
       }, this);
@@ -150,10 +150,10 @@ var Basket = React.createClass({
       emptyMessageClass = ' is-empty';
     }
 
-    if (props.renderOnlyItems) {
+    if (props.renderStaticItems) {
       return (
         <div className='basket-wrapper'>
-          <div className={'basket only-items' + emptyMessageClass}>
+          <div className={'basket static-items' + emptyMessageClass}>
             <div className='basket-items-wrapper'>
               <ul className='basket-items list-unstyled'>{items}</ul>
             </div>

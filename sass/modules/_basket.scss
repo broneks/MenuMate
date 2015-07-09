@@ -9,7 +9,7 @@
   overflow-y: auto;
   border: 1px solid $c-border;
 
-  &.only-items {
+  &.static-items {
     height: 25vh;
     max-height: 25vh;
   }

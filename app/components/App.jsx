@@ -16,6 +16,9 @@ var Pending  = require('../views/Pending.jsx');
 var Checkout = require('../views/Checkout.jsx');
 var NotFound = require('../views/NotFound.jsx');
 
+// temporary
+var CashCalculator = require('./CashCalculator.jsx');
+
 
 var App = React.createClass({
   render: function() {
@@ -47,6 +50,9 @@ var routes = (
     <Route name='pending' path='/pending' handler={Pending} />
 
     <Route name='checkout' path='/checkout/:id' handler={Checkout} />
+
+    // temporary
+    <Route name='test' path='/test' handler={CashCalculator}></Route>
 
     <NotFoundRoute handler={NotFound} />
   </Route>

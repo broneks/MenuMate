@@ -78,7 +78,7 @@ var Checkout = React.createClass({
 
           <Basket
             customer={state.customer}
-            renderOnlyItems={true}
+            renderStaticItems={true}
           />
 
         </div>
