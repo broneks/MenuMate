@@ -35,7 +35,17 @@ gulp.task('normalize', function() {
     .pipe(gulp.dest('public/css/'));
 });
 
-gulp.task('default', ['scripts', 'sass', 'normalize'], function() {
+gulp.task('fontstyles', function() {
+  gulp.src('node_modules/font-awesome/css/font-awesome.min.css')
+    .pipe(gulp.dest('public/css/'));
+});
+
+gulp.task('fontfiles', function() {
+  gulp.src('node_modules/font-awesome/fonts/*.*')
+    .pipe(gulp.dest('public/fonts/'));
+});
+
+gulp.task('default', ['scripts', 'sass', 'normalize', 'fontstyles', 'fontfiles'], function() {
   gulp.watch(['app/**/*.jsx', 'app/**/*.js'], ['scripts']);
 
   gulp.watch(['sass/**/*.scss'], ['sass']);

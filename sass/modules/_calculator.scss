@@ -1,0 +1,67 @@
+
+.cash-calculator {
+  max-width: 500px;
+  border: 1px solid $c-border;
+  padding: $s-general;
+
+  .flow-button {
+    width: 100%;
+  }
+
+  .display-wrapper {
+    margin: ($s-general * 2) 0;
+  }
+
+  .display {
+    position: relative;
+    border: 1px solid $c-border;
+    padding: $s-general;
+    padding-left: $s-general * 6;
+    font-size: 1.5em;
+
+    &:before {
+      content: "$";
+      position: absolute;
+      left: $s-general;
+      top: 0;
+      bottom: 0;
+      padding-right: $s-general;
+      border-right: 1px solid $c-border;
+      line-height: 2.2em;
+    }
+  }
+
+  .buttons-pad {
+    .columns {
+      width: 33.3%;
+      margin: 0;
+      border-top: 1px solid $c-border;
+      border-left: 1px solid $c-border;
+
+      &:last-child {
+        border-right: 1px solid $c-border;
+      }
+    }
+
+    .row {
+      &:last-child .columns {
+        border-bottom: 1px solid $c-border;
+      }
+    }
+  }
+
+  .pad-button {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding-top: $s-general * 2;
+    padding-bottom: $s-general * 2;
+    font-size: 1.5em;
+    border: 0;
+  }
+}
+
+#decimal-button {
+  padding-left: 33.4px;
+  padding-right: 33.4px;
+}
