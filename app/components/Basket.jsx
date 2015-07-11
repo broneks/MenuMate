@@ -13,7 +13,7 @@ var BasketSummary = require('./BasketSummary.jsx');
 
 var Basket = React.createClass({
   propTypes: {
-    customer:           React.PropTypes.object,
+    order:              React.PropTypes.object,
     item:               React.PropTypes.object,
     reactivateMenuItem: React.PropTypes.func,
     renderStaticItems:  React.PropTypes.bool
@@ -110,11 +110,11 @@ var Basket = React.createClass({
   componentWillMount: function() {
     var props = this.props;
 
-    if (props.customer) {
+    if (props.order) {
       this.setState({
-        items:      props.customer.items,
-        quantities: props.customer.quantities,
-        total:      props.customer.total
+        items:      props.order.items,
+        quantities: props.order.quantities,
+        total:      props.order.total
       });
     }
   },

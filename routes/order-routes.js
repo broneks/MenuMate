@@ -1,10 +1,10 @@
 //
-// Customer Routes
+// Order Routes
 //
 
-var Customer = require('../models/customer');
+var Order = require('../models/order');
 
-var validateCustomer = function(req) {
+var validateOrder = function(req) {
   req.checkBody('items', 'basket items are required').notEmpty();
 
   req.checkBody('quantities', 'item quantities are required').notEmpty();
@@ -25,9 +25,9 @@ var validateCustomer = function(req) {
 
 module.exports = function(router) {
 
-  router.route('/customers')
+  router.route('/orders')
     .get(function(req, res) {
-      Customer
+      Order
         .find()
         .lean()
         .sort({ created: 'desc' })
@@ -40,47 +40,47 @@ module.exports = function(router) {
             model: 'Category'
           };
 
-          Customer.populate(docs, options, function(err, customers) {
-            res.json(customers);
+          Order.populate(docs, options, function(err, orders) {
+            res.json(orders);
           });
         });
     })
 
     .post(function(req, res) {
-      var customer = new Customer();
-      var errors   = validateCustomer(req).validationErrors();
+      var order  = new Order();
+      var errors = validateOrder(req).validationErrors();
 
       if (errors) {
         res.status(400).json({ 'errors': errors });
         return;
       }
 
-      customer.items      = req.body.items;
-      customer.quantities = req.body.quantities;
-      customer.total      = req.body.total;
-      customer.method     = req.body.method || '';
-      customer.postal     = req.body.postal || '';
-      customer.email      = req.body.email  || '';
+      order.items      = req.body.items;
+      order.quantities = req.body.quantities;
+      order.total      = req.body.total;
+      order.method     = req.body.method || '';
+      order.postal     = req.body.postal || '';
+      order.email      = req.body.email  || '';
 
       if (req.body.status) {
-        customer.status = req.body.status;
+        order.status = req.body.status;
       }
 
-      customer.save(function(err, customer) {
+      order.save(function(err, order) {
         if (err) res.send(err);
 
         res.json({
-          message: 'customer created',
+          message: 'order created',
           context: {
-            id: customer._id
+            id: order._id
           }
         });
       });
     });
 
-  router.route('/customers/pending')
+  router.route('/orders/pending')
     .get(function(req, res) {
-      Customer
+      Order
         .find()
         .lean()
         .where('status').equals('pending')
@@ -94,15 +94,15 @@ module.exports = function(router) {
             model: 'Category'
           };
 
-          Customer.populate(docs, options, function(err, customers) {
-            res.json(customers);
+          Order.populate(docs, options, function(err, orders) {
+            res.json(orders);
           });
         });
     });
 
-  router.route('/customers/paid')
+  router.route('/orders/paid')
     .get(function(req, res) {
-      Customer
+      Order
         .find()
         .lean()
         .where('status').equals('paid')
@@ -116,15 +116,15 @@ module.exports = function(router) {
             model: 'Category'
           };
 
-          Customer.populate(docs, options, function(err, customers) {
-            res.json(customers);
+          Order.populate(docs, options, function(err, orders) {
+            res.json(orders);
           });
         });
     });
 
-  router.route('/customers/cancelled')
+  router.route('/orders/cancelled')
     .get(function(req, res) {
-      Customer
+      Order
         .find()
         .lean()
         .where('status').equals('cancelled')
@@ -138,16 +138,16 @@ module.exports = function(router) {
             model: 'Category'
           };
 
-          Customer.populate(docs, options, function(err, customers) {
-            res.json(customers);
+          Order.populate(docs, options, function(err, orders) {
+            res.json(orders);
           });
         });
     });
 
-  router.route('/customers/:customer_id')
+  router.route('/orders/:order_id')
     .get(function(req, res) {
-      Customer
-        .findById(req.params.customer_id)
+      Order
+        .findById(req.params.order_id)
         .lean()
         .populate('items')
         .exec(function(err, doc) {
@@ -158,14 +158,14 @@ module.exports = function(router) {
             model: 'Category'
           };
 
-          Customer.populate(doc, options, function(err, customer) {
-            res.json(customer);
+          Order.populate(doc, options, function(err, order) {
+            res.json(order);
           });
         });
     })
 
     .put(function(req, res) {
-      Customer.findById(req.params.customer_id, function(err, customer) {
+      Order.findById(req.params.order_id, function(err, order) {
         if (err) res.send(err);
 
         var errors = validateMenuItems(req).validationErrors();
@@ -177,45 +177,45 @@ module.exports = function(router) {
 
         // cannot update items, quantites or total (for now)
         //
-        // customer.items      = req.body.items;
-        // customer.quantities = req.body.quantities;
-        // customer.total      = req.body.total
-        customer.method  = req.body.method || '';
-        customer.postal  = req.body.postal || '';
-        customer.email   = req.body.email  || '';
-        customer.updated = Date.now();
+        // order.items      = req.body.items;
+        // order.quantities = req.body.quantities;
+        // order.total      = req.body.total
+        order.method  = req.body.method || '';
+        order.postal  = req.body.postal || '';
+        order.email   = req.body.email  || '';
+        order.updated = Date.now();
 
         if (req.body.status) {
-          customer.status = req.body.status;
+          order.status = req.body.status;
         }
 
-        customer.save(function() {
+        order.save(function() {
           if (err) res.send(err);
 
-          res.json({ message: 'customer updated' });
+          res.json({ message: 'order updated' });
         });
       });
     })
 
     .delete(function(req, res) {
-      // Customer.findById(req.params.customer_id, function(err, customer) {
+      // Order.findById(req.params.order_id, function(err, order) {
       //   if (err) res.send(err);
       //
-      //   customer.status = 'cancelled';
+      //   order.status = 'cancelled';
       //
-      //   customer.save(function() {
+      //   order.save(function() {
       //     if (err) res.send(err);
       //
-      //     res.json({ message: 'customer deleted' });
+      //     res.json({ message: 'order deleted' });
       //   });
       // });
 
-      Customer.remove({
-        _id: req.params.customer_id
+      Order.remove({
+        _id: req.params.order_id
       }, function(err) {
         if (err) res.send(err);
 
-        res.json({ message: 'customer deleted' });
+        res.json({ message: 'order deleted' });
       })
     });
 };

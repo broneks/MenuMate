@@ -1,0 +1,32 @@
+$pending   : yellow;
+$paid      : green;
+$cancelled : black;
+
+.order-number {
+  padding-bottom: $s-general;
+  border-bottom: 1px dashed $c-border;
+}
+
+.order-status {
+  font-weight: bold;
+  border: 1px solid $c-border;
+}
+
+.is-pending {
+  .order-status {
+    background-color: $pending;
+    color: contrast-text($pending);
+  }
+}
+.is-paid {
+  .order-status {
+    background-color: $paid;
+    color: contrast-text($paid);
+  }
+}
+.is-cancelled {
+  .order-status {
+    background-color: $cancelled;
+    color: contrast-text($cancelled);
+  }
+}

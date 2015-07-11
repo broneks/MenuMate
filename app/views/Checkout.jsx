@@ -18,7 +18,7 @@ var Checkout = React.createClass({
 
   getInitialState: function() {
     return {
-      customer: null
+      order: null
     };
   },
 
@@ -33,9 +33,9 @@ var Checkout = React.createClass({
     }
   },
 
-  getCustomerById: function(id, callback) {
+  getOrderById: function(id, callback) {
     request
-      .get(api.customers + id)
+      .get(api.orders + id)
       .end(function(err, res) {
         if (err) {
           console.log('Error');
@@ -44,7 +44,7 @@ var Checkout = React.createClass({
 
         if (this.isMounted()) {
           this.setState({
-            customer: res.body
+            order: res.body
           });
         }
       }.bind(this));
@@ -54,7 +54,7 @@ var Checkout = React.createClass({
     var id = this.getId();
 
     if (id) {
-      this.getCustomerById(id);
+      this.getOrderById(id);
     }
   },
 
@@ -63,21 +63,24 @@ var Checkout = React.createClass({
     var status;
     var created;
 
-    if (state.customer) {
-      status  = util.capitalize(state.customer.status);
-      created = util.formatDate(state.customer.created, {
-        time: true
-      });
+    if (state.order) {
+      statusClass = ' is-' + state.order.status;
+      status  = util.capitalize(state.order.status);
+      created = util.formatDate(state.order.created, { time: true });
 
       return (
-        <div className='checkout'>
-          <div className='order-info row'>
-            <div className='six columns'><strong>Status:</strong> {status}</div>
-            <div className='six columns'><strong>Order Created:</strong> {created}</div>
+        <div className={'checkout' + statusClass}>
+          <div className='order-info'>
+            <div className='order-number'>Order #{state.order._id}</div>
+
+            <div className='row'>
+              <div className='six columns order-created v-margin'>Created: {created}</div>
+              <div className='six columns order-status v-margin text-center'>{status}</div>
+            </div>
           </div>
 
           <Basket
-            customer={state.customer}
+            order={state.order}
             renderStaticItems={true}
           />
 
@@ -87,7 +90,7 @@ var Checkout = React.createClass({
     }
 
     return (
-      <div className='text-center'>No customer order was found</div>
+      <div className='text-center'>No order order was found</div>
     );
   }
 });

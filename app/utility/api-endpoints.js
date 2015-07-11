@@ -2,11 +2,12 @@
 // API Endpoints
 //
 
-var base = 'http://localhost:3000/api/';
+var host = 'localhost:3000';
+var base = 'http://' + host + '/api/';
 
 module.exports = {
   menuItems:  base + 'menu-items/',
   categories: base + 'categories/',
-  customers:  base + 'customers/',
-  pending:    base + 'customers/pending/'
+  orders:     base + 'orders/',
+  pending:    base + 'orders/pending/'
 };

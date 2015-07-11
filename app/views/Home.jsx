@@ -39,7 +39,7 @@ Home = React.createClass({
     var state = this.state;
 
     return (
-      <div>
+      <div className='home'>
         <Basket
           item={state.basketItem}
           reactivateMenuItem={this.reactivateMenuItem}

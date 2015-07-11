@@ -82,7 +82,9 @@ var BasketItem = React.createClass({
         <span className='basket-item-category field text-clip'>{item.category.name}</span>
         <span className='basket-item-price field'>{price}</span>
         <span className='basket-item-remove-wrapper field'>
-          <button className='basket-item-remove' onClick={this.remove}>X</button>
+          <button className='basket-item-remove' onClick={this.remove}>
+            <i className='fa fa-times'></i>
+          </button>
         </span>
       </li>
     );

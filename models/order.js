@@ -7,7 +7,7 @@ var autoIncrement = require('mongoose-auto-increment');
 
 autoIncrement.initialize(mongoose);
 
-var CustomerSchema = new mongoose.Schema({
+var OrderSchema = new mongoose.Schema({
   items: [{
     type: Number,
     ref: 'MenuItem'
@@ -33,6 +33,6 @@ var CustomerSchema = new mongoose.Schema({
   }
 });
 
-CustomerSchema.plugin(autoIncrement.plugin, { model: 'Customer', startAt: 1 });
+OrderSchema.plugin(autoIncrement.plugin, { model: 'Order', startAt: 1 });
 
-module.exports = mongoose.model('Customer', CustomerSchema);
+module.exports = mongoose.model('Customer', OrderSchema);

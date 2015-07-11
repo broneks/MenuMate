@@ -4,13 +4,13 @@
 
 var React = require('react/addons');
 
-var PendingCustomers = require('../components/PendingCustomers.jsx');
+var PendingOrders = require('../components/PendingOrders.jsx');
 
 
 var Pending = React.createClass({
   render: function() {
     return (
-      <PendingCustomers />
+      <PendingOrders />
     );
   }
 });

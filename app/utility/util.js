@@ -12,6 +12,10 @@ module.exports = {
   formatDate: (function() {
     var months = 'Jan Feb Mar Apr May June July Aug Sept Oct Nov Dec'.split(' ');
 
+    var precedingZero = function(num) {
+      return num < 10 ? '0' + num : num;
+    };
+
     return function(date, options) {
       date    = new Date(date);
       options = options || {};
@@ -21,7 +25,7 @@ module.exports = {
       var month = months[date.getMonth()];
       var year  = date.getFullYear();
 
-      var time = options.time ? date.getHours() + ':' + date.getMinutes() : '';
+      var time = options.time ? precedingZero(date.getHours()) + ':' + precedingZero(date.getMinutes()) : '';
 
       return month + ' ' + day + ', ' + year + ' at ' + time;
     };

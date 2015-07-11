@@ -1,12 +1,16 @@
-.pending-customers {
+.orders-list {
   position: relative;
   border: 1px solid $c-border;
   min-height: 75vh;
   overflow: auto;
 }
 
-.pending-customer-item {
+.order-item {
   margin: 0;
-  padding: $s-general;
   border-bottom: 1px solid $c-border;
+
+  a {
+    display: block;
+    padding: $s-general;
+  }
 }

@@ -22,20 +22,20 @@ var BasketActions = React.createClass({
   mixins: [Navigation],
 
   checkout: function() {
-    var props    = this.props;
-    var customer = {};
+    var props = this.props;
+    var order = {};
 
     if (!this.props.items.length) return;
 
-    customer.items = props.items.map(function(item) {
+    order.items = props.items.map(function(item) {
       return item._id;
     });
-    customer.quantities = props.quantities;
-    customer.total = props.total * util.tax;
+    order.quantities = props.quantities;
+    order.total = props.total * util.tax;
 
     request
-      .post(api.customers)
-      .send(customer)
+      .post(api.orders)
+      .send(order)
       .set('Accept', 'application/json')
       .end(function(err, res) {
         if (err) {
