@@ -53,11 +53,11 @@ var CashCalculator = React.createClass({
       <div className='cash-calculator'>
         <div className='flow-control'>
           <div className='row'>
-            <div className='four columns'>
-              <button className='flow-button button' onClick={this.cancelPayment}>Cancel</button>
+            <div className='four columns v-margin'>
+              <button className='button button-block' onClick={this.cancelPayment}>Cancel</button>
             </div>
-            <div className='eight columns'>
-              <button className='flow-button button' onClick={this.submitPayment}>Done</button>
+            <div className='eight columns v-margin'>
+              <button className='button button-block' onClick={this.submitPayment}>Done</button>
             </div>
           </div>
         </div>

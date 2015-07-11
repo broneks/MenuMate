@@ -5,6 +5,12 @@
   overflow: auto;
 }
 
+.orders-total {
+  padding: $s-general;
+  border: 1px solid $c-border;
+  border-top: 0;
+}
+
 .order-item {
   margin: 0;
   border-bottom: 1px solid $c-border;

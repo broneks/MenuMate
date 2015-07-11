@@ -3,8 +3,7 @@ $paid      : green;
 $cancelled : black;
 
 .order-number {
-  padding-bottom: $s-general;
-  border-bottom: 1px dashed $c-border;
+  margin-bottom: $s-general;
 }
 
 .order-status {

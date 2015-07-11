@@ -22,9 +22,13 @@ var OrdersList = React.createClass({
     }
 
     return (
-      <ul className={'orders-list list-unstyled' + emptyMessageClass}>
-        {orders}
-      </ul>
+      <div className='orders-list-wrapper'>
+        <ul className={'orders-list list-unstyled' + emptyMessageClass}>
+          {orders}
+        </ul>
+
+        <div className='orders-total'>{props.orders.length} Order(s)</div>
+      </div>
     );
   }
 });

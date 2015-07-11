@@ -20,7 +20,7 @@ var PendingOrders = React.createClass({
     };
   },
 
-  getCustomers: function() {
+  getOrders: function() {
     request
       .get(api.pending)
       .end(function(err, res) {
@@ -38,12 +38,11 @@ var PendingOrders = React.createClass({
   },
 
   componentDidMount: function() {
-    this.getCustomers();
+    this.getOrders();
   },
 
   render: function() {
     var orders = this.state.orders;
-    var emptyMessageClass = '';
     var links = [];
 
     if (orders.length) {

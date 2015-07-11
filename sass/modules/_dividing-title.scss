@@ -1,0 +1,32 @@
+.dividing-title {
+  position: relative;
+  margin: $s-general * 4 0;
+  text-align: center;
+
+  hr {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    border-color: $c-border;
+  }
+
+  .title {
+    position: relative;
+    display: inline-block;
+    padding: 0 1rem;
+    margin: 0 auto;
+    background: #fff;
+    color: $c-muted;
+    letter-spacing: 1.5px;
+  }
+
+  &-dashed {
+    @extend .dividing-title;
+
+    hr {
+      border-style: dashed;
+    }
+  }
+}

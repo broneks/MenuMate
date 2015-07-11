@@ -84,9 +84,48 @@ var Checkout = React.createClass({
             renderStaticItems={true}
           />
 
+          <div className='dividing-title-dashed'>
+            <hr role='separator' aria-hidden='true' />
+            <div className='title'>Payment</div>
+          </div>
+
+          <div className='payment-wrapper'>
+
+            <div className='payment-info v-margin'>
+
+              <div className='row'>
+                <div className='six columns payment-cash v-margin'>
+                  <button className='button button-block'>
+                    <i className='fa fa-money icon-spacing'></i>
+                    Cash
+                  </button>
+                </div>
+
+                <div className='six columns payment-card v-margin'>
+                  <button className='button button-block'>
+                    <i className='fa fa-credit-card icon-spacing'></i>
+                    Debit / Credit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        // TODO: add more info
       );
+
+      /*
+      <div className='customer-info v-margin'>
+        <div className='row'>
+          <div className='six columns customer-postal v-margin'>
+            <input type='text' ref='postal' placeholder='postal code' />
+          </div>
+
+          <div className='six columns customer-email v-margin'>
+            <input type='text' ref='email' placeholder='email' />
+          </div>
+        </div>
+      </div>
+      */
     }
 
     return (

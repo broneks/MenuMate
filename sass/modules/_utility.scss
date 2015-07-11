@@ -11,6 +11,11 @@
   }
 }
 
+.button-block {
+  width: 100%;
+  display: block;
+}
+
 .text-center {
   text-align: center;
 }
@@ -29,4 +34,8 @@
 .v-margin {
   margin-top: $s-general;
   margin-bottom: $s-general;
+}
+
+.icon-spacing {
+  margin-right: $s-general;
 }
