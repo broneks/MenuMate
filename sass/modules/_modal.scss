@@ -1,0 +1,85 @@
+$modal-header-height: 38px;
+
+.modal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: 0;
+  z-index: 1001;
+  display: none;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  outline: 0;
+  margin: $s-general * 3;
+  border-radius: $r-general;
+  background: #fff;
+  box-shadow: 0 5px 15px rgba(0,0,0,.5);
+
+  // &.fade {
+  //   opacity: 0;
+  //   @include transition(opacity 2s linear);
+  //
+  //   &.in {
+  //     opacity: 1;
+  //   }
+  // }
+}
+
+@media (min-width: 768px) {
+  .modal {
+    width: 600px;
+    margin: $s-general * 3 auto;
+  }
+}
+
+.modal-open {
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  &:after {
+    content: "";
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #000;
+    opacity: 0.5;
+  }
+}
+
+.modal-header {
+  height: $modal-header-height;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-bottom: 1px solid $c-border;
+}
+
+.modal-title {
+  line-height: $modal-header-height - ($s-general * 2) $s-general;
+  padding: $s-general;
+  margin-right: 45px; // approximate width of modal-close button
+}
+
+.modal-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-top-right-radius: $r-general;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 0;
+  padding: 0 $s-general * 2;
+  z-index: 1002;
+}
+
+.modal-body {
+  position: relative;
+  margin: ($modal-header-height + $s-general) $s-general $s-general;
+  overflow-x: hidden;
+  overflow-y: auto;
+}

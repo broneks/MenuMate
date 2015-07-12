@@ -11,6 +11,10 @@ var api = require('../utility/api-endpoints');
 var util = require('../utility/util');
 
 var CashCalculator = React.createClass({
+  propTypes: {
+    onDone: React.PropTypes.func.isRequired
+  },
+
   getInitialState: function() {
     return {
       display: '0'
@@ -18,15 +22,27 @@ var CashCalculator = React.createClass({
   },
 
   updateDisplay: function(value) {
-    var display = this.state.display;
+    var currentDisplay    = this.state.display;
+    var displayHasDecimal = currentDisplay.indexOf('.') >= 0;
     var updatedDisplay;
     var trimmed;
 
+    // if (!displayHasDecimal) {
+    //   // max length of 4 digits preceding the decimal place
+    //   if (currentDisplay.length >= 4) return;
+    // }
+
     if (value === 'backspace') {
-      trimmed = display.slice(0, -1);
+      trimmed = currentDisplay.slice(0, -1);
       updatedDisplay = trimmed.length ? trimmed : '0';
+    } else if (value === '.') {
+      // only allow one decimal place
+      if (displayHasDecimal) return;
+      updatedDisplay = currentDisplay + value;
     } else {
-      updatedDisplay = (value === '.' || display !== '0') ? display + value : value;
+      // only allow two decimal places
+      if (displayHasDecimal && currentDisplay.split('.')[1].length === 2) return;
+      updatedDisplay = currentDisplay !== '0' ? currentDisplay + value : value;
     }
 
     this.setState({
@@ -34,7 +50,7 @@ var CashCalculator = React.createClass({
     });
   },
 
-  cancelPayment: function(e) {
+  cancel: function(e) {
     e.stopPropagation();
 
     if(confirm('Cancel the cash payment?')) {
@@ -42,8 +58,10 @@ var CashCalculator = React.createClass({
     }
   },
 
-  submitPayment: function() {
-    // TODO: calculate change back then post checkout data and proceed to receipt
+  done: function(e) {
+    e.stopPropagation();
+
+    this.props.onDone(this.state.display);
   },
 
   render: function() {
@@ -54,10 +72,10 @@ var CashCalculator = React.createClass({
         <div className='flow-control'>
           <div className='row'>
             <div className='four columns v-margin'>
-              <button className='button button-block' onClick={this.cancelPayment}>Cancel</button>
+              <button className='button button-block' onClick={this.cancel}>Cancel</button>
             </div>
             <div className='eight columns v-margin'>
-              <button className='button button-block' onClick={this.submitPayment}>Done</button>
+              <button className='button button-block' onClick={this.done}>Done</button>
             </div>
           </div>
         </div>

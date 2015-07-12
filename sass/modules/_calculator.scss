@@ -1,8 +1,8 @@
 
 .cash-calculator {
   max-width: 500px;
-  border: 1px solid $c-border;
   padding: $s-general;
+  margin: 0 auto;
 
   .display-wrapper {
     margin: ($s-general * 2) 0;
@@ -40,6 +40,26 @@
     }
 
     .row {
+      &:first-of-type {
+        .columns:first-child {
+          border-top-left-radius: $r-general;
+        }
+
+        .columns:last-child {
+          border-top-right-radius: $r-general;
+        }
+      }
+
+      &:last-of-type {
+        .columns:first-child {
+          border-bottom-left-radius: $r-general;
+        }
+
+        .columns:last-child {
+          border-bottom-right-radius: $r-general;
+        }
+      }
+
       &:last-child .columns {
         border-bottom: 1px solid $c-border;
       }

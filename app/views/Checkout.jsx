@@ -7,10 +7,12 @@ var request    = require('superagent');
 var State      = require('react-router').State;
 var Navigation = require('react-router').Navigation;
 
-var Basket = require('../components/Basket.jsx');
-
 var api = require('../utility/api-endpoints');
 var util = require('../utility/util');
+
+var Basket = require('../components/Basket.jsx');
+var Modal  = require('../components/Modal.jsx');
+var CashCalculator = require('../components/CashCalculator.jsx');
 
 
 var Checkout = React.createClass({
@@ -48,6 +50,12 @@ var Checkout = React.createClass({
           });
         }
       }.bind(this));
+  },
+
+  submitPayment: function(payment) {
+    // TODO: calculate change back
+
+    alert('submit payment');
   },
 
   componentDidMount: function() {
@@ -95,14 +103,17 @@ var Checkout = React.createClass({
 
               <div className='row'>
                 <div className='six columns payment-cash v-margin'>
-                  <button className='button button-block'>
-                    <i className='fa fa-money icon-spacing'></i>
-                    Cash
-                  </button>
+                  <Modal
+                    buttonText='Cash'
+                    buttonBlock={true}
+                    buttonIcon='fa fa-money icon-spacing'
+                    modalTitle='Cash Payment'
+                    modalBody={<CashCalculator onDone={this.submitPayment} />}
+                  />
                 </div>
 
                 <div className='six columns payment-card v-margin'>
-                  <button className='button button-block'>
+                  <button className='button button-block' onClick={this.submitPayment}>
                     <i className='fa fa-credit-card icon-spacing'></i>
                     Debit / Credit
                   </button>
