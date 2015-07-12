@@ -13,6 +13,7 @@ var util = require('../utility/util');
 var Basket = require('../components/Basket.jsx');
 var Modal  = require('../components/Modal.jsx');
 var CashCalculator = require('../components/CashCalculator.jsx');
+var DividingTitle  = require('../components/DividingTitle.jsx');
 
 
 var Checkout = React.createClass({
@@ -92,10 +93,7 @@ var Checkout = React.createClass({
             renderStaticItems={true}
           />
 
-          <div className='dividing-title-dashed'>
-            <hr role='separator' aria-hidden='true' />
-            <div className='title'>Payment</div>
-          </div>
+          <DividingTitle dashed={true} title='Payment' />
 
           <div className='payment-wrapper'>
 

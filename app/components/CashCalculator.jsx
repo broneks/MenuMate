@@ -27,10 +27,10 @@ var CashCalculator = React.createClass({
     var updatedDisplay;
     var trimmed;
 
-    // if (!displayHasDecimal) {
-    //   // max length of 4 digits preceding the decimal place
-    //   if (currentDisplay.length >= 4) return;
-    // }
+    if (!displayHasDecimal && value !== 'backspace' && value !== '.') {
+      // max length of 4 digits preceding the decimal place
+      if (currentDisplay.length >= 4) return;
+    }
 
     if (value === 'backspace') {
       trimmed = currentDisplay.slice(0, -1);
