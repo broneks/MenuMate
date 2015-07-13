@@ -12,6 +12,7 @@ var NotFound = React.createClass({
       <div className='page-not-found text-center'>
         <h1>404</h1>
         <p>Page Not Found</p>
+        <img src="/img/coffee-beans.gif" alt="" />
       </div>
     );
   }

@@ -17,6 +17,7 @@ var Modal = React.createClass({
     buttonText:  React.PropTypes.string.isRequired,
     buttonBlock: React.PropTypes.bool,
     buttonIcon:  React.PropTypes.string,
+    onClose:     React.PropTypes.func,
     id:          React.PropTypes.string
   },
 
@@ -49,6 +50,10 @@ var Modal = React.createClass({
     this.setState({
       open: false
     });
+
+    if (this.props.onClose) {
+      this.props.onClose();
+    }
   },
 
   render: function() {

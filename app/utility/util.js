@@ -35,5 +35,25 @@ module.exports = {
     return str.toLowerCase().replace(/\b\w/g, function(m) {
       return m.toUpperCase();
     });
+  },
+
+  isArray: function(value) {
+    if (!Array.isArray) {
+      return Object.prototype.toString.call(value) === '[object Array]';
+    }
+    
+    return Array.isArray(value);
+  },
+
+  arrayChunk: function(arr, chunk) {
+    var chunked = [];
+    var length  = arr.length;
+    var i;
+
+    for (i = 0; i < length; i += chunk) {
+      chunked.push(arr.slice(i, i + chunk));
+    }
+
+    return chunked;
   }
 };

@@ -15,15 +15,6 @@ $modal-header-height: 38px;
   border-radius: $r-general;
   background: #fff;
   box-shadow: 0 5px 15px rgba(0,0,0,.5);
-
-  // &.fade {
-  //   opacity: 0;
-  //   @include transition(opacity 2s linear);
-  //
-  //   &.in {
-  //     opacity: 1;
-  //   }
-  // }
 }
 
 @media (min-width: 768px) {

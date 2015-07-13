@@ -8,6 +8,7 @@ var request = require('superagent');
 var api = require('../utility/api-endpoints');
 
 var MenuItem = require('./MenuItem.jsx');
+var LoadingSpinner = require('./LoadingSpinner.jsx');
 
 
 var Menu = React.createClass({
@@ -22,8 +23,9 @@ var Menu = React.createClass({
 
   getInitialState: function() {
     return {
+      items:    [],
       listView: true,
-      items: []
+      loading:  true
     };
   },
 
@@ -38,7 +40,8 @@ var Menu = React.createClass({
 
         if (this.isMounted()) {
           this.setState({
-            items: res.body
+            items:   res.body,
+            loading: false
           });
         }
       }.bind(this));
@@ -64,10 +67,11 @@ var Menu = React.createClass({
     var state = this.state;
     var props = this.props;
 
-    var itemNodes = state.items.map(function (item) {
+    var listViewClass  = state.listView ? ' list-view' : '';
+    var toggleViewText = state.listView ? 'grid view' : 'list view';
 
-      var reactivated = props.reactivated &&
-        props.reactivated.toString().indexOf(item._id) > -1;
+    var items = state.items.map(function (item) {
+      var reactivated = props.reactivated && props.reactivated.toString().indexOf(item._id) > -1;
 
       return (
         <MenuItem
@@ -81,12 +85,15 @@ var Menu = React.createClass({
       );
     }, this);
 
-    var listViewClass  = state.listView ? ' list-view' : '';
-    var toggleViewText = state.listView ? 'grid view' : 'list view';
+    if (!items.length) {
+      if (state.loading) {
+        items = <div className='message-center'><LoadingSpinner /></div>;
+      }
+    }
 
     return (
       <div className='menu-wrapper'>
-        <div className={'menu' + listViewClass}>{itemNodes}</div>
+        <div className={'menu' + listViewClass}>{items}</div>
         <div className='menu-display'>
             <button onClick={this.toggleView}>{toggleViewText}</button>
         </div>

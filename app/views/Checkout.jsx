@@ -12,6 +12,7 @@ var util = require('../utility/util');
 
 var Basket = require('../components/Basket.jsx');
 var Modal  = require('../components/Modal.jsx');
+var LoadingSpinner = require('../components/LoadingSpinner.jsx');
 var CashCalculator = require('../components/CashCalculator.jsx');
 var DividingTitle  = require('../components/DividingTitle.jsx');
 
@@ -21,7 +22,8 @@ var Checkout = React.createClass({
 
   getInitialState: function() {
     return {
-      order: null
+      order:   null,
+      loading: true
     };
   },
 
@@ -47,7 +49,8 @@ var Checkout = React.createClass({
 
         if (this.isMounted()) {
           this.setState({
-            order: res.body
+            order:   res.body,
+            loading: false
           });
         }
       }.bind(this));
@@ -57,6 +60,14 @@ var Checkout = React.createClass({
     // TODO: calculate change back
 
     alert('submit payment');
+  },
+
+  cancelCashPayment: function() {
+    this.refs.cashModal.close();
+  },
+
+  onCashModalClose: function() {
+    this.refs.cashCalculator.clearDisplay();
   },
 
   componentDidMount: function() {
@@ -69,77 +80,94 @@ var Checkout = React.createClass({
 
   render: function() {
     var state = this.state;
+    var message;
+    var statusClass;
     var status;
     var created;
 
-    if (state.order) {
-      statusClass = ' is-' + state.order.status;
-      status  = util.capitalize(state.order.status);
-      created = util.formatDate(state.order.created, { time: true });
+    console.log(!state.order);
+
+    if (!state.order) {
+      if (state.loading) {
+        message = <div className='message-center'><LoadingSpinner /></div>;
+      } else {
+        message = <div className='message-center empty-message'>No order order was found</div>;
+      }
 
       return (
-        <div className={'checkout' + statusClass}>
-          <div className='order-info'>
-            <div className='order-number'>Order #{state.order._id}</div>
+        <div className='message-wrapper'>{message}</div>
+      );
+    }
+
+    statusClass = ' is-' + state.order.status;
+    status  = util.capitalize(state.order.status);
+    created = util.formatDate(state.order.created, { time: true });
+
+    return (
+      <div className={'checkout' + statusClass}>
+        <div className='order-info'>
+          <div className='order-number'>Order #{state.order._id}</div>
+
+          <div className='row'>
+            <div className='six columns order-created v-margin'>Created: {created}</div>
+            <div className='six columns order-status v-margin text-center'>{status}</div>
+          </div>
+        </div>
+
+        <Basket
+          order={state.order}
+          renderStaticItems={true}
+        />
+
+        <DividingTitle dashed={true} title='Payment' />
+
+        <div className='payment-wrapper'>
+          <div className='payment-info v-margin'>
 
             <div className='row'>
-              <div className='six columns order-created v-margin'>Created: {created}</div>
-              <div className='six columns order-status v-margin text-center'>{status}</div>
-            </div>
-          </div>
+              <div className='six columns payment-cash v-margin'>
+                <Modal
+                  ref='cashModal'
+                  buttonText='Cash'
+                  buttonBlock={true}
+                  buttonIcon='fa fa-money icon-spacing'
+                  onClose={this.onCashModalClose}
+                  modalTitle='Cash Payment'
+                  modalBody={
+                    <CashCalculator
+                      ref='cashCalculator'
+                      onCancel={this.cancelCashPayment}
+                      onSubmit={this.submitPayment}
+                    />
+                  }
+                />
+              </div>
 
-          <Basket
-            order={state.order}
-            renderStaticItems={true}
-          />
-
-          <DividingTitle dashed={true} title='Payment' />
-
-          <div className='payment-wrapper'>
-
-            <div className='payment-info v-margin'>
-
-              <div className='row'>
-                <div className='six columns payment-cash v-margin'>
-                  <Modal
-                    buttonText='Cash'
-                    buttonBlock={true}
-                    buttonIcon='fa fa-money icon-spacing'
-                    modalTitle='Cash Payment'
-                    modalBody={<CashCalculator onDone={this.submitPayment} />}
-                  />
-                </div>
-
-                <div className='six columns payment-card v-margin'>
-                  <button className='button button-block' onClick={this.submitPayment}>
-                    <i className='fa fa-credit-card icon-spacing'></i>
-                    Debit / Credit
-                  </button>
-                </div>
+              <div className='six columns payment-card v-margin'>
+                <button className='button button-block' onClick={this.submitPayment}>
+                  <i className='fa fa-credit-card icon-spacing'></i>
+                  Debit / Credit
+                </button>
               </div>
             </div>
           </div>
         </div>
-      );
+      </div>
+    );
 
-      /*
-      <div className='customer-info v-margin'>
-        <div className='row'>
-          <div className='six columns customer-postal v-margin'>
-            <input type='text' ref='postal' placeholder='postal code' />
-          </div>
+    /*
+    <div className='customer-info v-margin'>
+      <div className='row'>
+        <div className='six columns customer-postal v-margin'>
+          <input type='text' ref='postal' placeholder='postal code' />
+        </div>
 
-          <div className='six columns customer-email v-margin'>
-            <input type='text' ref='email' placeholder='email' />
-          </div>
+        <div className='six columns customer-email v-margin'>
+          <input type='text' ref='email' placeholder='email' />
         </div>
       </div>
-      */
-    }
-
-    return (
-      <div className='text-center'>No order order was found</div>
-    );
+    </div>
+    */
   }
 });
 

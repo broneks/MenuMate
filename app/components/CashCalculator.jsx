@@ -12,7 +12,8 @@ var util = require('../utility/util');
 
 var CashCalculator = React.createClass({
   propTypes: {
-    onDone: React.PropTypes.func.isRequired
+    onCancel: React.PropTypes.func.isRequired,
+    onSubmit: React.PropTypes.func.isRequired
   },
 
   getInitialState: function() {
@@ -21,22 +22,28 @@ var CashCalculator = React.createClass({
     };
   },
 
+  clearDisplay: function() {
+    this.setState({
+      display: '0'
+    });
+  },
+
   updateDisplay: function(value) {
     var currentDisplay    = this.state.display;
     var displayHasDecimal = currentDisplay.indexOf('.') >= 0;
     var updatedDisplay;
     var trimmed;
 
-    if (!displayHasDecimal && value !== 'backspace' && value !== '.') {
-      // max length of 4 digits preceding the decimal place
-      if (currentDisplay.length >= 4) return;
-    }
+    // if (!displayHasDecimal && value !== 'backspace' && value !== '.') {
+    //   // max length of 4 digits preceding the decimal place
+    //   if (currentDisplay.length >= 4) return;
+    // }
 
     if (value === 'backspace') {
       trimmed = currentDisplay.slice(0, -1);
       updatedDisplay = trimmed.length ? trimmed : '0';
     } else if (value === '.') {
-      // only allow one decimal place
+      // only allow one decimal
       if (displayHasDecimal) return;
       updatedDisplay = currentDisplay + value;
     } else {
@@ -53,15 +60,14 @@ var CashCalculator = React.createClass({
   cancel: function(e) {
     e.stopPropagation();
 
-    if(confirm('Cancel the cash payment?')) {
-      // TODO: close modal and return to pending checkout view
-    }
+    this.clearDisplay();
+    this.props.onCancel();
   },
 
-  done: function(e) {
+  submit: function(e) {
     e.stopPropagation();
 
-    this.props.onDone(this.state.display);
+    this.props.onSubmit(this.state.display);
   },
 
   render: function() {
@@ -75,7 +81,7 @@ var CashCalculator = React.createClass({
               <button className='button button-block' onClick={this.cancel}>Cancel</button>
             </div>
             <div className='eight columns v-margin'>
-              <button className='button button-block' onClick={this.done}>Done</button>
+              <button className='button button-block' onClick={this.submit}>Submit</button>
             </div>
           </div>
         </div>

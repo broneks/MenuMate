@@ -1,14 +1,13 @@
 .orders-list {
+  // display: none;
   position: relative;
   border: 1px solid $c-border;
-  min-height: 75vh;
+  height: 65vh;
   overflow: auto;
-}
 
-.orders-total {
-  padding: $s-general;
-  border: 1px solid $c-border;
-  border-top: 0;
+  &.current {
+    display: block;
+  }
 }
 
 .order-item {
@@ -18,5 +17,24 @@
   a {
     display: block;
     padding: $s-general;
+  }
+}
+
+.pagination-bar {
+  padding: $s-general;
+  border: 1px solid $c-border;
+  border-top: 0;
+}
+
+.orders-pages {
+  a, span {
+    display: inline-block;
+    padding: $s-general / 2 $s-general;
+    border: 1px solid $c-border;
+
+    & + a,
+    & + span {
+      border-left: 0;
+    }
   }
 }

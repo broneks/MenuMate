@@ -5,24 +5,28 @@
 var React   = require('react/addons');
 var request = require('superagent');
 
-var api = require('../utility/api-endpoints');
-
 var util = require('../utility/util');
 
 var OrderItem  = require('./OrderItem.jsx');
 var OrdersList = require('./OrdersList.jsx');
 
 
-var PendingOrders = React.createClass({
+var Orders = React.createClass({
+  propTypes: {
+    apiUrl: React.PropTypes.string.isRequired,
+    status: React.PropTypes.string.isRequired
+  },
+
   getInitialState: function() {
     return {
-      orders: []
+      orders:  [],
+      loading: true
     };
   },
 
   getOrders: function() {
     request
-      .get(api.pending)
+      .get(this.props.apiUrl)
       .end(function(err, res) {
         if (err) {
           console.log('Error');
@@ -31,7 +35,8 @@ var PendingOrders = React.createClass({
 
         if (this.isMounted()) {
           this.setState({
-            orders: res.body
+            orders:  res.body,
+            loading: false
           });
         }
       }.bind(this));
@@ -43,10 +48,11 @@ var PendingOrders = React.createClass({
 
   render: function() {
     var orders = this.state.orders;
-    var links = [];
+    var status = this.props.status.toLowerCase();
+    var listItems = [];
 
     if (orders.length) {
-      links = orders.map(function(order) {
+      listItems = orders.map(function(order) {
         var id   = order._id;
         var date = util.formatDate(order.created, { time: true });
 
@@ -64,16 +70,17 @@ var PendingOrders = React.createClass({
     }
 
     return (
-      <div className='pending-orders'>
-        <h4>Pending Orders</h4>
+      <div className={status + '-orders'}>
+        <h4>{util.capitalize(status)} Orders</h4>
 
         <OrdersList
-          orders={links}
-          emptyMessage='no pending orders'
+          orders={listItems}
+          loading={this.state.loading}
+          emptyMessage={'no' + status + 'orders'}
         />
       </div>
     );
   }
 });
 
-module.exports = PendingOrders;
+module.exports = Orders;

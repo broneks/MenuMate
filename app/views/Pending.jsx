@@ -4,13 +4,18 @@
 
 var React = require('react/addons');
 
-var PendingOrders = require('../components/PendingOrders.jsx');
+var api = require('../utility/api-endpoints');
+
+var Orders = require('../components/Orders.jsx');
 
 
 var Pending = React.createClass({
   render: function() {
     return (
-      <PendingOrders />
+      <Orders
+        apiUrl={api.pending}
+        status='pending'
+      />
     );
   }
 });

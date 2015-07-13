@@ -146,7 +146,7 @@ var Basket = React.createClass({
         );
       }, this);
     } else {
-      items = <li className='empty-message'>basket is empty</li>
+      items = <li className='message-center empty-message'>Basket is empty</li>
       emptyMessageClass = ' is-empty';
     }
 
