@@ -1,6 +1,6 @@
 node_modules
 public/js/*
 public/css/*
-public/img/*
+public/img/uploads/
 
 npm-debug.log
