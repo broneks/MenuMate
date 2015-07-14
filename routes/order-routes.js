@@ -18,6 +18,10 @@ var validateOrder = function(req) {
 
   req.checkBody('postal', 'postal code must be in the format of M1M 1M1').optional().isPostal();
 
+  req.checkBody('payment', 'payment must be a number').optional().isNumberStr();
+  
+  req.checkBody('change', 'change must be a number').optional().isNumberStr();
+
   req.checkBody('email', 'email must be in the right format').optional().isEmail();
 
   return req;
@@ -58,9 +62,11 @@ module.exports = function(router) {
       order.items      = req.body.items;
       order.quantities = req.body.quantities;
       order.total      = req.body.total;
-      order.method     = req.body.method || '';
-      order.postal     = req.body.postal || '';
-      order.email      = req.body.email  || '';
+      order.method     = req.body.method  || '';
+      order.payment    = req.body.payment || 0;
+      order.change     = req.body.change  || 0;
+      order.postal     = req.body.postal  || '';
+      order.email      = req.body.email   || '';
 
       if (req.body.status) {
         order.status = req.body.status;
@@ -168,6 +174,9 @@ module.exports = function(router) {
       Order.findById(req.params.order_id, function(err, order) {
         if (err) res.send(err);
 
+        // cannot edit 'paid' or 'cancelled' orders
+        if (order.status !== 'pending') return;
+
         var errors = validateMenuItems(req).validationErrors();
 
         if (errors) {
@@ -187,6 +196,12 @@ module.exports = function(router) {
 
         if (req.body.status) {
           order.status = req.body.status;
+        }
+        if (req.body.payment) {
+          order.payment = req.body.payment;
+        }
+        if (req.body.change) {
+          order.change = req.body.change;
         }
 
         order.save(function() {
@@ -216,6 +231,6 @@ module.exports = function(router) {
         if (err) res.send(err);
 
         res.json({ message: 'order deleted' });
-      })
+      });
     });
 };

@@ -61,9 +61,16 @@ var BasketActions = React.createClass({
 
   render: function() {
     return (
-      <div className='basket-actions button-group'>
-        <button onClick={this.clearBasket}>Cancel</button>
-        <button onClick={this.checkout} className='button-primary'>Checkout</button>
+      <div className='basket-actions'>
+        <div className='row'>
+          <div className='three columns'>
+            <button className='button button-block' onClick={this.clearBasket}>Cancel</button>
+          </div>
+
+          <div className='five columns'>
+            <button className='button button-block button-primary' onClick={this.checkout}>Checkout</button>
+          </div>
+        </div>
       </div>
     );
   }

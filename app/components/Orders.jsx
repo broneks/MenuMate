@@ -76,7 +76,7 @@ var Orders = React.createClass({
         <OrdersList
           orders={listItems}
           loading={this.state.loading}
-          emptyMessage={'no' + status + 'orders'}
+          emptyMessage={'No ' + status + ' orders'}
         />
       </div>
     );

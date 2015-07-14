@@ -21,8 +21,10 @@ var OrderSchema = new mongoose.Schema({
     default: 'pending'
   },
   method: String,
-  postal: String,
+  payment: Number,
+  change: Number,
   email: String,
+  postal: String,
   created: {
     type: Date,
     default: Date.now
