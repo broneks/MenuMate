@@ -37,4 +37,4 @@ var OrderSchema = new mongoose.Schema({
 
 OrderSchema.plugin(autoIncrement.plugin, { model: 'Order', startAt: 1 });
 
-module.exports = mongoose.model('Customer', OrderSchema);
+module.exports = mongoose.model('Order', OrderSchema);
