@@ -51,6 +51,11 @@
   letter-spacing: 1px;
 }
 
+.error-message {
+  color: red;
+  letter-spacing: 1px;
+}
+
 .loading-message {
   @include animation(fadeIn 0.7s ease-in);
 }

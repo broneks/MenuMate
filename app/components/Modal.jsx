@@ -56,6 +56,10 @@ var Modal = React.createClass({
     }
   },
 
+  componentWillUnmount: function() {
+    this.close();
+  },
+
   render: function() {
     var state = this.state;
     var props = this.props;

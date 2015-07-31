@@ -19,7 +19,7 @@ var validateOrder = function(req) {
   req.checkBody('postal', 'postal code must be in the format of M1M 1M1').optional().isPostal();
 
   req.checkBody('payment', 'payment must be a number').optional().isNumberStr();
-  
+
   req.checkBody('change', 'change must be a number').optional().isNumberStr();
 
   req.checkBody('email', 'email must be in the right format').optional().isEmail();
@@ -177,12 +177,12 @@ module.exports = function(router) {
         // cannot edit 'paid' or 'cancelled' orders
         if (order.status !== 'pending') return;
 
-        var errors = validateMenuItems(req).validationErrors();
-
-        if (errors) {
-          res.status(400).json({ 'errors': errors });
-          return;
-        }
+        // var errors = validateOrder(req).validationErrors();
+        //
+        // if (errors) {
+        //   res.status(400).json({ 'errors': errors });
+        //   return;
+        // }
 
         // cannot update items, quantites or total (for now)
         //

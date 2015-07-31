@@ -31,7 +31,7 @@ var BasketActions = React.createClass({
       return item._id;
     });
     order.quantities = props.quantities;
-    order.total = props.total * util.tax;
+    order.total = props.total;
 
     request
       .post(api.orders)

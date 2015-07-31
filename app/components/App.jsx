@@ -14,6 +14,7 @@ var RouteHandler  = Router.RouteHandler;
 var Home     = require('../views/Home.jsx');
 var Pending  = require('../views/Pending.jsx');
 var Checkout = require('../views/Checkout.jsx');
+var Done     = require('../views/Done.jsx');
 var NotFound = require('../views/NotFound.jsx');
 
 
@@ -47,6 +48,9 @@ var routes = (
     <Route name='pending' path='/pending' handler={Pending} />
 
     <Route name='checkout' path='/checkout/:id' handler={Checkout} />
+
+    <Route name='done' path='/done/:id' handler={Done} />
+
 
     <NotFoundRoute handler={NotFound} />
   </Route>

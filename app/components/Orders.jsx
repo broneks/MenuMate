@@ -53,8 +53,9 @@ var Orders = React.createClass({
 
     if (orders.length) {
       listItems = orders.map(function(order) {
-        var id   = order._id;
-        var date = util.formatDate(order.created, { time: true });
+        var id       = order._id;
+        var date     = util.formatDate(order.created, { time: true });
+        var quantity = order.quantities.reduce(function(a, b) { return a + b });
 
         return (
           <OrderItem
@@ -63,7 +64,7 @@ var Orders = React.createClass({
             linkParams={{ id: id }}
             orderId={id}
             orderDate={date}
-            orderItemsLength={order.items.length}
+            orderItemsQuantity={quantity}
           />
         );
       });

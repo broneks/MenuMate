@@ -12,7 +12,7 @@ var OrderItem = React.createClass({
     linkParams: React.PropTypes.object.isRequired,
     orderId:    React.PropTypes.number.isRequired,
     orderDate:  React.PropTypes.string.isRequired,
-    orderItemsLength: React.PropTypes.number.isRequired
+    orderItemsQuantity: React.PropTypes.number.isRequired
   },
 
   render: function() {
@@ -21,9 +21,9 @@ var OrderItem = React.createClass({
     return (
       <li className='order-item'>
         <Link to={props.linkTo} params={props.linkParams} className='row'>
-          <div className='four columns'>Order #{props.orderId}</div>
-          <div className='five columns'>{props.orderDate}</div>
-          <div className='three columns'>Items: {props.orderItemsLength}</div>
+          <div className='four columns order-id'>Order #{props.orderId}</div>
+          <div className='five columns order-date'>{props.orderDate}</div>
+          <div className='three columns items-total'>Items: {props.orderItemsQuantity}</div>
         </Link>
       </li>
     );

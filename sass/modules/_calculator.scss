@@ -4,6 +4,10 @@
   padding: $s-general;
   margin: 0 auto;
 
+  .error-message {
+    margin-bottom: 20px;
+  }
+
   .display-wrapper {
     margin: ($s-general * 2) 0;
   }

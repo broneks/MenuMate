@@ -56,10 +56,87 @@ var Checkout = React.createClass({
       }.bind(this));
   },
 
-  submitPayment: function(payment) {
-    // TODO: calculate change back
+  submitPayment: function(payment, paymentMethod) {
+    var method = paymentMethod || 'cash';
+    var total  = this.state.order.total * util.tax;
+    var checkoutDetails;
 
-    alert('submit payment');
+    if (payment) {
+      if (payment < total) {
+        this.refs.cashCalculator.showError('Payment cannot be less than the total price');
+      } else {
+        this.refs.cashCalculator.clearError();
+
+        checkoutDetails = {
+          method  : method,
+          status  : 'paid',
+          payment : payment,
+          change  : payment - total
+        };
+
+        request
+          .put(api.orders + this.getId())
+          .send(checkoutDetails)
+          .set('Accept', 'application/json')
+          .end(function(err, res) {
+            if (err) {
+              console.log(err);
+              return;
+            }
+
+            this.transitionTo('done', { id: this.getId() });
+          }.bind(this));
+      }
+    }
+  },
+
+  showPaymentSection: function() {
+    var state = this.state;
+
+    if (state.order.status === 'paid') {
+      return (
+        <div className='payment-wrapper'>
+          <div>Paid On: {util.formatDate(state.order.updated, { time: true })}</div>
+          <div>Method:  {state.order.method}</div>
+          <div>Payment: {util.asCurrency(state.order.payment)}</div>
+          <div>Change:  {util.asCurrency(state.order.change)}</div>
+        </div>
+      );
+    }
+
+    return (
+      <div className='payment-wrapper'>
+        <div className='payment-info v-margin'>
+
+          <div className='row'>
+            <div className='six columns payment-cash v-margin'>
+              <Modal
+                ref='cashModal'
+                buttonText='Cash'
+                buttonBlock={true}
+                buttonIcon='fa fa-money icon-spacing'
+                onClose={this.onCashModalClose}
+                modalTitle='Cash Payment'
+                modalBody={
+                  <CashCalculator
+                    ref='cashCalculator'
+                    onCancel={this.cancelCashPayment}
+                    onSubmit={this.submitPayment}
+                  />
+                }
+              />
+            </div>
+
+            <div className='six columns payment-card v-margin'>
+              <button className='button button-block' onClick={this.submitPayment.bind(null, this.state.order.total * util.tax, 'debit/credit')}>
+                <i className='fa fa-credit-card icon-spacing'></i>
+                Debit / Credit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   },
 
   cancelCashPayment: function() {
@@ -84,8 +161,7 @@ var Checkout = React.createClass({
     var statusClass;
     var status;
     var created;
-
-    console.log(!state.order);
+    var total;
 
     if (!state.order) {
       if (state.loading) {
@@ -121,37 +197,7 @@ var Checkout = React.createClass({
 
         <DividingTitle dashed={true} title='Payment' />
 
-        <div className='payment-wrapper'>
-          <div className='payment-info v-margin'>
-
-            <div className='row'>
-              <div className='six columns payment-cash v-margin'>
-                <Modal
-                  ref='cashModal'
-                  buttonText='Cash'
-                  buttonBlock={true}
-                  buttonIcon='fa fa-money icon-spacing'
-                  onClose={this.onCashModalClose}
-                  modalTitle='Cash Payment'
-                  modalBody={
-                    <CashCalculator
-                      ref='cashCalculator'
-                      onCancel={this.cancelCashPayment}
-                      onSubmit={this.submitPayment}
-                    />
-                  }
-                />
-              </div>
-
-              <div className='six columns payment-card v-margin'>
-                <button className='button button-block' onClick={this.submitPayment}>
-                  <i className='fa fa-credit-card icon-spacing'></i>
-                  Debit / Credit
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        {this.showPaymentSection()}
       </div>
     );
 

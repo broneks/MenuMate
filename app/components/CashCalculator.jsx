@@ -18,6 +18,7 @@ var CashCalculator = React.createClass({
 
   getInitialState: function() {
     return {
+      error:   '',
       display: '0'
     };
   },
@@ -57,6 +58,20 @@ var CashCalculator = React.createClass({
     });
   },
 
+  showError: function(message) {
+    if (message) {
+      this.setState({
+        error: message
+      });
+    }
+  },
+
+  clearError: function() {
+    this.setState({
+      error: ''
+    });
+  },
+
   cancel: function(e) {
     e.stopPropagation();
 
@@ -73,6 +88,8 @@ var CashCalculator = React.createClass({
   render: function() {
     var state = this.state;
 
+    var errorMessage = state.error ? <div className='error-message'>{state.error}</div> : null;
+
     return (
       <div className='cash-calculator'>
         <div className='flow-control'>
@@ -87,6 +104,7 @@ var CashCalculator = React.createClass({
         </div>
 
         <div className='display-wrapper'>
+          {errorMessage}
           <div className='display'>{state.display}</div>
         </div>
 
