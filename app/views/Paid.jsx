@@ -9,16 +9,16 @@ var api = require('../utility/api-endpoints');
 var Orders = require('../components/Orders.jsx');
 
 
-var Pending = React.createClass({
+var Paid = React.createClass({
   render: function() {
     return (
       <Orders
-        apiUrl={api.pending}
-        status='pending'
-        linkTo='checkout'
+        apiUrl={api.paid}
+        status='paid'
+        linkTo='confirmation'
       />
     );
   }
 });
 
-module.exports = Pending;
+module.exports = Paid;

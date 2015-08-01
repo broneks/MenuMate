@@ -76,6 +76,7 @@ var CashCalculator = React.createClass({
     e.stopPropagation();
 
     this.clearDisplay();
+    this.clearError();
     this.props.onCancel();
   },
 

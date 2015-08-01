@@ -3,7 +3,7 @@
 //
 
 module.exports = {
-  tax: 1.15,
+  TAX: 1.15,
 
   asCurrency: function(str) {
     return '$' + parseFloat(str).toFixed(2);
@@ -41,7 +41,7 @@ module.exports = {
     if (!Array.isArray) {
       return Object.prototype.toString.call(value) === '[object Array]';
     }
-    
+
     return Array.isArray(value);
   },
 

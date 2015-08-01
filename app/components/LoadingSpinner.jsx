@@ -3,8 +3,6 @@
  */
 
 var React = require('react/addons');
-var Link  = require('react-router').Link;
-
 
 var LoadingSpinner = React.createClass({
   getInitialState: function() {

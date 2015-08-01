@@ -1,5 +1,5 @@
 $pending   : yellow;
-$paid      : green;
+$paid      : #27ae60;
 $cancelled : black;
 
 .order-number {
@@ -7,8 +7,14 @@ $cancelled : black;
 }
 
 .order-status {
-  // font-weight: bold;
+  font-weight: bold;
   border: 1px dashed $c-border;
+}
+.is-paid,
+.is-cancelled {
+  .order-status {
+    border-color: #fff;
+  }
 }
 
 .is-pending {

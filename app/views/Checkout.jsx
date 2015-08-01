@@ -43,7 +43,7 @@ var Checkout = React.createClass({
       .get(api.orders + id)
       .end(function(err, res) {
         if (err) {
-          console.log('Error');
+          console.log(err);
           return;
         }
 
@@ -58,7 +58,7 @@ var Checkout = React.createClass({
 
   submitPayment: function(payment, paymentMethod) {
     var method = paymentMethod || 'cash';
-    var total  = this.state.order.total * util.tax;
+    var total  = this.state.order.total * util.TAX;
     var checkoutDetails;
 
     if (payment) {
@@ -80,7 +80,11 @@ var Checkout = React.createClass({
           .set('Accept', 'application/json')
           .end(function(err, res) {
             if (err) {
-              console.log(err);
+              if (err.status === 422) {
+                this.props.APP.flashMessage.show('error', res.body.errors);
+              } else {
+                console.log(err);
+              }
               return;
             }
 
@@ -128,7 +132,7 @@ var Checkout = React.createClass({
             </div>
 
             <div className='six columns payment-card v-margin'>
-              <button className='button button-block' onClick={this.submitPayment.bind(null, this.state.order.total * util.tax, 'debit/credit')}>
+              <button className='button button-block' onClick={this.submitPayment.bind(null, this.state.order.total * util.TAX, 'debit/credit')}>
                 <i className='fa fa-credit-card icon-spacing'></i>
                 Debit / Credit
               </button>

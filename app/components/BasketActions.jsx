@@ -39,7 +39,7 @@ var BasketActions = React.createClass({
       .set('Accept', 'application/json')
       .end(function(err, res) {
         if (err) {
-          console.log('Error');
+          console.log(err);
           return;
         }
 

@@ -8,13 +8,20 @@ var request = require('superagent');
 var util = require('../utility/util');
 
 var OrderItem  = require('./OrderItem.jsx');
-var OrdersList = require('./OrdersList.jsx');
+var Pagination = require('./Pagination.jsx');
 
 
 var Orders = React.createClass({
   propTypes: {
     apiUrl: React.PropTypes.string.isRequired,
-    status: React.PropTypes.string.isRequired
+    status: React.PropTypes.string.isRequired,
+    linkTo: React.PropTypes.string
+  },
+
+  getDefaultProps: function() {
+    return {
+      linkTo: 'checkout'
+    };
   },
 
   getInitialState: function() {
@@ -29,7 +36,7 @@ var Orders = React.createClass({
       .get(this.props.apiUrl)
       .end(function(err, res) {
         if (err) {
-          console.log('Error');
+          console.log(err);
           return;
         }
 
@@ -47,6 +54,7 @@ var Orders = React.createClass({
   },
 
   render: function() {
+    var props  = this.props;
     var orders = this.state.orders;
     var status = this.props.status.toLowerCase();
     var listItems = [];
@@ -60,7 +68,7 @@ var Orders = React.createClass({
         return (
           <OrderItem
             key={id}
-            linkTo='checkout'
+            linkTo={props.linkTo}
             linkParams={{ id: id }}
             orderId={id}
             orderDate={date}
@@ -74,8 +82,8 @@ var Orders = React.createClass({
       <div className={status + '-orders'}>
         <h4>{util.capitalize(status)} Orders</h4>
 
-        <OrdersList
-          orders={listItems}
+        <Pagination
+          listItems={listItems}
           loading={this.state.loading}
           emptyMessage={'No ' + status + ' orders'}
         />

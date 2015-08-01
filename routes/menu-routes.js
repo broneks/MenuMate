@@ -6,13 +6,9 @@ var MenuItem = require('../models/menu-item');
 
 var validateMenuItems = function(req) {
   req.checkBody('name', 'name is required').notEmpty()
-
   req.checkBody('category', 'category is required').notEmpty();
-
   req.checkBody('ingredients', 'ingredients must be between 5 and 255 characters').optional().len(5, 255);
-
   req.checkBody('description', 'description must be between 5 and 255 characters').optional().len(5, 255);
-
   req.checkBody('price', 'price is required').notEmpty();
   req.checkBody('price', 'price must be a number').isNumberStr();
 
@@ -26,6 +22,7 @@ module.exports = function(router) {
       MenuItem
         .find()
         .lean()
+        .sort({'name': 'asc'})
         .populate('category')
         .exec(function (err, items) {
           if (err) res.send(err);
@@ -41,7 +38,7 @@ module.exports = function(router) {
       var errors = validateMenuItems(req).validationErrors();
 
       if (errors) {
-        res.status(400).json({ 'errors': errors });
+        res.status(422).json({ 'errors': errors });
         return;
       }
 
@@ -83,7 +80,7 @@ module.exports = function(router) {
         var errors = validateMenuItems(req).validationErrors();
 
         if (errors) {
-          res.status(400).json({ 'errors': errors });
+          res.status(422).json({ 'errors': errors });
           return;
         }
 

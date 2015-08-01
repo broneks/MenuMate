@@ -5,23 +5,22 @@
 var Order = require('../models/order');
 
 var validateOrder = function(req) {
+  // req.checkBody('quantities', 'item quantities are required').notEmpty();
+  // req.checkBody('total', 'price is required').notEmpty();
+  // req.checkBody('total', 'price must be a number').isNumberStr();
+
   req.checkBody('items', 'basket items are required').notEmpty();
 
-  req.checkBody('quantities', 'item quantities are required').notEmpty();
+  return req;
+};
 
-  req.checkBody('total', 'price is required').notEmpty();
-  req.checkBody('total', 'price must be a number').isNumberStr();
-
-  req.checkBody('status', 'status must only contain letters').optional().isAlpha();
-
-  req.checkBody('method', 'method must only contain letters').optional().isAlpha();
+validateOrderUpdate = function(req) {
+  // req.checkBody('status', 'status must only contain letters').optional().isAlpha();
+  // req.checkBody('method', 'method must only contain letters').optional().isAlpha();
+  // req.checkBody('payment', 'payment must be a number').optional().isNumberStr();
+  // req.checkBody('change', 'change must be a number').optional().isNumberStr();
 
   req.checkBody('postal', 'postal code must be in the format of M1M 1M1').optional().isPostal();
-
-  req.checkBody('payment', 'payment must be a number').optional().isNumberStr();
-
-  req.checkBody('change', 'change must be a number').optional().isNumberStr();
-
   req.checkBody('email', 'email must be in the right format').optional().isEmail();
 
   return req;
@@ -55,7 +54,7 @@ module.exports = function(router) {
       var errors = validateOrder(req).validationErrors();
 
       if (errors) {
-        res.status(400).json({ 'errors': errors });
+        res.status(422).json({ 'errors': errors });
         return;
       }
 
@@ -172,17 +171,17 @@ module.exports = function(router) {
 
     .put(function(req, res) {
       Order.findById(req.params.order_id, function(err, order) {
+        var errors = validateOrderUpdate(req).validationErrors();
+
         if (err) res.send(err);
 
         // cannot edit 'paid' or 'cancelled' orders
         if (order.status !== 'pending') return;
 
-        // var errors = validateOrder(req).validationErrors();
-        //
-        // if (errors) {
-        //   res.status(400).json({ 'errors': errors });
-        //   return;
-        // }
+        if (errors) {
+          res.status(422).json({ 'errors': errors });
+          return;
+        }
 
         // cannot update items, quantites or total (for now)
         //

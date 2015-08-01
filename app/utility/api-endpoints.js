@@ -9,5 +9,6 @@ module.exports = {
   menuItems:  base + 'menu-items/',
   categories: base + 'categories/',
   orders:     base + 'orders/',
-  pending:    base + 'orders/pending/'
+  pending:    base + 'orders/pending/',
+  paid:       base + 'orders/paid/'
 };

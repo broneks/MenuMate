@@ -31,7 +31,7 @@ var BasketSummary = React.createClass({
     var quantity = this.getQuantitySum(props.quantities);
 
     var subtotal = util.asCurrency(props.total);
-    var total    = util.asCurrency(props.total * util.tax);
+    var total    = util.asCurrency(props.total * util.TAX);
 
     return (
       <div className='basket-summary-wrapper'>

@@ -9,9 +9,9 @@ var util = require('../utility/util');
 var LoadingSpinner = require('./LoadingSpinner.jsx');
 
 
-var OrdersList = React.createClass({
+var Pagination = React.createClass({
   propTypes: {
-    orders:       React.PropTypes.array.isRequired,
+    listItems:    React.PropTypes.array.isRequired,
     loading:      React.PropTypes.bool.isRequired,
     emptyMessage: React.PropTypes.string.isRequired
   },
@@ -85,7 +85,7 @@ var OrdersList = React.createClass({
   render: function() {
     var state        = this.state;
     var props        = this.props;
-    var listItems    = props.orders;
+    var listItems    = props.listItems;
     var isEmptyClass = '';
     var pages;
 
@@ -113,4 +113,4 @@ var OrdersList = React.createClass({
   }
 });
 
-module.exports = OrdersList;
+module.exports = Pagination;

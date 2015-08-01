@@ -30,7 +30,7 @@ module.exports = function(router) {
       var errors   = validateCategory(req).validationErrors();
 
       if (errors) {
-        res.status(400).json({ 'errors': errors });
+        res.status(422).json({ 'errors': errors });
         return;
       }
 
@@ -62,7 +62,7 @@ module.exports = function(router) {
         var errors = validateCategory(req).validationErrors();
 
         if (errors) {
-          res.status(400).json({ 'errors': errors });
+          res.status(422).json({ 'errors': errors });
           return;
         }
 
