@@ -80,7 +80,7 @@ var Orders = React.createClass({
 
     return (
       <div className={status + '-orders'}>
-        <h4>{util.capitalize(status)} Orders</h4>
+        <h4 className={'orders-type-title ' + status}>{util.capitalize(status)} Orders</h4>
 
         <Pagination
           listItems={listItems}

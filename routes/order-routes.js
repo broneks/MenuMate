@@ -111,7 +111,7 @@ module.exports = function(router) {
         .find()
         .lean()
         .where('status').equals('paid')
-        .sort({ created: 'desc' })
+        .sort({ updated: 'desc' })
         .populate('items')
         .exec(function(err, docs) {
           if (err) res.send(err);

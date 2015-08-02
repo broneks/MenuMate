@@ -3,10 +3,6 @@ $error: #f04124;
 
 #flash-message-wrapper {
   display: none;
-  padding: $s-general;
-  margin-bottom: $s-general * 2;
-  border: 1px solid $c-border;
-  border-radius: $r-general;
   font-weight: bold;
   font-size: 14px;
 
@@ -14,6 +10,12 @@ $error: #f04124;
 
   &.show {
     display: block;
+    padding: $s-general;
+    margin-bottom: $s-general * 2;
+    border: 1px solid $c-border;
+    border-radius: $r-general;
+
+    @include animation(fadeIn 0.4s ease-in);
   }
 
   &.info {

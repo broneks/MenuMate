@@ -1,3 +1,32 @@
+$title-marker-width: 10px;
+
+.orders-type-title {
+  position: relative;
+  margin-left: $title-marker-width;
+  padding-left: $s-general;
+
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: $s-general;
+    bottom: $s-general;
+    left: -$title-marker-width;
+    width: $title-marker-width;
+    border: 1px solid $c-border;
+  }
+
+  &.pending:before {
+    background-color: $pending;
+  }
+  &.paid:before {
+    background-color: $paid;
+  }
+  &.cancelled:before {
+    background-color: $cancelled;
+  }
+}
+
 .orders-list {
   // display: none;
   position: relative;

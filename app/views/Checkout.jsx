@@ -97,16 +97,90 @@ var Checkout = React.createClass({
     }
   },
 
+  showCustomerInfo: function() {
+    var state = this.state;
+    var postal;
+    var email;
+
+    console.log(state.order);
+
+    if (state.order.status === 'paid') {
+      if (state.order.postal || state.order.email) {
+        postal = state.order.postal ? (
+          <div className='six columns customer-postal v-margin'>
+            <span className='field-label'>Postal Code:</span>
+            <span>{state.order.postal}</span>
+          </div>
+        ) : null;
+
+        email = state.order.email ? (
+          <div className='six columns customer-email v-margin'>
+            <span className='field-label'>Email:</span>
+            <span>{state.order.email}</span>
+          </div>
+        ) : null;
+
+        return (
+          <div>
+            <DividingTitle dashed={true} title='Customer Info' />
+
+            <div className='customer-info v-margin'>
+              <div className='row'>
+                {postal}
+                {email}
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      return;
+    }
+
+    return (
+      <div>
+        <DividingTitle dashed={true} title='Customer Info' />
+
+        <div className='customer-info v-margin'>
+          <div className='row'>
+            <div className='six columns customer-postal v-margin'>
+              <input type='text' ref='input_postal' placeholder='postal code' maxLength='6' onBlur={this.uppercase.bind(null, 'input_postal')} />
+            </div>
+
+            <div className='six columns customer-email v-margin'>
+              <input type='text' ref='input_email' placeholder='email' />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  },
+
   showPaymentSection: function() {
     var state = this.state;
 
     if (state.order.status === 'paid') {
       return (
         <div className='payment-wrapper'>
-          <div>Paid On: {util.formatDate(state.order.updated, { time: true })}</div>
-          <div>Method:  {state.order.method}</div>
-          <div>Payment: {util.asCurrency(state.order.payment)}</div>
-          <div>Change:  {util.asCurrency(state.order.change)}</div>
+          <div>
+            <span className='field-label'>Paid On:</span>
+            <span>{util.formatDate(state.order.updated, { time: true })}</span>
+          </div>
+
+          <div>
+            <span className='field-label'>Method:</span>
+            <span>{state.order.method}</span>
+          </div>
+
+          <div>
+            <span className='field-label'>Payment:</span>
+            <span>{util.asCurrency(state.order.payment)}</span>
+          </div>
+
+          <div>
+            <span className='field-label'>Change:</span>
+            <span>{util.asCurrency(state.order.change)}</span>
+          </div>
         </div>
       );
     }
@@ -198,7 +272,11 @@ var Checkout = React.createClass({
           <div className='order-number'>Order #{state.order._id}</div>
 
           <div className='row'>
-            <div className='six columns order-created v-margin'>Created: {created}</div>
+            <div className='six columns order-created v-margin'>
+              <span className='field-label label-width-auto'>Created:</span>
+              <span>{created}</span>
+            </div>
+
             <div className='six columns order-status v-margin text-center'>{status}</div>
           </div>
         </div>
@@ -208,19 +286,7 @@ var Checkout = React.createClass({
           renderStaticItems={true}
         />
 
-        <DividingTitle dashed={true} title='Customer Info' />
-
-        <div className='customer-info v-margin'>
-          <div className='row'>
-            <div className='six columns customer-postal v-margin'>
-              <input type='text' ref='input_postal' placeholder='postal code' maxLength='6' onBlur={this.uppercase.bind(null, 'input_postal')} />
-            </div>
-
-            <div className='six columns customer-email v-margin'>
-              <input type='text' ref='input_email' placeholder='email' />
-            </div>
-          </div>
-        </div>
+        {this.showCustomerInfo()}
 
         <DividingTitle dashed={true} title='Payment' />
 

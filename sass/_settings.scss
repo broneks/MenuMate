@@ -1,5 +1,6 @@
 // colors
 $c-muted: #999;
+$c-label: #777;
 $c-border: #ddd;
 
 $c-gray: #555;
@@ -25,6 +26,10 @@ $c-button-border: #bbb;
 $c-button-border-dark: #888;
 $c-button-text: #888;
 $c-button-text-dark: $c-gray;
+
+$pending   : yellow;
+$paid      : #27ae60;
+$cancelled : black;
 
 
 // spacing
