@@ -28,7 +28,7 @@ var Pagination = React.createClass({
     var pages;
 
     if (util.isArray(items)) {
-      items = util.arrayChunk(items, this.state.pageLimit);
+      items = util.chunkArray(items, this.state.pageLimit);
       pages = items.map(function(chunk, index) {
         return (
           <ul key={index} className={classes}>{chunk}</ul>

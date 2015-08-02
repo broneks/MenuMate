@@ -12,7 +12,7 @@ module.exports = {
       return !isNaN(param);
     },
     isPostal: function(param) {
-      var validPostal = /^([a-zA-Z]\d[a-zA-Z]\s?\d[a-zA-Z]\d)$/;
+      var validPostal = /^([a-zA-Z]\d[a-zA-Z]\d[a-zA-Z]\d)$/;
 
       return validPostal.test(param);
     }

@@ -11,14 +11,14 @@ var Link          = Router.Link;
 var Route         = Router.Route;
 var RouteHandler  = Router.RouteHandler;
 
-var Home     = require('../views/Home.jsx');
-var Pending  = require('../views/Pending.jsx');
-var Paid     = require('../views/Paid.jsx');
-var Checkout = require('../views/Checkout.jsx');
-var Done     = require('../views/Done.jsx');
-var NotFound = require('../views/NotFound.jsx');
+var Pending  = require('./Pending.jsx');
+var Paid     = require('./Paid.jsx');
+var Home     = require('./Home.jsx');
+var Checkout = require('./Checkout.jsx');
+var Done     = require('./Done.jsx');
+var NotFound = require('./NotFound.jsx');
 
-var FlashMessage = require('./FlashMessage.jsx');
+var FlashMessage = require('../components/FlashMessage.jsx');
 
 var App = React.createClass({
   getInitialState: function() {

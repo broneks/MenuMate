@@ -37,6 +37,10 @@ module.exports = {
     });
   },
 
+  uppercase: function(str) {
+    return str.toUpperCase();
+  },
+
   isArray: function(value) {
     if (!Array.isArray) {
       return Object.prototype.toString.call(value) === '[object Array]';
@@ -45,7 +49,7 @@ module.exports = {
     return Array.isArray(value);
   },
 
-  arrayChunk: function(arr, chunk) {
+  chunkArray: function(arr, chunk) {
     var chunked = [];
     var length  = arr.length;
     var i;
@@ -55,5 +59,22 @@ module.exports = {
     }
 
     return chunked;
+  },
+
+  addInputsToObj: function(obj, refs) {
+    Object.keys(refs).forEach(function(key) {
+      var splitKey = key.split('_');
+      var value;
+
+      if (splitKey[0] === 'input') {
+        value = refs[key].getDOMNode().value;
+
+        if (value) {
+          obj[splitKey[1]] = value;
+        }
+      }
+    });
+
+    return obj;
   }
 };

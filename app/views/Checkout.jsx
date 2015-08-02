@@ -57,15 +57,16 @@ var Checkout = React.createClass({
   },
 
   submitPayment: function(payment, paymentMethod) {
+    var refs   = this.refs;
     var method = paymentMethod || 'cash';
     var total  = this.state.order.total * util.TAX;
     var checkoutDetails;
 
     if (payment) {
       if (payment < total) {
-        this.refs.cashCalculator.showError('Payment cannot be less than the total price');
+        refs.cashCalculator.showError('Payment cannot be less than the total price');
       } else {
-        this.refs.cashCalculator.clearError();
+        refs.cashCalculator.clearError();
 
         checkoutDetails = {
           method  : method,
@@ -73,6 +74,8 @@ var Checkout = React.createClass({
           payment : payment,
           change  : payment - total
         };
+
+        util.addInputsToObj(checkoutDetails, refs);
 
         request
           .put(api.orders + this.getId())
@@ -151,6 +154,12 @@ var Checkout = React.createClass({
     this.refs.cashCalculator.clearDisplay();
   },
 
+  uppercase: function(ref) {
+    var node = this.refs[ref].getDOMNode();
+
+    node.value = util.uppercase(node.value);
+  },
+
   componentDidMount: function() {
     var id = this.getId();
 
@@ -199,25 +208,25 @@ var Checkout = React.createClass({
           renderStaticItems={true}
         />
 
+        <DividingTitle dashed={true} title='Customer Info' />
+
+        <div className='customer-info v-margin'>
+          <div className='row'>
+            <div className='six columns customer-postal v-margin'>
+              <input type='text' ref='input_postal' placeholder='postal code' maxLength='6' onBlur={this.uppercase.bind(null, 'input_postal')} />
+            </div>
+
+            <div className='six columns customer-email v-margin'>
+              <input type='text' ref='input_email' placeholder='email' />
+            </div>
+          </div>
+        </div>
+
         <DividingTitle dashed={true} title='Payment' />
 
         {this.showPaymentSection()}
       </div>
     );
-
-    /*
-    <div className='customer-info v-margin'>
-      <div className='row'>
-        <div className='six columns customer-postal v-margin'>
-          <input type='text' ref='postal' placeholder='postal code' />
-        </div>
-
-        <div className='six columns customer-email v-margin'>
-          <input type='text' ref='email' placeholder='email' />
-        </div>
-      </div>
-    </div>
-    */
   }
 });
 

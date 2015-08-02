@@ -9,7 +9,7 @@ var APIorder    = require('./order-routes');
 var React  = require('react/addons');
 var Router = require('react-router');
 
-var routes = require('../app/components/App.jsx').routes;
+var routes = require('../app/views/App.jsx').routes;
 
 module.exports = function(app, router) {
   //
