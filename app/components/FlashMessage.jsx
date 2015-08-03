@@ -15,22 +15,30 @@ var FlashMessage = React.createClass({
 
   getInitialState: function() {
     return {
-      hidden: true
+      hidden: true,
+      inputNames: []
     };
   },
 
   hide: function() {
     this.setState({
-      hidden: true
+      hidden: true,
+      inputNames: []
     });
   },
-
+z
   showMessageBody: function() {
     var messages = this.props.messages.map(function(message, index) {
+      if (message.param) {
+        util.errorOnInput(message.param);
+      }
+
       return (
         <li key={index} className='flash-message'>{message.error}</li>
       );
     });
+
+    util.scrollToTop();
 
     return (
       <ul className='flash-message-body'>{messages}</ul>
@@ -39,8 +47,11 @@ var FlashMessage = React.createClass({
 
   componentWillReceiveProps: function(nextProps) {
     this.setState({
-      hidden: !nextProps.messages.length
+      hidden: !nextProps.messages.length,
+      inputNames: []
     });
+
+    util.clearInputErrors();
   },
 
   render: function() {

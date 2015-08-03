@@ -54,7 +54,7 @@ var Pagination = React.createClass({
       }
 
       return (
-        <a key={index} href='#' onClick={this.changePage.bind(null, index)}>{index + 1}</a>
+        <a key={index} onClick={this.changePage.bind(null, index)}>{index + 1}</a>
       );
     }, this);
 
@@ -72,14 +72,15 @@ var Pagination = React.createClass({
   },
 
   getTotal: function() {
-    var orders = this.props.orders;
-    var total  = 0;
+    var listItems = this.props.listItems;
+    var total     = 0;
+    var text      = ' Order';
 
-    if (util.isArray(orders) && orders.length) {
-      total = orders.length;
+    if (util.isArray(listItems) && listItems.length) {
+      total = listItems.length;
     }
 
-    return total;
+    return total + (total === 1 ? text : text + 's');
   },
 
   render: function() {
@@ -105,7 +106,7 @@ var Pagination = React.createClass({
         {pages[state.currentPage]}
 
         <div className='pagination-bar row'>
-          <div className='orders-total four columns v-margin'>{this.getTotal()} Order(s)</div>
+          <div className='orders-total four columns v-margin'>{this.getTotal()}</div>
           {this.createLinks(pages, 'orders-pages eight columns')}
         </div>
       </div>

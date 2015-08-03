@@ -6,12 +6,16 @@
 
   &-item {
     box-sizing: border-box;
-    padding: $s-general * 2;
     margin: $s-general;
-    border: 1px solid $c-border;
     width: 30%;
     display: inline-block;
     vertical-align: top;
+
+    &-body {
+      padding: $s-general * 2;
+      border: 1px solid $c-border;
+      border-bottom: 0;
+    }
 
     &-name {
       margin: 0 0 $s-general;
@@ -25,27 +29,41 @@
       margin: $s-general auto;
     }
 
+    &-category {
+      font-style: italic;
+    }
+
     &-add {
       width: 100%;
     }
   }
 
   &.list-view &-item {
+    display: table;
     width: 100%;
     padding: 0;
     margin: 0;
-    border: 0;
     border-bottom: 1px solid $c-border;
-    display: table;
+
+    &-body {
+      display: table-cell;
+      width: 70%;
+      padding: 0;
+      border: 0;
+
+      @include clearfix();
+    }
 
     .field {
-      width: 35%;
+      width: 50%;
       padding: $s-general;
-      display: table-cell;
+      float: left;
+      box-sizing: border-box;
     }
 
     .menu-item-add-wrapper {
-      width: 30%;
+      display: table-cell;
+      width: 100%;
     }
   }
 

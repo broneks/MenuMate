@@ -1,4 +1,4 @@
-$title-marker-width: 10px;
+$title-marker-width: 15px;
 
 .orders-type-title {
   position: relative;
@@ -46,6 +46,10 @@ $title-marker-width: 10px;
   a {
     display: block;
     padding: $s-general;
+
+    &:hover {
+      background-color: $c-hover;
+    }
   }
 }
 
@@ -56,9 +60,13 @@ $title-marker-width: 10px;
 }
 
 .orders-pages {
+  a {
+    cursor: pointer;
+  }
+  
   a, span {
     display: inline-block;
-    padding: $s-general / 2 $s-general;
+    padding: $s-general / 2 12px;
     border: 1px solid $c-border;
 
     & + a,

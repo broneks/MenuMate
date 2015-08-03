@@ -83,6 +83,8 @@ var Checkout = React.createClass({
           .set('Accept', 'application/json')
           .end(function(err, res) {
             if (err) {
+              this.refs.cashModal.close();
+
               if (err.status === 422) {
                 this.props.APP.flashMessage.show('error', res.body.errors);
               } else {
@@ -101,8 +103,6 @@ var Checkout = React.createClass({
     var state = this.state;
     var postal;
     var email;
-
-    console.log(state.order);
 
     if (state.order.status === 'paid') {
       if (state.order.postal || state.order.email) {
@@ -144,11 +144,11 @@ var Checkout = React.createClass({
         <div className='customer-info v-margin'>
           <div className='row'>
             <div className='six columns customer-postal v-margin'>
-              <input type='text' ref='input_postal' placeholder='postal code' maxLength='6' onBlur={this.uppercase.bind(null, 'input_postal')} />
+              <input type='text' ref='input_postal' name='postal' placeholder='postal code' maxLength='6' onBlur={this.uppercase.bind(null, 'input_postal')} />
             </div>
 
             <div className='six columns customer-email v-margin'>
-              <input type='text' ref='input_email' placeholder='email' />
+              <input type='text' ref='input_email' name='email' placeholder='email' />
             </div>
           </div>
         </div>
@@ -162,22 +162,22 @@ var Checkout = React.createClass({
     if (state.order.status === 'paid') {
       return (
         <div className='payment-wrapper'>
-          <div>
+          <div className='field-group'>
             <span className='field-label'>Paid On:</span>
             <span>{util.formatDate(state.order.updated, { time: true })}</span>
           </div>
 
-          <div>
+          <div className='field-group'>
             <span className='field-label'>Method:</span>
-            <span>{state.order.method}</span>
+            <span>{util.capitalize(state.order.method)}</span>
           </div>
 
-          <div>
+          <div className='field-group'>
             <span className='field-label'>Payment:</span>
             <span>{util.asCurrency(state.order.payment)}</span>
           </div>
 
-          <div>
+          <div className='field-group'>
             <span className='field-label'>Change:</span>
             <span>{util.asCurrency(state.order.change)}</span>
           </div>

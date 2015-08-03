@@ -4,13 +4,7 @@
 
 .order-status {
   font-weight: bold;
-  border: 1px dashed $c-border;
-}
-.is-paid,
-.is-cancelled {
-  .order-status {
-    border-color: #fff;
-  }
+  border: 1px solid $c-border;
 }
 
 .is-pending {

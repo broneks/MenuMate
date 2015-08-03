@@ -1,5 +1,5 @@
 $info:  #e7e7e7;
-$error: #f04124;
+$error: $c-error;
 
 #flash-message-wrapper {
   display: none;
@@ -25,13 +25,13 @@ $error: #f04124;
   }
 
   &.error {
-    background-color: $error;
-    border-color: #de2d0f;
-    color: #fff;
+    background-color: #f9f6f0;
+    border-color: $error;
+    color: $error;
 
     .flash-message-close {
-      color: #fff;
-      border-color: #fff;
+      color: $error;
+      border-color: $error;
     }
   }
 

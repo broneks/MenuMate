@@ -2,7 +2,11 @@
 // Utility functions
 //
 
-module.exports = {
+var keys       = Object.keys;
+var toString   = Object.prototype.toString;
+var arraySlice = Array.prototype.slice;
+
+var util = {
   TAX: 1.15,
 
   asCurrency: function(str) {
@@ -41,12 +45,14 @@ module.exports = {
     return str.toUpperCase();
   },
 
-  isArray: function(value) {
-    if (!Array.isArray) {
-      return Object.prototype.toString.call(value) === '[object Array]';
-    }
+  isArray: (function() {
+    return Array.isArray || function(value) {
+      return toString.call(value) === '[object Array]';
+    };
+  })(),
 
-    return Array.isArray(value);
+  toArray: function(value) {
+    return arraySlice.call(value);
   },
 
   chunkArray: function(arr, chunk) {
@@ -62,7 +68,7 @@ module.exports = {
   },
 
   addInputsToObj: function(obj, refs) {
-    Object.keys(refs).forEach(function(key) {
+    keys(refs).forEach(function(key) {
       var splitKey = key.split('_');
       var value;
 
@@ -76,5 +82,24 @@ module.exports = {
     });
 
     return obj;
+  },
+
+  scrollToTop: function() {
+    window.scrollTo(0, 0);
+  },
+
+  errorOnInput: function(name) {
+    var input = document.getElementsByName(name)[0];
+    input.classList.add('input-error');
+  },
+
+  clearInputErrors: function(names) {
+    var inputs = document.getElementsByClassName('input-error');
+
+    util.toArray(inputs).forEach(function(input) {
+      input.classList.remove('input-error');
+    });
   }
 };
+
+module.exports = util;

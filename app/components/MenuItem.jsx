@@ -85,13 +85,14 @@ var MenuItem = React.createClass({
 
     return (
       <div className={'menu-item' + disabledClass} onClick={toggleDetails}>
-        <h4 className='menu-item-name field'>{item.name}</h4>
+        <div className='menu-item-body'>
+          <h4 className='menu-item-name field'>{item.name}</h4>
 
-        <div className='menu-item-price field'>{price}</div>
+          <div className='menu-item-price field'>{price}</div>
 
-        {image}
-
-        {details}
+          {image}
+          {details}
+        </div>
 
         <div className='menu-item-add-wrapper field'>
           <button

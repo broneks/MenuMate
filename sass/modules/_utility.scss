@@ -77,3 +77,13 @@
     min-width: inherit;
   }
 }
+
+.field-group {
+  & + .field-group {
+    margin-top: $s-general;
+  }
+}
+
+.input-error {
+  border-color: #f04124 !important;
+}
