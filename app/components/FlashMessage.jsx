@@ -26,7 +26,7 @@ var FlashMessage = React.createClass({
       inputNames: []
     });
   },
-z
+
   showMessageBody: function() {
     var messages = this.props.messages.map(function(message, index) {
       if (message.param) {

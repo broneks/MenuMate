@@ -4,6 +4,12 @@
   padding: $s-general;
   margin: 0 auto;
 
+  .info-message {
+    color: $c-label;
+    letter-spacing: 1px;
+  }
+
+  .info-message,
   .error-message {
     margin-bottom: 20px;
   }

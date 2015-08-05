@@ -10,6 +10,8 @@ var Navigation = require('react-router').Navigation;
 var api = require('../utility/api-endpoints');
 var util = require('../utility/util');
 
+var queryIdMixin = require('../mixins/queryId');
+
 var Basket = require('../components/Basket.jsx');
 var Modal  = require('../components/Modal.jsx');
 var LoadingSpinner = require('../components/LoadingSpinner.jsx');
@@ -18,42 +20,13 @@ var DividingTitle  = require('../components/DividingTitle.jsx');
 
 
 var Checkout = React.createClass({
-  mixins: [State, Navigation],
+  mixins: [queryIdMixin, State, Navigation],
 
   getInitialState: function() {
     return {
       order:   null,
       loading: true
     };
-  },
-
-  getId: function() {
-    var id    = this.getParams().id;
-    var isInt = /^\d+$/g.test(id);
-
-    if (isInt) {
-      return id;
-    } else {
-      this.transitionTo('pending');
-    }
-  },
-
-  getOrderById: function(id, callback) {
-    request
-      .get(api.orders + id)
-      .end(function(err, res) {
-        if (err) {
-          console.log(err);
-          return;
-        }
-
-        if (this.isMounted()) {
-          this.setState({
-            order:   res.body,
-            loading: false
-          });
-        }
-      }.bind(this));
   },
 
   submitPayment: function(payment, paymentMethod) {
@@ -78,7 +51,7 @@ var Checkout = React.createClass({
         util.addInputsToObj(checkoutDetails, refs);
 
         request
-          .put(api.orders + this.getId())
+          .put(api.orders + this.getIdParam())
           .send(checkoutDetails)
           .set('Accept', 'application/json')
           .end(function(err, res) {
@@ -93,7 +66,7 @@ var Checkout = React.createClass({
               return;
             }
 
-            this.transitionTo('done', { id: this.getId() });
+            this.transitionTo('done', { id: this.getIdParam() });
           }.bind(this));
       }
     }
@@ -158,6 +131,7 @@ var Checkout = React.createClass({
 
   showPaymentSection: function() {
     var state = this.state;
+    var infoMessage = 'Total: ' + util.asCurrency(state.order.total * util.TAX);
 
     if (state.order.status === 'paid') {
       return (
@@ -203,6 +177,7 @@ var Checkout = React.createClass({
                     ref='cashCalculator'
                     onCancel={this.cancelCashPayment}
                     onSubmit={this.submitPayment}
+                    infoMessage={infoMessage}
                   />
                 }
               />
@@ -235,10 +210,17 @@ var Checkout = React.createClass({
   },
 
   componentDidMount: function() {
-    var id = this.getId();
+    var id = this.getIdParam();
 
     if (id) {
-      this.getOrderById(id);
+      this.getById(id, api.orders, function(order) {
+        this.setState({
+          order:   order,
+          loading: false
+        });
+      });
+    } else {
+      this.transitionTo('pending');
     }
   },
 

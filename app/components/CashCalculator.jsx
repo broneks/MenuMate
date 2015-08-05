@@ -12,8 +12,9 @@ var util = require('../utility/util');
 
 var CashCalculator = React.createClass({
   propTypes: {
-    onCancel: React.PropTypes.func.isRequired,
-    onSubmit: React.PropTypes.func.isRequired
+    onCancel:    React.PropTypes.func.isRequired,
+    onSubmit:    React.PropTypes.func.isRequired,
+    infoMessage: React.PropTypes.string
   },
 
   getInitialState: function() {
@@ -88,7 +89,9 @@ var CashCalculator = React.createClass({
 
   render: function() {
     var state = this.state;
+    var props = this.props;
 
+    var infoMessage  = props.infoMessage ? <div className='info-message'>{props.infoMessage}</div> : null;
     var errorMessage = state.error ? <div className='error-message'>{state.error}</div> : null;
 
     return (
@@ -105,6 +108,7 @@ var CashCalculator = React.createClass({
         </div>
 
         <div className='display-wrapper'>
+          {infoMessage}
           {errorMessage}
           <div className='display'>{state.display}</div>
         </div>
