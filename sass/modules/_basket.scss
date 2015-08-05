@@ -67,7 +67,7 @@
 }
 
 .basket-actions {
-  padding: $s-general;
+  padding: 0 $s-general;
   border: 1px solid $c-border;
   border-bottom: 0;
 }
@@ -113,4 +113,10 @@
 .basket-summary-price .total {
   background-color: $c-light-gray;
   font-weight: bold;
+}
+
+.cancel-order-message {
+  padding: $s-general * 2 0;
+  text-align: center;
+  letter-spacing: 1px;
 }

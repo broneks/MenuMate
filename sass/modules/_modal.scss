@@ -74,3 +74,8 @@ $modal-header-height: 38px;
   overflow-x: hidden;
   overflow-y: auto;
 }
+
+.modal-footer {
+  padding: $s-general;
+  border-top: 1px solid $c-border;
+}

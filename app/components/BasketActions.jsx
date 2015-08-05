@@ -10,6 +10,8 @@ var api = require('../utility/api-endpoints');
 
 var util = require('../utility/util');
 
+var Modal  = require('../components/Modal.jsx');
+
 
 var BasketActions = React.createClass({
   propTypes: {
@@ -49,25 +51,32 @@ var BasketActions = React.createClass({
       }.bind(this));
   },
 
-  clearBasket: function(e) {
-    e.stopPropagation();
-
-    if (!this.props.items.length) return;
-
-    if(confirm('Cancel the current order?')) {
+  clearBasket: function() {
+    if (this.props.items.length) {
       this.props.clearBasket();
     }
+
+    this.refs.cancelModal.close();
   },
 
   render: function() {
     return (
       <div className='basket-actions'>
         <div className='row'>
-          <div className='three columns'>
-            <button className='button button-block' onClick={this.clearBasket}>Cancel</button>
+          <div className='three columns v-margin'>
+            <Modal
+              ref='cancelModal'
+              disabled={!this.props.items.length}
+              buttonText='Cancel'
+              buttonBlock={true}
+              body={<div className='cancel-order-message'>Cancel the current order?</div>}
+              onOk={this.clearBasket}
+              okButtonText='Yes'
+              cancelButtonText='No'
+            />
           </div>
 
-          <div className='five columns'>
+          <div className='five columns v-margin'>
             <button className='button button-block button-primary' onClick={this.checkout}>Checkout</button>
           </div>
         </div>

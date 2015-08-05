@@ -8,8 +8,10 @@ var Link  = require('react-router').Link;
 
 var Modal = React.createClass({
   propTypes: {
-    modalTitle:  React.PropTypes.string,
-    modalBody:   React.PropTypes.oneOfType([
+    id:          React.PropTypes.string,
+    condition:   React.PropTypes.bool,
+    title:       React.PropTypes.string,
+    body:        React.PropTypes.oneOfType([
       React.PropTypes.element.isRequired,
       React.PropTypes.node.isRequired,
       React.PropTypes.string.isRequired
@@ -18,7 +20,9 @@ var Modal = React.createClass({
     buttonBlock: React.PropTypes.bool,
     buttonIcon:  React.PropTypes.string,
     onClose:     React.PropTypes.func,
-    id:          React.PropTypes.string
+    onOk:        React.PropTypes.func,
+    cancelButtonText: React.PropTypes.string,
+    okButtonText:     React.PropTypes.string
   },
 
   getDefaultProps: function() {
@@ -56,6 +60,10 @@ var Modal = React.createClass({
     }
   },
 
+  ok: function() {
+    this.props.onOk();
+  },
+
   componentWillUnmount: function() {
     this.close();
   },
@@ -63,13 +71,31 @@ var Modal = React.createClass({
   render: function() {
     var state = this.state;
     var props = this.props;
+
     var buttonBlock = props.buttonBlock ? ' button-block' : '';
     var buttonIcon  = props.buttonIcon.length ? <i className={props.buttonIcon}></i> : null;
     var display     = state.open ? 'block' : 'none';
+    var footer      = null;
+
+    if (props.onOk) {
+      footer = (
+        <div className='modal-footer' role='footer'>
+          <div className='row'>
+            <div className='six columns v-margin'>
+              <button className='button button-block' onClick={this.close}>{props.cancelButtonText || 'Cancel'}</button>
+            </div>
+
+            <div className='six columns v-margin'>
+              <button className='button button-block button-primary' onClick={this.ok}>{props.okButtonText || 'Ok'}</button>
+            </div>
+          </div>
+        </div>
+      );
+    }
 
     return (
       <div className='modal-group'>
-        <button className={'modal-button button' + buttonBlock} onClick={this.open}>
+        <button className={'modal-button button' + buttonBlock} onClick={this.open} disabled={props.disabled}>
           {buttonIcon}
           {props.buttonText}
         </button>
@@ -77,7 +103,7 @@ var Modal = React.createClass({
         <div id={props.id} className='modal' role='dialog' style={{ display: display }}>
           <div className='modal-header'>
             <div className='modal-title text-center'>
-              {props.modalTitle}
+              {props.title}
             </div>
 
             <button className='modal-close' onClick={this.close}>
@@ -86,8 +112,10 @@ var Modal = React.createClass({
           </div>
 
           <div className='modal-body' role='document'>
-            {props.modalBody}
+            {props.body}
           </div>
+
+          {footer}
         </div>
       </div>
     );
