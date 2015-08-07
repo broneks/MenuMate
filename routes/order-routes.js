@@ -14,7 +14,7 @@ var validateOrder = function(req) {
   return req;
 };
 
-validateOrderUpdate = function(req) {
+var validateOrderUpdate = function(req) {
   // req.checkBody('status', 'status must only contain letters').optional().isAlpha();
   // req.checkBody('method', 'method must only contain letters').optional().isAlpha();
   // req.checkBody('payment', 'payment must be a number').optional().isNumberStr();

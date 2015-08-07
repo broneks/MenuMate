@@ -8,7 +8,7 @@ var Basket = require('../components/Basket.jsx');
 var Menu   = require('../components/Menu.jsx');
 
 
-Home = React.createClass({
+var Home = React.createClass({
   getInitialState: function() {
     return {
       basketItem:          null,

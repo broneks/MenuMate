@@ -2,7 +2,7 @@
  * @jsx React.DOM
  */
 
-var React = require('react/addons');
+var React      = require('react/addons');
 var State      = require('react-router').State;
 var Navigation = require('react-router').Navigation;
 

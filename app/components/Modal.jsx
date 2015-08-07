@@ -25,14 +25,6 @@ var Modal = React.createClass({
     okButtonText:     React.PropTypes.string
   },
 
-  getDefaultProps: function() {
-    return {
-      buttonBlock: false,
-      buttonIcon:  '',
-      modalTitle:  ''
-    };
-  },
-
   getInitialState: function() {
     return {
       open:      false,
@@ -73,7 +65,7 @@ var Modal = React.createClass({
     var props = this.props;
 
     var buttonBlock = props.buttonBlock ? ' button-block' : '';
-    var buttonIcon  = props.buttonIcon.length ? <i className={props.buttonIcon}></i> : null;
+    var buttonIcon  = props.buttonIcon ? <i className={props.buttonIcon}></i> : null;
     var display     = state.open ? 'block' : 'none';
     var footer      = null;
 

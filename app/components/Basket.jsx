@@ -45,6 +45,7 @@ var Basket = React.createClass({
   addItem: function(item) {
     var updatedItems;
     var updatedTotal;
+    var updatedQuantities;
 
     if (this.checkForNoDuplicates(item._id)) {
       updatedItems      = React.addons.update(this.state.items, { '$push': [item] });
