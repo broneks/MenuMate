@@ -25,12 +25,7 @@ var Menu = React.createClass({
     return {
       items:    [],
       listView: true,
-      loading:  true,
-      scrollPos: {
-        listView : 0,
-        gridView : 0,
-        current  : 0
-      }
+      loading:  true
     };
   },
 
@@ -59,8 +54,6 @@ var Menu = React.createClass({
   toggleView: function(e) {
     e.stopPropagation();
 
-    this.setScrollPosition();
-
     this.setState({
       listView: !this.state.listView
     });
@@ -68,36 +61,6 @@ var Menu = React.createClass({
 
   addToBasket: function(item) {
     this.props.addToBasket(item);
-  },
-
-  getScrollPosition: function(e) {
-    var scrollTop = e.target.scrollTop;
-    var propObj   = {};
-
-    if (this.state.listView) {
-      propObj.listView = {$set: scrollTop};
-    } else {
-      propObj.gridView = {$set: scrollTop};
-    }
-
-    var updatedPos = React.addons.update(this.state.scrollPos, propObj);
-
-    this.setState({
-      scrollPos: updatedPos
-    });
-  },
-
-  setScrollPosition: function() {
-    var nextViewType = this.state.listView ? 'gridView': 'listView';
-
-    this.state.scrollPos.current = this.state.scrollPos[nextViewType];
-  },
-
-  componentDidUpdate: function() {
-    var menuWrapper = React.findDOMNode(this.refs.menuWrapper);
-
-    // DEBUG
-    menuWrapper.scrollTop = this.state.scrollPos.current;
   },
 
   render: function() {
@@ -108,7 +71,7 @@ var Menu = React.createClass({
     var toggleViewText = state.listView ? 'grid view' : 'list view';
 
     var items = state.items.map(function (item) {
-      var reactivated = props.reactivated && props.reactivated.toString().indexOf(item._id) > -1;
+    var reactivated = props.reactivated && props.reactivated.toString().indexOf(item._id) > -1;
 
       return (
         <MenuItem
@@ -129,7 +92,7 @@ var Menu = React.createClass({
     }
 
     return (
-      <div className='menu-wrapper' onScroll={this.getScrollPosition} ref="menuWrapper">
+      <div className='menu-wrapper' ref="menuWrapper">
         <div className={'menu' + listViewClass}>{items}</div>
         <div className='menu-display'>
             <button onClick={this.toggleView}>{toggleViewText}</button>
