@@ -16,9 +16,10 @@ var Paid     = require('./Paid.jsx');
 var Home     = require('./Home.jsx');
 var Checkout = require('./Checkout.jsx');
 var Done     = require('./Done.jsx');
+var Review   = require('./Review.jsx');
 var NotFound = require('./NotFound.jsx');
 
-var FlashMessage = require('../components/FlashMessage.jsx');
+var FlashMessage = require('../components/general/FlashMessage.jsx');
 
 var App = React.createClass({
   getInitialState: function() {
@@ -68,6 +69,7 @@ var App = React.createClass({
               <li><Link to='home'>Main</Link></li>
               <li><Link to='pending'>Pending</Link></li>
               <li><Link to='paid'>Paid</Link></li>
+              <li><Link to='review'>Review</Link></li>
             </ul>
           </nav>
         </header>
@@ -98,6 +100,7 @@ var routes = (
 
     <Route name='done' path='/done/:id' handler={Done} />
 
+    <Route name='review' path='/review/' handler={Review} />
 
     <NotFoundRoute handler={NotFound} />
   </Route>

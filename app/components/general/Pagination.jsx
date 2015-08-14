@@ -4,7 +4,7 @@
 
 var React = require('react/addons');
 
-var util = require('../utility/util');
+var util = require('../../utility/util');
 
 var LoadingSpinner = require('./LoadingSpinner.jsx');
 

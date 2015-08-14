@@ -9,7 +9,6 @@ var jade    = require('jade');
 
 var path         = require('path');
 var logger       = require('morgan');
-var cors         = require('cors');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var validator    = require('express-validator');
@@ -18,8 +17,6 @@ var favicon      = require('serve-favicon');
 var multer = require('multer');
 var gm     = require('gm');
 
-require('node-jsx').install({ extension: '.jsx' });
-
 var mongoose  = require('mongoose');
 
 var config = {
@@ -27,14 +24,14 @@ var config = {
   validator: require('./config/validator')
 };
 
+require('node-jsx').install({ extension: '.jsx' });
 
 //
 // Config
 //
-app.set('env', 'dev');
+app.set('mode', process.env.MODE || 'common');
 
-app.use(logger('dev'));
-app.use(cors());
+app.use(logger(app.get('mode')));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -98,7 +95,7 @@ app.use(function(err, req, res, next) {
       error: err.status || 500
     };
 
-    if (app.get('env') === 'dev') {
+    if (app.get('mode') === 'dev') {
       output.stack = err.stack;
     }
 

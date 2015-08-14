@@ -11,7 +11,7 @@ var util = require('../utility/util');
 
 var queryIdMixin = require('../mixins/queryId');
 
-var LoadingSpinner = require('../components/LoadingSpinner.jsx');
+var LoadingSpinner = require('../components/general/LoadingSpinner.jsx');
 
 
 var Done = React.createClass({

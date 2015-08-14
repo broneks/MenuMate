@@ -12,11 +12,11 @@ var util = require('../utility/util');
 
 var queryIdMixin = require('../mixins/queryId');
 
-var Basket = require('../components/Basket.jsx');
-var Modal  = require('../components/Modal.jsx');
-var LoadingSpinner = require('../components/LoadingSpinner.jsx');
+var Basket         = require('../components/Basket.jsx');
 var CashCalculator = require('../components/CashCalculator.jsx');
-var DividingTitle  = require('../components/DividingTitle.jsx');
+var DividingTitle  = require('../components/general/DividingTitle.jsx');
+var LoadingSpinner = require('../components/general/LoadingSpinner.jsx');
+var Modal          = require('../components/general/Modal.jsx');
 
 
 var Checkout = React.createClass({

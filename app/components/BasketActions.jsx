@@ -10,7 +10,7 @@ var api = require('../utility/api-endpoints');
 
 var util = require('../utility/util');
 
-var Modal  = require('../components/Modal.jsx');
+var Modal  = require('./general/Modal.jsx');
 
 
 var BasketActions = React.createClass({

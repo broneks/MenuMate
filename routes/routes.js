@@ -2,9 +2,13 @@
 // Routes
 //
 
-var APImenu     = require('./menu-routes');
-var APIcategory = require('./category-routes');
-var APIorder    = require('./order-routes');
+
+var APIroutes = {
+  menu:     require('./menu-routes'),
+  category: require('./category-routes'),
+  order:    require('./order-routes'),
+  review:   require('./review-routes')
+};
 
 var React  = require('react/addons');
 var Router = require('react-router');
@@ -15,9 +19,9 @@ module.exports = function(app, router) {
   //
   // Rest API
   //
-  APImenu(router);
-  APIcategory(router);
-  APIorder(router);
+  for (var type in APIroutes) {
+    APIroutes[type](router);
+  }
 
 
   // route prefix

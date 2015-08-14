@@ -8,7 +8,7 @@ var request = require('superagent');
 var util = require('../utility/util');
 
 var OrderItem  = require('./OrderItem.jsx');
-var Pagination = require('./Pagination.jsx');
+var Pagination = require('./general/Pagination.jsx');
 
 
 var Orders = React.createClass({

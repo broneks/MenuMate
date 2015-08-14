@@ -1,11 +1,11 @@
 {
   "name": "MenuMate",
-  "version": "0.0.0",
-  "description": "",
+  "version": "1.0.0",
+  "description": "A Simple Cafe POS",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon bin/www"
+    "test": "MODE=dev nodemon bin/www",
+    "start": "PORT=80 node bin/www"
   },
   "author": "Bronek Szulc",
   "license": "BSD",
@@ -36,7 +36,6 @@
     "gulp-minify-css": "~1.1.1",
     "multer": "~0.1.8",
     "gm": "~1.17.0",
-    "cors": "~2.7.1",
     "font-awesome": "~4.3.0"
   }
 }
