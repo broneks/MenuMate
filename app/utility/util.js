@@ -10,7 +10,7 @@ var util = {
   TAX: 1.15,
 
   asCurrency: function(str) {
-    return '$' + parseFloat(str).toFixed(2);
+    return '$' + parseFloat(Math.round(str * 100) / 100).toFixed(2);
   },
 
   formatDate: (function() {

@@ -14,6 +14,7 @@ var queryIdMixin = require('../mixins/queryId');
 
 var Basket         = require('../components/Basket.jsx');
 var CashCalculator = require('../components/CashCalculator.jsx');
+var StripePayment  = require('../components/StripePayment.jsx');
 var DividingTitle  = require('../components/general/DividingTitle.jsx');
 var LoadingSpinner = require('../components/general/LoadingSpinner.jsx');
 var Modal          = require('../components/general/Modal.jsx');
@@ -184,10 +185,7 @@ var Checkout = React.createClass({
             </div>
 
             <div className='six columns payment-card v-margin'>
-              <button className='button button-block' onClick={this.submitPayment.bind(null, this.state.order.total * util.TAX, 'debit/credit')}>
-                <i className='fa fa-credit-card icon-spacing'></i>
-                Debit / Credit
-              </button>
+              <StripePayment total={this.state.order.total * util.TAX} onSuccess={this.submitPayment} />
             </div>
           </div>
         </div>
