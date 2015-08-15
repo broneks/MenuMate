@@ -62,7 +62,7 @@ var Orders = React.createClass({
     if (orders.length) {
       listItems = orders.map(function(order) {
         var id       = order._id;
-        var date     = util.formatDate(order.created, { time: true });
+        var date     = util.formatDate(order.updated, { time: true });
         var quantity = order.quantities.reduce(function(a, b) { return a + b });
 
         return (
