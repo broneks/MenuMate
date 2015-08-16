@@ -20,7 +20,74 @@ function extractMonthString(str) {
   }
 }
 
+function groupAndCount(curr) {
+  this[curr] = (this[curr] || 0) + 1;
+}
+
+function analyzeOrderPatterns(orders) {
+  var itemsSold      = {};
+  var paymentMethods = {};
+  var averagePayment = orders.map(function(order) {
+    return order.payment;
+  }).reduce(function(prev, curr) {
+    return prev + curr;
+  }) / orders.length;
+
+  orders.map(function(order) {
+    return order.items;
+  }).reduce(function(a, b) {
+    return a.concat(b);
+  }).forEach(groupAndCount, itemsSold);
+
+  orders.map(function(order) {
+    return order.method;
+  }).forEach(groupAndCount, paymentMethods);
+
+  var data = {
+    quantity:  orders.length,
+    itemsSold: itemsSold,
+    revenue: orders.map(function(order) {
+      return order.total;
+    }).reduce(function(prev, curr) {
+      return prev + curr;
+    }),
+    paymentMethods: paymentMethods,
+    averagePayment: averagePayment,
+  };
+
+  return data;
+}
+
 module.exports = function(router) {
+
+  router.route('/review/orders/general')
+    .get(function(req, res) {
+      Order
+        .find()
+        .lean()
+        .sort({created: 'desc'})
+        .exec(function(err, orders) {
+          if (err) {
+            console.log(err);
+          }
+
+          var dates = {
+            latest: orders[0].created,
+            oldest: orders[orders.length - 1].created,
+            years:  []
+          };
+
+          orders.forEach(function(order) {
+            var year = order.created.getFullYear();
+
+            if (dates.years.indexOf(year) === -1) {
+              dates.years.push(year);
+            }
+          });
+
+          res.json(dates);
+        });
+    });
 
   router.route('/review/orders/months/:startDate/:endDate?')
     .get(function(req, res) {
@@ -37,52 +104,42 @@ module.exports = function(router) {
         .where('created')
           .gte(new Date(start))
           .lte(end ? new Date(end) : new Date())
+        .sort({created: 'desc'})
         .exec(function(err, orders) {
           if (err) {
             console.log(err);
           }
 
-          res.json(orders.map(function(order) {
-            return order.created.getDate() + ' ' + (order.created.getMonth() + 1) + ' '  + order.created.getFullYear();
-          }));
+          var data = analyzeOrderPatterns(orders);
+
+          res.json(data);
         });
 
-    })
+    });
 
-    router.route('/review/orders/dates/:startDate/:endDate?')
-      .get(function(req, res) {
-        var params = {
-          startDate: swapDashWithSpace(req.params.startDate),
-          endDate:   swapDashWithSpace(req.params.endDate)
-        };
+  router.route('/review/orders/dates/:startDate/:endDate?')
+    .get(function(req, res) {
+      var params = {
+        startDate: swapDashWithSpace(req.params.startDate),
+        endDate:   swapDashWithSpace(req.params.endDate)
+      };
 
-        Order
-          .find()
-          .lean()
-          .where('created')
-            .gte(new Date(params.startDate))
-            .lte(params.endDate ? new Date(params.endDate) : new Date())
-          .exec(function(err, orders) {
-            if (err) {
-              console.log(err);
-            }
+      Order
+        .find()
+        .lean()
+        .where('created')
+          .gte(new Date(params.startDate))
+          .lte(params.endDate ? new Date(params.endDate) : new Date())
+        .sort({created: 'desc'})
+        .exec(function(err, orders) {
+          if (err) {
+            console.log(err);
+          }
 
-            res.json(orders.map(function(order) {
-              return order.created.getDate() + ' ' + (order.created.getMonth() + 1) + ' '  + order.created.getFullYear();
-            }));
-          });
+          var data = analyzeOrderPatterns(orders);
 
-      })
+          res.json(data);
+        });
 
-  // router.route('/categories/:category_id')
-  //   .get(function(req, res) {
-  //     Category
-  //       .findById(req.params.category_id)
-  //       .lean()
-  //       .exec(function(err, category) {
-  //         if (err) res.send(err);
-  //
-  //         res.json(category);
-  //       });
-  //   })
+    });
 };

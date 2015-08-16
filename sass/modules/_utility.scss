@@ -101,3 +101,17 @@
 .input-error {
   border-color: #f04124 !important;
 }
+
+.checkbox-button {
+  border: 1px solid $c-border;
+  padding: $s-general / 2 $s-general;
+
+  .checkbox-label {
+    font-weight: normal;
+    margin-right: 10px;
+  }
+
+  input {
+    margin-bottom: 0;
+  }
+}

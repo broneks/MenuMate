@@ -1,0 +1,8 @@
+.select-date-range-wrapper {
+  @include clearfix;
+}
+
+.date-from,
+.date-to {
+  margin: $s-general;
+}

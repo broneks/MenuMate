@@ -13,9 +13,17 @@ var util = {
     return '$' + parseFloat(Math.round(str * 100) / 100).toFixed(2);
   },
 
-  formatDate: (function() {
+  getMonthName: (function() {
     var months = 'Jan Feb Mar Apr May June July Aug Sept Oct Nov Dec'.split(' ');
 
+    return function(num) {
+      if (num) {
+        return months[num];
+      }
+    };
+  })(),
+
+  formatDate: (function() {
     var precedingZero = function(num) {
       return num < 10 ? '0' + num : num;
     };
@@ -24,9 +32,8 @@ var util = {
       date    = new Date(date);
       options = options || {};
 
-
       var day   = date.getDate();
-      var month = months[date.getMonth()];
+      var month = util.getMonthName[date.getMonth()];
       var year  = date.getFullYear();
 
       var time = options.time ? precedingZero(date.getHours()) + ':' + precedingZero(date.getMinutes()) : '';

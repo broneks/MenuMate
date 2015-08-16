@@ -2,30 +2,61 @@
  * @jsx React.DOM
  */
 
-var React = require('react/addons');
+var React   = require('react/addons');
+var request = require('superagent');
 
 var api  = require('../utility/api-endpoints');
 var util = require('../utility/util');
 
-var LoadingSpinner = require('../components/general/LoadingSpinner.jsx');
+var LoadingSpinner  = require('../components/general/LoadingSpinner.jsx');
+var SelectDateRange = require('../components/general/SelectDateRange.jsx');
 
 
 var Review = React.createClass({
   getInitialState: function() {
     return {
-      result:  null,
+      review: {
+        orders: null
+      },
       loading: true
     };
   },
 
-  componentDidMount: function() {
+  getOrdersGeneralReview: function() {
+    request
+      .get(api.review.orders.general)
+      .end(function(err, res) {
+        if (err) {
+          console.log(err);
+          return;
+        }
 
+        if (this.isMounted()) {
+          this.setState({
+            review: {
+              orders: {
+                general: res.body
+              }
+            },
+            loading: false
+          });
+        }
+      }.bind(this));
+  },
+
+  getOrdersReviewByRange: function() {
+    // TODO
+  },
+
+  componentDidMount: function() {
+    this.getOrdersGeneralReview();
+    // this.getOrdersReviewByRange();
   },
 
   render: function() {
     var state = this.state;
 
-    if (!state.result) {
+    if (!state.review.orders) {
       if (state.loading) {
         message = <div className='message-center'><LoadingSpinner /></div>;
       } else {
@@ -38,7 +69,9 @@ var Review = React.createClass({
     }
 
     return (
-      <div>review</div>
+      <div>
+        <SelectDateRange yearsRange={state.review.orders.general.years} />
+      </div>
     );
   }
 });

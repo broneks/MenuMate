@@ -65,9 +65,11 @@ var Done = React.createClass({
 
     if (id) {
       this.getById(id, api.orders, function(order) {
-        this.setState({
-          loading: false
-        });
+        if (this.isMounted()) {
+          this.setState({
+            loading: false
+          });
+        }
 
         if (order) {
           this.routeOnStatus(order);
