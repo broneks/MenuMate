@@ -66,7 +66,7 @@ var App = React.createClass({
 
           <nav>
             <ul className='list-unstyled'>
-              <li><Link to='home'>Main</Link></li>
+              <li><Link to='main'>Main</Link></li>
               <li><Link to='pending'>Pending</Link></li>
               <li><Link to='paid'>Paid</Link></li>
               <li><Link to='review'>Review</Link></li>
@@ -88,7 +88,7 @@ var App = React.createClass({
 });
 
 var routes = (
-  <Route name='home' path='/' handler={App}>
+  <Route name='main' path='/' handler={App}>
     <DefaultRoute handler={Home} />
 
     <Route name='pending' path='/pending' handler={Pending} />

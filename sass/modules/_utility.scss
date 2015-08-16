@@ -60,6 +60,11 @@
   margin-right: $s-general;
 }
 
+.icon-big {
+  font-size: 1.6em;
+  opacity: 0.8;
+}
+
 .loading-icon {
   font-size: 3.5em;
   margin: $s-general;
@@ -76,6 +81,15 @@
   &.label-width-auto {
     min-width: inherit;
   }
+}
+
+.order-number {
+  display: inline-block;
+  font-weight: bold;
+  color: $c-label;
+  letter-spacing: 1px;
+  // border-bottom: 1px solid $c-border;
+  // padding-bottom: $s-general / 2;
 }
 
 .field-group {

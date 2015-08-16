@@ -1,0 +1,14 @@
+$c-info-bg:     #d9edf7;
+$c-info-border: #bce8f1;
+$c-info-text:   #31708f;
+
+.alert-info {
+  padding: $s-general * 1.5 $s-general;
+  margin: $s-general 0;
+  font-size: 1.1em;
+  background: $c-info-bg;
+  border: 1px solid $c-info-border;
+  color: $c-info-text;
+
+  @include clearfix;
+}

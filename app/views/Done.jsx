@@ -5,6 +5,7 @@
 var React      = require('react/addons');
 var State      = require('react-router').State;
 var Navigation = require('react-router').Navigation;
+var Link       = require('react-router').Link;
 
 var api  = require('../utility/api-endpoints');
 var util = require('../utility/util');
@@ -12,6 +13,7 @@ var util = require('../utility/util');
 var queryIdMixin = require('../mixins/queryId');
 
 var LoadingSpinner = require('../components/general/LoadingSpinner.jsx');
+var DividingTitle  = require('../components/general/DividingTitle.jsx');
 
 
 var Done = React.createClass({
@@ -30,8 +32,7 @@ var Done = React.createClass({
     return {
       paid: function() {
         self.setState({
-          order:   order,
-          loading: false
+          order: order
         });
       },
       pending: function() {
@@ -43,15 +44,33 @@ var Done = React.createClass({
     }[order.status]();
   },
 
+  showChangeDueSection: function() {
+    var changeDue = util.asCurrency(this.state.order.change);
+
+    if (this.state.order.change) {
+      return (
+        <div className='alert-info'>
+          <div className='u-pull-left'>
+            <span className='field-label'>Change Due:</span>
+            <strong>{changeDue}</strong>
+          </div>
+          <i className='fa fa-money icon-spacing icon-big u-pull-right'></i>
+        </div>
+      );
+    }
+  },
+
   componentDidMount: function() {
     var id = this.getIdParam();
 
     if (id) {
       this.getById(id, api.orders, function(order) {
+        this.setState({
+          loading: false
+        });
+
         if (order) {
           this.routeOnStatus(order);
-        } else {
-          this.transitionTo('main');
         }
       });
     } else {
@@ -61,6 +80,7 @@ var Done = React.createClass({
 
   render: function() {
     var state = this.state;
+    var paidOn;
 
     if (!state.order) {
       if (state.loading) {
@@ -74,10 +94,37 @@ var Done = React.createClass({
       );
     }
 
-    console.log(state.order);
+    paidOn = util.formatDate(state.order.updated, { time: true });;
 
     return (
-      <div>done</div>
+      <div className="done">
+        <div className='order-info'>
+          <div className='row'>
+            <div className='six columns'>
+              <div className='order-number'>Order #{state.order._id}</div>
+            </div>
+
+            <div className='six columns order-created v-margin'>
+              <span className='field-label label-width-auto'>Paid On:</span>
+              <span>{paidOn}</span>
+            </div>
+          </div>
+        </div>
+
+        {this.showChangeDueSection()}
+
+        <DividingTitle title="Order Completed" />
+
+        <div clasName='row'>
+          <div className='six columns v-margin'>
+            <Link to='confirmation' params={{id: this.state.order._id}} className='button button-block'>Review Details</Link>
+          </div>
+
+          <div className='six columns v-margin'>
+            <Link to='main' className='button button-block button-primary'>Begin a New Order</Link>
+          </div>
+        </div>
+      </div>
     );
   }
 });
