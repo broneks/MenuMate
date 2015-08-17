@@ -9,8 +9,11 @@ var util = require('../../utility/util');
 
 var FlashMessage = React.createClass({
   propTypes: {
-    messages: React.PropTypes.array,
-    type:     React.PropTypes.string
+    messages: React.PropTypes.oneOfType([
+      React.PropTypes.array,
+      React.PropTypes.string
+    ]),
+    type: React.PropTypes.string
   },
 
   getInitialState: function() {
@@ -28,15 +31,22 @@ var FlashMessage = React.createClass({
   },
 
   showMessageBody: function() {
-    var messages = this.props.messages.map(function(message, index) {
-      if (message.param) {
-        util.errorOnInput(message.param);
-      }
+    var type = this.props.type;
+    var messages;
 
-      return (
-        <li key={index} className='flash-message'>{message.error}</li>
-      );
-    });
+    if (type === 'error') {
+      messages = this.props.messages.map(function(message, index) {
+        if (message.param) {
+          util.errorOnInput(message.param);
+        }
+
+        return (
+          <li key={index} className='flash-message'>{message.error}</li>
+        );
+      });
+    } else if (type === 'info') {
+      messages = <li className='flash-message'>{this.props.messages}</li>;
+    }
 
     util.scrollToTop();
 

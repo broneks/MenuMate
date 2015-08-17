@@ -33,7 +33,7 @@ var util = {
       options = options || {};
 
       var day   = date.getDate();
-      var month = util.getMonthName[date.getMonth()];
+      var month = util.getMonthName(date.getMonth());
       var year  = date.getFullYear();
 
       var time = options.time ? precedingZero(date.getHours()) + ':' + precedingZero(date.getMinutes()) : '';

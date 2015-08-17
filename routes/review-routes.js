@@ -21,38 +21,56 @@ function extractMonthString(str) {
 }
 
 function groupAndCount(curr) {
-  this[curr] = (this[curr] || 0) + 1;
+  if (curr) {
+    this[curr] = (this[curr] || 0) + 1;
+  }
+}
+
+function groupAndCountWithId(curr) {
+  var name = curr[1];
+
+  if (!this[name])    this[name]    = {};
+  if (!this[name].id) this[name].id = curr[0];
+
+  this[name].count = (this[name].count || 0) + 1;
 }
 
 function analyzeOrderPatterns(orders) {
+  if (!orders.length) return;
+
   var itemsSold      = {};
   var paymentMethods = {};
+
+  var revenue = orders.map(function(order) {
+    return order.total;
+  }).reduce(function(prev, curr) {
+    return prev + curr;
+  });
+
   var averagePayment = orders.map(function(order) {
     return order.payment;
   }).reduce(function(prev, curr) {
     return prev + curr;
   }) / orders.length;
 
+  // items sold
   orders.map(function(order) {
-    return order.items;
-  }).reduce(function(a, b) {
-    return a.concat(b);
-  }).forEach(groupAndCount, itemsSold);
+    return order.items.map(function(item) {
+      return [item._id, item.name];
+    }).forEach(groupAndCountWithId, itemsSold);
+  });
 
+  // payment methods
   orders.map(function(order) {
     return order.method;
   }).forEach(groupAndCount, paymentMethods);
 
   var data = {
-    quantity:  orders.length,
-    itemsSold: itemsSold,
-    revenue: orders.map(function(order) {
-      return order.total;
-    }).reduce(function(prev, curr) {
-      return prev + curr;
-    }),
-    paymentMethods: paymentMethods,
+    quantity:       orders.length,
+    revenue:        revenue,
     averagePayment: averagePayment,
+    itemsSold:      itemsSold,
+    paymentMethods: paymentMethods
   };
 
   return data;
@@ -65,6 +83,8 @@ module.exports = function(router) {
       Order
         .find()
         .lean()
+        // .populate('items')
+        .where({status: 'paid'})
         .sort({created: 'desc'})
         .exec(function(err, orders) {
           if (err) {
@@ -101,9 +121,11 @@ module.exports = function(router) {
       Order
         .find()
         .lean()
+        .where({status: 'paid'})
         .where('created')
           .gte(new Date(start))
           .lte(end ? new Date(end) : new Date())
+        .populate('items')
         .sort({created: 'desc'})
         .exec(function(err, orders) {
           if (err) {
@@ -112,9 +134,12 @@ module.exports = function(router) {
 
           var data = analyzeOrderPatterns(orders);
 
-          res.json(data);
+          if (data) {
+            res.json(data);
+          } else {
+            res.json({ 'message': 'No Orders Were Retrieved' });
+          }
         });
-
     });
 
   router.route('/review/orders/dates/:startDate/:endDate?')
@@ -127,9 +152,11 @@ module.exports = function(router) {
       Order
         .find()
         .lean()
+        .where({status: 'paid'})
         .where('created')
           .gte(new Date(params.startDate))
           .lte(params.endDate ? new Date(params.endDate) : new Date())
+        .populate('items')
         .sort({created: 'desc'})
         .exec(function(err, orders) {
           if (err) {
@@ -138,8 +165,11 @@ module.exports = function(router) {
 
           var data = analyzeOrderPatterns(orders);
 
-          res.json(data);
+          if (data) {
+            res.json(data);
+          } else {
+            res.json({ 'message': 'No Orders Were Retrieved' });
+          }
         });
-
     });
 };

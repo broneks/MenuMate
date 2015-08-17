@@ -22,6 +22,14 @@ $error: $c-error;
     background-color: $info;
     border-color: #c7c7c7;
     color: #5f5f5f;
+
+    .flash-message-body {
+      list-style-type: none;
+    }
+
+    li {
+      margin-bottom: 0;
+    }
   }
 
   &.error {

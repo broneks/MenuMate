@@ -35,7 +35,7 @@
 
 .empty-message,
 .loading-message {
-  display: inline-block;
+  display: block;
   font-style: italic;
   font-weight: 300;
   color: $c-muted;
@@ -54,6 +54,10 @@
 .v-margin {
   margin-top: $s-general;
   margin-bottom: $s-general;
+}
+.v-double-margin {
+  margin-top: $s-general * 2;
+  margin-bottom: $s-general * 2;
 }
 
 .icon-spacing {
@@ -114,4 +118,8 @@
   input {
     margin-bottom: 0;
   }
+}
+
+.hide {
+  display: none;
 }

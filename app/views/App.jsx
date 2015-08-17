@@ -100,7 +100,7 @@ var routes = (
 
     <Route name='done' path='/done/:id' handler={Done} />
 
-    <Route name='review' path='/review/' handler={Review} />
+    <Route name='review' path='/review' handler={Review} />
 
     <NotFoundRoute handler={NotFound} />
   </Route>

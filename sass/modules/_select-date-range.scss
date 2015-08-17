@@ -1,8 +1,21 @@
 .select-date-range-wrapper {
+  border: 1px solid $c-border;
+
   @include clearfix;
 }
 
 .date-from,
 .date-to {
-  margin: $s-general;
+  margin: $s-general $s-general;
+}
+
+.set-date {
+  display: block;
+  text-align: right;
+  margin-bottom: $s-general;
+  cursor: pointer;
+}
+
+.date-select-wrapper {
+  clear: both;
 }
