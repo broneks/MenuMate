@@ -41,36 +41,57 @@ function analyzeOrderPatterns(orders) {
   var itemsSold      = {};
   var paymentMethods = {};
 
-  var revenue = orders.map(function(order) {
-    return order.total;
-  }).reduce(function(prev, curr) {
-    return prev + curr;
-  });
+  var revenue = orders
+    .map(function(order) {
+      return order.total;
+    })
+    .reduce(function(prev, curr) {
+      return prev + curr;
+    });
 
-  var averagePayment = orders.map(function(order) {
-    return order.payment;
-  }).reduce(function(prev, curr) {
-    return prev + curr;
-  }) / orders.length;
+  var averagePayment = orders
+    .map(function(order) {
+      return order.payment;
+    })
+    .reduce(function(prev, curr) {
+      return prev + curr;
+    }) / orders.length;
+
+  var customerInfo = orders
+    .filter(function(order) {
+      return (order.postal || order.email);
+    })
+    .map(function(order) {
+      return {
+        postal: order.postal,
+        email:  order.email
+      };
+    });
 
   // items sold
-  orders.map(function(order) {
-    return order.items.map(function(item) {
-      return [item._id, item.name];
-    }).forEach(groupAndCountWithId, itemsSold);
-  });
+  orders
+    .map(function(order) {
+      return order.items
+        .map(function(item) {
+          return [item._id, item.name];
+        })
+        .forEach(groupAndCountWithId, itemsSold)
+    });
 
   // payment methods
-  orders.map(function(order) {
-    return order.method;
-  }).forEach(groupAndCount, paymentMethods);
+  orders
+    .map(function(order) {
+      return order.method;
+    })
+    .forEach(groupAndCount, paymentMethods);
 
   var data = {
     quantity:       orders.length,
     revenue:        revenue,
     averagePayment: averagePayment,
     itemsSold:      itemsSold,
-    paymentMethods: paymentMethods
+    paymentMethods: paymentMethods,
+    customerInfo:   customerInfo
   };
 
   return data;

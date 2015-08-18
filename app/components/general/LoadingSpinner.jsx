@@ -5,6 +5,10 @@
 var React = require('react/addons');
 
 var LoadingSpinner = React.createClass({
+  propTypes: {
+    message: React.PropTypes.string
+  },
+
   getInitialState: function() {
     return {
       remarks: [
@@ -30,7 +34,7 @@ var LoadingSpinner = React.createClass({
   componentDidMount: function() {
     // this approach prevents server-client checksum inconsistencies
     this.setState({
-      selected: this.getRandomRemark()
+      selected: this.props.message || this.getRandomRemark()
     });
   },
 
@@ -38,7 +42,7 @@ var LoadingSpinner = React.createClass({
     var props = this.props;
 
     return (
-      <span className='loading-message'>
+      <span className='loading-message text-center'>
         <i className='fa fa-spinner fa-pulse loading-icon'></i>
         <div className='witty-remark'>{this.state.selected}</div>
       </span>

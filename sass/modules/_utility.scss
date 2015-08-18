@@ -20,6 +20,13 @@
   text-align: center;
 }
 
+.text-muted {
+  color: $c-muted;
+  letter-spacing: 1px;
+  font-weight: normal;
+  font-style: italic;
+}
+
 .message-wrapper {
   position: relative;
   min-height: 100px;
@@ -74,13 +81,17 @@
   margin: $s-general;
 }
 
-.field-label {
+.label {
   display: inline-block;
   margin-right: 10px;
-  min-width: 100px;
   color: $c-label;
   letter-spacing: 1px;
   font-weight: bold;
+}
+
+.field-label {
+  @extend .label;
+  min-width: 100px;
 
   &.label-width-auto {
     min-width: inherit;

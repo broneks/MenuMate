@@ -1,0 +1,15 @@
+.postal-email-list {
+  border: 1px solid $c-border;
+  padding: $s-general;
+  list-style: none;
+  height: 300px;
+  overflow-y: auto;
+
+  li {
+    margin-bottom: $s-general;
+    padding-bottom: $s-general;
+    border-bottom: 1px solid $c-border;
+
+    @include clearfix;
+  }
+}

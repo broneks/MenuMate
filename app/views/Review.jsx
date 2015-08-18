@@ -10,14 +10,15 @@ var util = require('../utility/util');
 
 var LoadingSpinner  = require('../components/general/LoadingSpinner.jsx');
 var SelectDateRange = require('../components/general/SelectDateRange.jsx');
+var OrdersInfo      = require('../components/OrdersInfo.jsx');
+var CustomerInfo    = require('../components/CustomerInfo.jsx');
 
 
 var Review = React.createClass({
   getInitialState: function() {
     return {
       review: {
-        orders: null,
-        loading: true
+        orders: null
       },
       dateRange: {
         from: null,
@@ -50,7 +51,7 @@ var Review = React.createClass({
   },
 
   buildDateString: function(date) {
-    return Object.keys(date).map(function(key) {
+    return util.keys(date).map(function(key) {
       return date[key];
     }, this).join('-');
   },
@@ -98,55 +99,6 @@ var Review = React.createClass({
       }.bind(this));
   },
 
-  showOrdersInfo: function() {
-    var state = this.state;
-    var ordersInfo;
-    var itemsSold;
-    var info;
-
-    if (!state.review.orders.info) {
-      if (state.review.loading) {
-        info = <LoadingSpinner />;
-      }
-    } else {
-      ordersInfo = this.state.review.orders.info;
-
-      itemsSold = Object.keys(ordersInfo.itemsSold).map(function(name, index) {
-        var item = ordersInfo.itemsSold[name];
-
-        return (
-          <div key={index} title={'ID: ' + item.id}>{util.capitalize(name)}: <span className='u-pull-right'>{item.count}</span></div>
-        );
-      });
-
-      info = (
-        <table>
-          <tbody>
-            <tr>
-              <td>Quantity:</td>
-              <td>{ordersInfo.quantity}</td>
-            </tr>
-            <tr>
-              <td>Revenue:</td>
-              <td>{util.asCurrency(ordersInfo.revenue)}</td>
-            </tr>
-            <tr>
-              <td>Average Payment:</td>
-              <td>{util.asCurrency(ordersInfo.averagePayment)}</td>
-            </tr>
-
-            <tr>
-              <td>Items Sold:</td>
-              <td>{itemsSold}</td>
-            </tr>
-          </tbody>
-        </table>
-      );
-    }
-
-    return info;
-  },
-
   updateDateRange: function(from, to) {
     var updated = {
       dateRange: {
@@ -182,9 +134,9 @@ var Review = React.createClass({
       <div className='review'>
         <SelectDateRange onChange={this.updateDateRange} yearsRange={state.review.orders.general.years} />
 
-        <div className='order-review v-double-margin'>
-          {this.showOrdersInfo()}
-        </div>
+        <OrdersInfo orders={state.review.orders} />
+
+        <CustomerInfo orders={state.review.orders} />
       </div>
     );
   }

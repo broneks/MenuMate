@@ -7,11 +7,13 @@
 .date-from,
 .date-to {
   margin: $s-general $s-general;
+
+  @include clearfix;
 }
 
 .set-date {
-  display: block;
-  text-align: right;
+  display: inline-block;
+  float: right;
   margin-bottom: $s-general;
   cursor: pointer;
 }

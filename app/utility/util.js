@@ -74,6 +74,10 @@ var util = {
     return chunked;
   },
 
+  keys: function(obj) {
+    return keys(obj);
+  },
+
   addInputsToObj: function(obj, refs) {
     keys(refs).forEach(function(key) {
       var splitKey = key.split('_');
