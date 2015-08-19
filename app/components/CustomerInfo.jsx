@@ -9,6 +9,7 @@ var util = require('../utility/util');
 var LoadingSpinner = require('./general/LoadingSpinner.jsx');
 var DividingTitle  = require('./general/DividingTitle.jsx');
 var MarkerMap      = require('./general/MarkerMap.jsx');
+var SendEmail      = require('./general/SendEmail.jsx');
 
 
 var CustomerInfo = React.createClass({
@@ -18,7 +19,7 @@ var CustomerInfo = React.createClass({
 
   render: function() {
     var props = this.props;
-    var postal;
+    var list;
     var info;
 
     if (!props.orders.info) {
@@ -28,7 +29,7 @@ var CustomerInfo = React.createClass({
         info = <LoadingSpinner message='Loading customer info' />;
       }
     } else {
-      postal = props.orders.info.customerInfo.map(function(customer, index) {
+      list = props.orders.info.customerInfo.map(function(customer, index) {
         var pcode = customer.postal ? <a className='postal-link'>{customer.postal}</a> : <span className='text-muted'>no postal</span>;
         var email = customer.email || <span className='text-muted'>no email</span>;
 
@@ -40,12 +41,22 @@ var CustomerInfo = React.createClass({
         );
       }, this);
 
+      var emailList = props.orders.info.customerInfo
+        .filter(function(customer) {
+          return customer.email.length;
+        })
+        .map(function(customer) {
+          return customer.email;
+        });
+
       info = (
         <div className='row postal-and-email-info'>
           <div className='columns six v-margin'>
             <ul className='postal-email-list'>
-              {postal}
+              {list}
             </ul>
+
+            <SendEmail list={emailList} buttonBlock={true} />
           </div>
 
           <div className='columns six v-margin'>

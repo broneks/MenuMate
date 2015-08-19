@@ -21,7 +21,7 @@ var validateOrderUpdate = function(req) {
   // req.checkBody('change', 'change must be a number').optional().isNumberStr();
 
   req.checkBody('postal', 'postal code must be in the format of M1M1M1').optional().isPostal();
-  req.checkBody('email', 'email must be in the right format').optional().isEmail();
+  req.checkBody('email', 'email must be in the right format of abc@email.com').optional().isEmail();
 
   return req;
 };
