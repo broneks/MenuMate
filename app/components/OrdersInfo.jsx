@@ -37,7 +37,7 @@ var OrdersInfo = React.createClass({
       });
 
       info = (
-        <table>
+        <table className='v-margin'>
           <tbody>
             <tr>
               <td><span className='label'>Number of Orders:</span></td>
@@ -62,7 +62,7 @@ var OrdersInfo = React.createClass({
     }
 
     return (
-      <div className='order-review v-double-margin'>
+      <div className='order-review'>
         <DividingTitle title='Order Info' dashed={true} />
 
         {info}

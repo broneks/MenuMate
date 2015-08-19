@@ -4,7 +4,6 @@
 
 var React      = require('react/addons');
 var request    = require('superagent');
-var Navigation = require('react-router').Navigation;
 
 var api = require('../utility/api-endpoints');
 

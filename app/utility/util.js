@@ -7,7 +7,9 @@ var toString   = Object.prototype.toString;
 var arraySlice = Array.prototype.slice;
 
 var util = {
-  TAX: 1.15,
+  TAX: 1.13,
+
+  MAP_CENTER: {lat: 43.761, lng: -79.411},
 
   asCurrency: function(str) {
     return '$' + parseFloat(Math.round(str * 100) / 100).toFixed(2);

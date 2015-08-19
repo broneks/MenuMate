@@ -1,3 +1,12 @@
+#marker-map {
+  height: 100%;
+  border: 1px solid $c-border;
+}
+
+.postal-and-email-info > .columns {
+  height: 300px + $s-general * 2;
+}
+
 .postal-email-list {
   border: 1px solid $c-border;
   padding: $s-general;

@@ -124,7 +124,10 @@ var SelectDateRange = React.createClass({
     return (
       <div className='select-date-range-wrapper'>
         <div className='date-from u-pull-left'>
-          <a className='set-date set-date-today' onClick={this.setDateSelect.bind(null, 'from')}>Set As Today</a>
+          <a className='set-date set-date-today' onClick={this.setDateSelect.bind(null, 'from')}>
+            <i className='fa fa-calendar icon-spacing'></i>
+            Set As Today
+          </a>
 
           <div className='date-select-wrapper'>
             <label className='field-label label-width-auto'>From:</label>
@@ -134,7 +137,10 @@ var SelectDateRange = React.createClass({
         </div>
 
         <div className='date-to u-pull-left'>
-          <a className='set-date set-date-tomorrow' onClick={this.setDateSelect.bind(null, 'to')}>Set As Tomorrow</a>
+          <a className='set-date set-date-tomorrow' onClick={this.setDateSelect.bind(null, 'to')}>
+            <i className='fa fa-calendar icon-spacing'></i>
+            Set As Tomorrow
+          </a>
 
           <div className='date-select-wrapper'>
             <label className='field-label label-width-auto'>To:</label>

@@ -79,10 +79,6 @@ var Review = React.createClass({
               info: {$set: null}
             }
           });
-
-          this.setState({
-            review: updated
-          });
         } else {
           this.props.APP.flashMessage.hide();
 
@@ -91,11 +87,11 @@ var Review = React.createClass({
               info: {$set: res.body}
             }
           });
-
-          this.setState({
-            review: updated
-          });
         }
+
+        this.setState({
+          review: updated
+        });
       }.bind(this));
   },
 
