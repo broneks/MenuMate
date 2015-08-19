@@ -14,7 +14,6 @@ module.exports = {
   review: {
     orders: {
       general:    base + 'review/orders/general/',
-      monthRange: base + 'review/orders/months/',
       dateRange:  base + 'review/orders/dates/'
     }
   }

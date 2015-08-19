@@ -10,16 +10,6 @@ function swapDashWithSpace(str) {
   }
 }
 
-function extractMonthString(str) {
-  var split;
-
-  if (str) {
-    split = str.split(' ');
-
-    return split[0] + ' 1 ' + split[1];
-  }
-}
-
 function groupAndCount(curr) {
   if (curr) {
     this[curr] = (this[curr] || 0) + 1;
@@ -127,39 +117,6 @@ module.exports = function(router) {
           });
 
           res.json(dates);
-        });
-    });
-
-  router.route('/review/orders/months/:startDate/:endDate?')
-    .get(function(req, res) {
-      var params = {
-        startDate: swapDashWithSpace(req.params.startDate),
-        endDate:   swapDashWithSpace(req.params.endDate)
-      };
-      var start = extractMonthString(params.startDate);
-      var end   = typeof params.endDate !== 'undefined' ? extractMonthString(params.endDate) : null;
-
-      Order
-        .find()
-        .lean()
-        .where({status: 'paid'})
-        .where('created')
-          .gte(new Date(start))
-          .lte(end ? new Date(end) : new Date())
-        .populate('items')
-        .sort({created: 'desc'})
-        .exec(function(err, orders) {
-          if (err) {
-            console.log(err);
-          }
-
-          var data = analyzeOrderPatterns(orders);
-
-          if (data) {
-            res.json(data);
-          } else {
-            res.json({ 'message': 'No Orders Were Retrieved' });
-          }
         });
     });
 
