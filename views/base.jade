@@ -1,21 +1,25 @@
 doctype html
+
+block vars
+
 html
   head
-    title MenuMate
+    title= title
 
     meta(charset='UTF-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
 
-    link(rel='icon' href='/img/favicon.ico')
+    link(rel='icon' href=path + '/img/favicon.ico')
     
     link(href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600', rel='stylesheet', type='text/css')
 
-    link(rel='stylesheet' href='/css/normalize.css')
-    link(rel='stylesheet' href='/css/font-awesome.min.css')
-    link(rel='stylesheet' href='/css/base.css')
+    link(rel='stylesheet' href=path + '/css/normalize.css')
+    link(rel='stylesheet' href=path + '/css/font-awesome.min.css')
+    link(rel='stylesheet' href=path + '/css/base.css')
+  
   body
     block content
     
   script(src='https://checkout.stripe.com/checkout.js')
   script(src='https://maps.googleapis.com/maps/api/js?signed_in=true')
-  script(src='/js/main.js')
+  script(src=path + '/js/main.js')

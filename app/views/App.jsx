@@ -2,8 +2,11 @@
  * @jsx React.DOM
  */
 
+
 var React  = require('react/addons');
 var Router = require('react-router');
+
+var app = require('../../config/app.json');
 
 var DefaultRoute  = Router.DefaultRoute;
 var NotFoundRoute = Router.NotFoundRoute;
@@ -57,13 +60,16 @@ var App = React.createClass({
       flashMessage: {
         show: this.flashMessageShow,
         hide: this.flashMessageHide
-      }
+      },
+      config: app
     };
+
+    Object.seal(global);
 
     return (
       <div id='main-wrapper'>
         <header id='main-header'>
-          <h1 id='logo'>MenuMate</h1>
+          <h1 id='logo'>{app.name}</h1>
 
           <nav>
             <ul className='list-unstyled'>

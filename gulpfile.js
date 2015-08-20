@@ -46,7 +46,7 @@ gulp.task('fontfiles', function() {
 });
 
 gulp.task('default', ['scripts', 'sass', 'normalize', 'fontstyles', 'fontfiles'], function() {
-  gulp.watch(['app/**/*.jsx', 'app/**/*.js'], ['scripts']);
+  gulp.watch(['app/**/*.jsx', 'app/**/*.js', 'config/app.json'], ['scripts']);
 
   gulp.watch(['sass/**/*.scss'], ['sass']);
 });

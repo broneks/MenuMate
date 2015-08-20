@@ -1,0 +1,17 @@
+{
+  "name": "MenuMate",
+  "url": {
+    "host": "http://localhost:3000",
+    "path": ""
+  },
+  "tax": 1.13,
+  "currency": "cad",
+  "keys": {
+    "stripe" : "pk_test_wyIFxCYoLMsbK7KX9Fzjaieb"
+  },
+  "email": "messenger@mailbolt.com",
+  "coords": {
+    "lat": 43.761,
+    "lng": -79.411
+  }
+}

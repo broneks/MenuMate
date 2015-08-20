@@ -4,6 +4,7 @@
 
 var React = require('react/addons');
 
+var APP  = require('../../config/app.json');
 var util = require('../utility/util');
 
 
@@ -31,7 +32,7 @@ var BasketSummary = React.createClass({
     var quantity = this.getQuantitySum(props.quantities);
 
     var subtotal = util.asCurrency(props.total);
-    var total    = util.asCurrency(props.total * util.TAX);
+    var total    = util.asCurrency(props.total * APP.tax);
 
     return (
       <div className='basket-summary-wrapper'>

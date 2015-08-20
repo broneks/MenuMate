@@ -20,6 +20,7 @@ var gm     = require('gm');
 var mongoose  = require('mongoose');
 
 var config = {
+  app:       require('./config/app.json'),
   database:  require('./config/database'),
   validator: require('./config/validator')
 };
@@ -77,7 +78,7 @@ app.use(favicon(__dirname + '/public/img/favicon.ico'));
 //
 // Routes
 //
-require('./routes/routes.js')(app, router);
+require('./routes/routes.js')(app, router, config.app);
 
 
 //

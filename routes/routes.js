@@ -15,7 +15,7 @@ var Router = require('react-router');
 
 var routes = require('../app/views/App.jsx').routes;
 
-module.exports = function(app, router) {
+module.exports = function(app, router, config) {
   //
   // Rest API
   //
@@ -35,7 +35,7 @@ module.exports = function(app, router) {
     Router.run(routes, req.path, function (Handler) {
       var reactHtml = React.renderToString(React.createElement(Handler));
 
-      res.render('index', { reactOutput: reactHtml });
+      res.render('index', { reactOutput: reactHtml, config: config });
     });
   });
 };

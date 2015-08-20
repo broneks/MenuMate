@@ -4,6 +4,8 @@
 
 var React = require('react/addons');
 
+var APP = require('../../config/app.json');
+
 
 var StripePayment = React.createClass({
   propTypes: {
@@ -13,8 +15,6 @@ var StripePayment = React.createClass({
 
   getInitialState: function() {
     return {
-      key:     'pk_test_wyIFxCYoLMsbK7KX9Fzjaieb',
-      email:   'messenger@mailbolt.com',
       handler: null
     };
   },
@@ -26,9 +26,9 @@ var StripePayment = React.createClass({
     if (handler && total) {
       handler.open({
         name:     'Card Payment',
-        email:    this.state.email,
+        email:    APP.email,
+        currency: APP.currency,
         amount:   Math.round(total * 100),
-        currency: 'cad',
         allowRememberMe: false,
       });
     }
@@ -37,7 +37,7 @@ var StripePayment = React.createClass({
   componentDidMount: function() {
     var props   = this.props;
     var handler = this.state.handler = StripeCheckout.configure({
-      key:   this.state.key,
+      key:   APP.keys.stripe,
       token: function() {
         props.onSuccess(props.total, 'debit/credit');
       }

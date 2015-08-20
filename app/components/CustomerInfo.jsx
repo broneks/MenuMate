@@ -4,7 +4,7 @@
 
 var React = require('react/addons');
 
-var util = require('../utility/util');
+var APP = require('../../config/app.json');
 
 var LoadingSpinner = require('./general/LoadingSpinner.jsx');
 var DividingTitle  = require('./general/DividingTitle.jsx');
@@ -60,7 +60,7 @@ var CustomerInfo = React.createClass({
           </div>
 
           <div className='columns six v-margin'>
-            <MarkerMap data={props.orders.info.customerInfo} dataItem='postal' center={util.MAP_CENTER} />
+            <MarkerMap data={props.orders.info.customerInfo} dataItem='postal' center={APP.coords} />
           </div>
         </div>
       );

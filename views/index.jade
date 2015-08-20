@@ -1,4 +1,8 @@
 extends base
 
+block vars
+ - var title = config.name
+ - var path  = config.url.path
+
 block content
   div#react-main-mount !{reactOutput}

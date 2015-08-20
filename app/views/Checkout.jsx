@@ -33,7 +33,7 @@ var Checkout = React.createClass({
   submitPayment: function(payment, paymentMethod) {
     var refs   = this.refs;
     var method = paymentMethod || 'cash';
-    var total  = this.state.order.total * util.TAX;
+    var total  = this.state.order.total * this.props.APP.config.tax;
     var checkoutDetails;
 
     if (payment) {
@@ -132,7 +132,7 @@ var Checkout = React.createClass({
 
   showPaymentSection: function() {
     var state = this.state;
-    var infoMessage = 'Total: ' + util.asCurrency(state.order.total * util.TAX);
+    var infoMessage = 'Total: ' + util.asCurrency(state.order.total * this.props.APP.config.tax);
 
     if (state.order.status === 'paid') {
       return (
@@ -185,7 +185,7 @@ var Checkout = React.createClass({
             </div>
 
             <div className='six columns payment-card v-margin'>
-              <StripePayment total={this.state.order.total * util.TAX} onSuccess={this.submitPayment} />
+              <StripePayment total={this.state.order.total * this.props.APP.config.tax} onSuccess={this.submitPayment} />
             </div>
           </div>
         </div>

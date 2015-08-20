@@ -4,6 +4,7 @@
 
 var React = require('react/addons');
 
+var APP  = require('../../config/app.json');
 var util = require('../utility/util');
 
 
@@ -74,7 +75,7 @@ var MenuItem = React.createClass({
 
     var item  = props.item;
     var price = util.asCurrency(item.price);
-    var image = props.showAsList ? null : <img className='menu-item-image' src={item.image} alt="" />;
+    var image = props.showAsList ? null : <img className='menu-item-image' src={APP.url.path + item.image} alt='' />;
 
     var details       = state.showDetails  ? <MenuItemDetails item={item} /> : null;
     var toggleDetails = props.showAsList ? null : this.toggleDetails;

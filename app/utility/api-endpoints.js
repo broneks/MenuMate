@@ -2,8 +2,8 @@
 // API Endpoints
 //
 
-var host = 'localhost:3000';
-var base = 'http://' + host + '/api/';
+var app  = require('../../config/app.json');
+var base = app.url.host + '/api/';
 
 module.exports = {
   menuItems:  base + 'menu-items/',
