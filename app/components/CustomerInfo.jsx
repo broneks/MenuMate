@@ -17,13 +17,20 @@ var CustomerInfo = React.createClass({
     orders: React.PropTypes.object.isRequired
   },
 
+  customerInfoIsEmpty: function() {
+    var info = this.props.orders.info;
+
+    return info && (!info.customerInfo || !info.customerInfo.length);
+  },
+
   render: function() {
     var props = this.props;
+    var noCustomerInfo = this.customerInfoIsEmpty();
     var list;
     var info;
 
-    if (!props.orders.info) {
-      if (props.orders.info === null) {
+    if (!props.orders.info || noCustomerInfo) {
+      if (props.orders.info === null || noCustomerInfo) {
         info = <div className='text-center text-muted'>. . .</div>
       } else {
         info = <LoadingSpinner message='Loading customer info' />;
