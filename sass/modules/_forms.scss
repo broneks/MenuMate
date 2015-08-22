@@ -1,0 +1,9 @@
+.required {
+  &:after {
+    display: inline-block;
+    content: "*";
+    color: $c-error;
+    font-size: 0.8em;
+    margin-left: $s-general;
+  }
+}

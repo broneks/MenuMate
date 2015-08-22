@@ -6,6 +6,7 @@ var keys       = Object.keys;
 var toString   = Object.prototype.toString;
 var arraySlice = Array.prototype.slice;
 
+
 var util = {
   asCurrency: function(str) {
     return '$' + parseFloat(Math.round(str * 100) / 100).toFixed(2);
@@ -79,13 +80,13 @@ var util = {
   addInputsToObj: function(obj, refs) {
     keys(refs).forEach(function(key) {
       var splitKey = key.split('_');
-      var value;
+      var node;
 
       if (splitKey[0] === 'input') {
-        value = refs[key].getDOMNode().value;
+        node = refs[key].getDOMNode();
 
-        if (value) {
-          obj[splitKey[1]] = value;
+        if (node.value && node.type !== 'file') {
+          obj[splitKey[1]] = node.value;
         }
       }
     });
@@ -99,7 +100,10 @@ var util = {
 
   errorOnInput: function(name) {
     var input = document.getElementsByName(name)[0];
-    input.classList.add('input-error');
+
+    if (input) {
+      input.classList.add('input-error');
+    }
   },
 
   clearInputErrors: function(names) {
@@ -107,6 +111,18 @@ var util = {
 
     util.toArray(inputs).forEach(function(input) {
       input.classList.remove('input-error');
+    });
+  },
+
+  clearInputs: function(refs) {
+    keys(refs).forEach(function(key) {
+      var splitKey = key.split('_');
+      var node;
+
+      if (splitKey[0] === 'input') {
+        node = refs[key].getDOMNode();
+        node.value = '';
+      }
     });
   }
 };

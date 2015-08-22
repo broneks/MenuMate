@@ -20,8 +20,8 @@ var Home     = require('./Home.jsx');
 var Checkout = require('./Checkout.jsx');
 var Done     = require('./Done.jsx');
 var Review   = require('./Review.jsx');
-var Menu     = require('./Menu.jsx');
 var NotFound = require('./NotFound.jsx');
+var CreateMenuItem = require('./CreateMenuItem.jsx');
 
 var FlashMessage = require('../components/general/FlashMessage.jsx');
 
@@ -76,7 +76,7 @@ var App = React.createClass({
               <li><Link to='main'>Main</Link></li>
               <li><Link to='pending'>Pending</Link></li>
               <li><Link to='paid'>Paid</Link></li>
-              <li><Link to='menu'>Menu</Link></li>
+              <li><Link to='createMenuItem'>Create Menu</Link></li>
               <li><Link to='review'>Review</Link></li>
             </ul>
           </nav>
@@ -108,7 +108,7 @@ var routes = (
 
     <Route name='done' path='/done/:id' handler={Done} />
 
-    <Route name='menu' path='/menu' handler={Menu} />
+    <Route name='createMenuItem' path='/create-menu' handler={CreateMenuItem} />
 
     <Route name='review' path='/review' handler={Review} />
 

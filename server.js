@@ -15,7 +15,7 @@ var validator    = require('express-validator');
 var favicon      = require('serve-favicon');
 
 var multer = require('multer');
-var gm     = require('gm');
+var gm     = require('gm').subClass({ imageMagick: true });
 
 var mongoose  = require('mongoose');
 
@@ -44,8 +44,18 @@ app.use(validator(config.validator));
 //
 app.use(multer({
   dest: './public/img/uploads/',
+  limits: {
+    files: 1
+  },
   rename: function(fieldname, filename) {
     return filename.replace(/\W+/g, '-').toLowerCase() + '-' + Date.now();
+  },
+  onFileUploadStart: function(file) {
+    if (file.mimetype !== 'image/jpg' &&
+        file.mimetype !== 'image/jpeg' &&
+        file.mimetype !== 'image/png') {
+      return false
+    }
   },
   onFileUploadComplete: function(file) {
     var dest = this.dest;
