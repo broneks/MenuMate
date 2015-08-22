@@ -115,4 +115,29 @@ module.exports = function(router) {
         res.json({ message: 'menu item deleted' });
       });
     });
+
+  router.route('/by-category/menu-items')
+    .get(function(req, res) {
+      MenuItem
+        .find()
+        .lean()
+        .sort({'name': 'asc'})
+        .populate('category')
+        .exec(function (err, items) {
+          if (err) res.send(err);
+
+          var itemsByCategory = {};
+
+          items.forEach(function(item) {
+            var name = item.category.name;
+
+            if (!itemsByCategory[name]) {
+              itemsByCategory[name] = [];
+            }
+            itemsByCategory[name].push(item);
+          });
+
+          res.json(itemsByCategory);
+        });
+    });
 };

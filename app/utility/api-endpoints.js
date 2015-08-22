@@ -6,6 +6,7 @@ var app  = require('../../config/app.json');
 var base = app.url.host + '/api/';
 
 module.exports = {
+  menuItemsByCategory: base + 'by-category/menu-items/',
   menuItems:  base + 'menu-items/',
   categories: base + 'categories/',
   orders:     base + 'orders/',

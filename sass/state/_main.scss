@@ -1,5 +1,9 @@
 .is-disabled {
-  background: url('/img/stripe-bg.png');
+  background: url(#{$path}stripe-bg.png);
+}
+
+.is-selected {
+  background: $c-light-gray;  
 }
 
 button[disabled]:hover,

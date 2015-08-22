@@ -77,6 +77,10 @@ var util = {
     return keys(obj);
   },
 
+  isObjEmpty: function(obj) {
+    return keys(obj).length === 0;
+  },
+
   addInputsToObj: function(obj, refs) {
     keys(refs).forEach(function(key) {
       var splitKey = key.split('_');
@@ -106,24 +110,34 @@ var util = {
     }
   },
 
-  clearInputErrors: function(names) {
+  clearInputErrors: function() {
     var inputs = document.getElementsByClassName('input-error');
 
-    util.toArray(inputs).forEach(function(input) {
-      input.classList.remove('input-error');
-    });
+    if (inputs) {
+      util.toArray(inputs).forEach(function(input) {
+        input.classList.remove('input-error');
+      });
+    }
   },
 
   clearInputs: function(refs) {
-    keys(refs).forEach(function(key) {
-      var splitKey = key.split('_');
-      var node;
+    var imagePreview = document.getElementById('image-preview');
 
-      if (splitKey[0] === 'input') {
-        node = refs[key].getDOMNode();
-        node.value = '';
+    if (refs) {
+      if (imagePreview) {
+        imagePreview.src = '';
       }
-    });
+
+      keys(refs).forEach(function(key) {
+        var splitKey = key.split('_');
+        var node;
+
+        if (splitKey[0] === 'input') {
+          node = refs[key].getDOMNode();
+          node.value = '';
+        }
+      });
+    }
   }
 };
 

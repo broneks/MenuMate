@@ -1,0 +1,18 @@
+.image-preview-wrapper {
+  position: relative;
+  border: 1px dashed $c-border;
+  width: 100%;
+  min-height: 150px;
+
+  .no-image-message {
+    display: none;
+  }
+
+  img[src=""] ~ .no-image-message {
+    display: block;
+  }
+
+  img {
+    display: block;
+  }
+}

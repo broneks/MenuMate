@@ -28,13 +28,16 @@ var MenuItem = React.createClass({
     clearReactivated: React.PropTypes.func,
     reactivated:      React.PropTypes.bool,
     showAsList:       React.PropTypes.bool.isRequired,
-    addToBasket:      React.PropTypes.func
+    addToBasket:      React.PropTypes.func,
+    basketIds:        React.PropTypes.array
   },
 
   getInitialState: function() {
+    var addedToBasket = this.props.basketIds.indexOf(this.props.item._id) !== -1;
+
     return {
       showDetails:   false,
-      addedToBasket: false
+      addedToBasket: addedToBasket
     };
   },
 

@@ -137,7 +137,7 @@ var Basket = React.createClass({
       items = state.items.map(function(item, index) {
         return (
           <BasketItem
-            key={item._id}
+            key={index}
             item={item}
             quantity={state.quantities[index]}
             updateSummary={this.updateSummary}

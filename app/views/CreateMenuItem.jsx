@@ -10,7 +10,8 @@ var util = require('../utility/util');
 
 var LoadingSpinner = require('../components/general/LoadingSpinner.jsx');
 var DividingTitle  = require('../components/general/DividingTitle.jsx');
-
+var ImagePreview   = require('../components/general/ImagePreview.jsx');
+var ClearForm      = require('../components/general/ClearForm.jsx');
 
 var CreateMenuItem = React.createClass({
   getInitialState: function() {
@@ -68,8 +69,6 @@ var CreateMenuItem = React.createClass({
     var file = refs.input_image.getDOMNode().files[0];
 
     util.addInputsToObj(menuItemDetails, refs);
-
-    console.log(menuItemDetails);
 
     request
       .post(api.menuItems)
@@ -167,6 +166,8 @@ var CreateMenuItem = React.createClass({
 
     return (
       <div className='edit-menu'>
+        <h4>Create a Menu Item</h4>
+
         <form encType='multipart/form-data' onSubmit={this.cancelSubmit}>
           <div className='row'>
             <div className='six columns'>
@@ -206,11 +207,19 @@ var CreateMenuItem = React.createClass({
             </div>
 
             <div className='six columns'>
-              <img id='image-preview' />
+              <ImagePreview />
             </div>
           </div>
 
-          <button className='button-primary' onClick={this.createMenuItem}>Create Menu Item</button>
+          <div className='row'>
+            <div className='six columns v-double-margin'>
+              <button className='button-primary button-block' onClick={this.createMenuItem}>Create Menu Item</button>
+            </div>
+
+            <div className='six columns v-double-margin'>
+              <ClearForm refs={this.refs} flashMessage={this.props.APP.flashMessage} />
+            </div>
+          </div>
         </form>
       </div>
     );

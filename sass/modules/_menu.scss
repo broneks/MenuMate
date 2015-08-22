@@ -85,3 +85,25 @@
   padding: $s-general;
   margin-bottom: $s-general;
 }
+
+.menu-categories {
+  &, * {
+    box-sizing: border-box;
+  }
+
+  .tab-row {
+    border: 1px solid $c-border;
+    border-bottom: 0;
+  }
+
+  .tab {
+    display: inline-block;
+
+    button {
+      padding: 0 $s-general;
+      border-bottom: 0;
+      border-top: 0;
+      border-left: 0;
+    }
+  }
+}
