@@ -172,27 +172,27 @@ var Auth = React.createClass({
 });
 
 var routes = (
-  <Route name='main' path='/' handler={App}>
+  <Route name='main' path={app.url.path || '/'} handler={App}>
     <DefaultRoute handler={Home} />
 
-    <Route name='pending' path='/pending' handler={Pending} />
+    <Route name='pending' path={app.url.path +'/pending'} handler={Pending} />
 
-    <Route name='paid' path='/paid' handler={Paid} />
+    <Route name='paid' path={app.url.path +'/paid'} handler={Paid} />
 
-    <Route name='checkout' path='/checkout/:id' handler={Checkout} />
-    <Route name='confirmation' path='/confirmation/:id' handler={Checkout} />
+    <Route name='checkout' path={app.url.path +'/checkout/:id'} handler={Checkout} />
+    <Route name='confirmation' path={app.url.path + '/confirmation/:id'} handler={Checkout} />
 
-    <Route name='done' path='/done/:id' handler={Done} />
+    <Route name='done' path={app.url.path +'/done/:id'} handler={Done} />
 
-    <Route name='review' path='/review' handler={Review} />
+    <Route name='review' path={app.url.path +'/review'} handler={Review} />
 
     /* Admin Routes */
-    <Route name='auth' path='/auth' handler={Auth}>
+    <Route name='auth' path={app.url.path +'/auth'} handler={Auth}>
       <DefaultRoute handler={Login} />
 
-      <Route name='logout' path='/auth/logout' handler={Logout} />
+      <Route name='logout' path={app.url.path +'/auth/logout'} handler={Logout} />
 
-      <Route name='createMenuItem' path='/auth/create-menu' handler={CreateMenuItem} />
+      <Route name='createMenuItem' path={app.url.path +'/auth/create-menu'} handler={CreateMenuItem} />
     </Route>
 
     <NotFoundRoute handler={NotFound} />

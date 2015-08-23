@@ -34,7 +34,7 @@ module.exports = function(app, router, config) {
   //
   app.get('*', function(req, res) {
     Router.run(routes, req.path, function (Handler) {
-      var reactHtml = React.renderToString(React.createElement(Handler));
+      var reactHtml = React.renderToStaticMarkup(React.createElement(Handler));
 
       res.render('index', { reactOutput: reactHtml, config: config });
     });
