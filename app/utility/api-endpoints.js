@@ -17,5 +17,10 @@ module.exports = {
       general:    base + 'review/orders/general/',
       dateRange:  base + 'review/orders/dates/'
     }
+  },
+  auth: {
+    isAuthenticated: base + 'auth/is-authenticated',
+    login:           base + 'auth/login',
+    logout:          base + 'auth/logout'
   }
 };

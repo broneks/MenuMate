@@ -17,6 +17,9 @@ var favicon      = require('serve-favicon');
 var multer = require('multer');
 var gm     = require('gm').subClass({ imageMagick: true });
 
+var expressSession = require('express-session');
+var passport       = require('passport');
+
 var mongoose  = require('mongoose');
 
 var config = {
@@ -26,6 +29,7 @@ var config = {
 };
 
 require('node-jsx').install({ extension: '.jsx' });
+
 
 //
 // Config
@@ -83,6 +87,19 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/img/favicon.ico'));
+
+
+//
+// Passport
+//
+app.use(expressSession({
+  name:   'connect',
+  secret: 'Love electricity shockwave central',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 //

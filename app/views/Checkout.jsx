@@ -4,7 +4,6 @@
 
 var React      = require('react/addons');
 var request    = require('superagent');
-var State      = require('react-router').State;
 var Navigation = require('react-router').Navigation;
 
 var api = require('../utility/api-endpoints');
@@ -21,7 +20,7 @@ var Modal          = require('../components/general/Modal.jsx');
 
 
 var Checkout = React.createClass({
-  mixins: [queryIdMixin, State, Navigation],
+  mixins: [queryIdMixin, Navigation],
 
   getInitialState: function() {
     return {

@@ -172,7 +172,7 @@ var CreateMenuItem = React.createClass({
           <div className='row'>
             <div className='six columns'>
               <label htmlFor='name' className='label required'>Name</label>
-              <input type='text' ref='input_name' name='name' className='u-full-width' />
+              <input type='text' ref='input_name' name='name' className='u-full-width' autoFocus />
             </div>
           </div>
 

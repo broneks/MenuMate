@@ -57,7 +57,7 @@ var FlashMessage = React.createClass({
 
   componentWillReceiveProps: function(nextProps) {
     this.setState({
-      hidden: !nextProps.messages.length,
+      hidden:     !nextProps.messages.length,
       inputNames: []
     });
 
@@ -65,7 +65,7 @@ var FlashMessage = React.createClass({
   },
 
   render: function() {
-    var props = this.props;
+    var props     = this.props;
     var typeClass = props.type.toLowerCase() || 'info';
 
     if (this.state.hidden) {

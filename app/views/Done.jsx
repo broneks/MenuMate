@@ -3,7 +3,6 @@
  */
 
 var React      = require('react/addons');
-var State      = require('react-router').State;
 var Navigation = require('react-router').Navigation;
 var Link       = require('react-router').Link;
 
@@ -17,7 +16,7 @@ var DividingTitle  = require('../components/general/DividingTitle.jsx');
 
 
 var Done = React.createClass({
-  mixins: [queryIdMixin, State, Navigation],
+  mixins: [queryIdMixin, Navigation],
 
   getInitialState: function() {
     return {

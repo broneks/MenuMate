@@ -1,6 +1,9 @@
 var request = require('superagent');
+var State   = require('react-router').State;
 
 module.exports = {
+  mixins: [State],
+
   getIdParam: function() {
     var id    = this.getParams().id;
     var isInt = /^\d+$/g.test(id);
