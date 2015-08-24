@@ -81,23 +81,6 @@
   margin: $s-general;
 }
 
-.label {
-  display: inline-block;
-  margin-right: 10px;
-  color: $c-label;
-  letter-spacing: 1px;
-  font-weight: bold;
-}
-
-.field-label {
-  @extend .label;
-  min-width: 100px;
-
-  &.label-width-auto {
-    min-width: inherit;
-  }
-}
-
 .order-number {
   display: inline-block;
   font-weight: bold;

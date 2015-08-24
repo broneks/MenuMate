@@ -9,9 +9,11 @@ var api  = require('../utility/api-endpoints');
 var util = require('../utility/util');
 
 var LoadingSpinner = require('../components/general/LoadingSpinner.jsx');
-var DividingTitle  = require('../components/general/DividingTitle.jsx');
 var ImagePreview   = require('../components/general/ImagePreview.jsx');
 var ClearForm      = require('../components/general/ClearForm.jsx');
+var RadioGroup     = require('../components/general/RadioGroup.jsx');
+var RadioButton    = require('../components/general/RadioButton.jsx');
+
 
 var CreateMenuItem = React.createClass({
   getInitialState: function() {
@@ -33,10 +35,14 @@ var CreateMenuItem = React.createClass({
         }
 
         if (this.isMounted()) {
-          this.setState({
-            categories: res.body,
-            loading:    false
-          });
+          if (res.body.length) {
+            this.setState({
+              categories: res.body,
+              loading:    false
+            });
+          } else {
+            this.props.APP.flashMessage.show('info', 'please create some categories before creating a menu item');
+          }
         }
       }.bind(this));
   },
@@ -71,7 +77,7 @@ var CreateMenuItem = React.createClass({
     util.addInputsToObj(menuItemDetails, refs);
 
     request
-      .post(api.menuItems)
+      .post(api.manage.menuItems.standard)
       .send(menuItemDetails)
       .end(function(err, res) {
         if (err) {
@@ -90,9 +96,10 @@ var CreateMenuItem = React.createClass({
           // overly complicated request just to get image uploading to work...
           //
           request
-            .post(api.menuItems)
+            .post(api.manage.menuItems.standard)
             .attach('image', file, file.name)
             .field('name', menuItemDetails.name)
+            .field('onsale', menuItemDetails.onsale)
             .field('category', menuItemDetails.category)
             .field('price', menuItemDetails.price)
             .field('description', menuItemDetails.description)
@@ -160,12 +167,14 @@ var CreateMenuItem = React.createClass({
       }
 
       return (
-        <div className='message-wrapper'>info</div>
+        <div className='message-wrapper'>
+          {message}
+        </div>
       );
     }
 
     return (
-      <div className='edit-menu'>
+      <div className='create-menu-item'>
         <h4>Create a Menu Item</h4>
 
         <form encType='multipart/form-data' onSubmit={this.cancelSubmit}>
@@ -173,6 +182,15 @@ var CreateMenuItem = React.createClass({
             <div className='six columns'>
               <label htmlFor='name' className='label required'>Name</label>
               <input type='text' ref='input_name' name='name' className='u-full-width' autoFocus />
+            </div>
+
+            <div className='six columns'>
+              <span className='label'>Visibility</span>
+
+              <RadioGroup ref='input_onsale'>
+                <RadioButton id='on-sale' name='visibility' label='on sale' value='true' defaultChecked={true}></RadioButton>
+                <RadioButton id='off-sale' name='visibility' label='off sale' value='false'></RadioButton>
+              </RadioGroup>
             </div>
           </div>
 

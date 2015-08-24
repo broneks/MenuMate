@@ -35,7 +35,7 @@ var Menu = React.createClass({
 
   getMenuItems: function() {
     request
-      .get(api.menuItemsByCategory)
+      .get(api.menuItems.byCategory)
       .end(function(err, res) {
         if (err) {
           console.log(err);

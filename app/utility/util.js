@@ -88,8 +88,10 @@ var util = {
 
       if (splitKey[0] === 'input') {
         node = refs[key].getDOMNode();
-
-        if (node.value && node.type !== 'file') {
+        
+        if (refs[key].getValue) {
+          obj[splitKey[1]] = refs[key].getValue();
+        } else if (node.value && node.type !== 'file') {
           obj[splitKey[1]] = node.value;
         }
       }

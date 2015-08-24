@@ -6,8 +6,10 @@ var app  = require('../../config/app.json');
 var base = app.url.host + '/api/';
 
 module.exports = {
-  menuItemsByCategory: base + 'by-category/menu-items/',
-  menuItems:  base + 'menu-items/',
+  menuItems: {
+    standard:   base + 'menu-items/',
+    byCategory: base + 'by-category/menu-items/'
+  },
   categories: base + 'categories/',
   orders:     base + 'orders/',
   pending:    base + 'orders/pending/',
@@ -16,6 +18,12 @@ module.exports = {
     orders: {
       general:    base + 'review/orders/general/',
       dateRange:  base + 'review/orders/dates/'
+    }
+  },
+  manage: {
+    menuItems: {
+      standard:   base + 'manage/menu-items/',
+      byCategory: base + 'manage/by-category/menu-items/'
     }
   },
   auth: {

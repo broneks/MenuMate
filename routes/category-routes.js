@@ -37,7 +37,7 @@ module.exports = function(router) {
       category.name = req.body.name;
 
       category.save(function(err) {
-        if (err) res.send(err);
+        if (err) res.send('category could not be created. please try again.');
 
         res.json({ message: 'category created' });
       });
@@ -69,8 +69,9 @@ module.exports = function(router) {
         category.name    = req.body.name;
         category.updated = Date.now();
 
+
         category.save(function() {
-          if (err) res.send(err);
+          if (err) res.send('category could not be updated. please try again.');
 
           res.json({ message: 'category updated' });
         });
@@ -78,24 +79,24 @@ module.exports = function(router) {
     })
 
     .delete(function(req, res) {
-      MenuItem.count({
-        category: req.params.category_id
-      }, function (err, count) {
-        if (count) {
-          if (err) res.send(err);
-
-          res.status(400).send({ message: 'cannot delete a category that being' +
-          'used in the menu. Remove all assignments before continuing.' });
-        } else {
-          Category.remove({
-            _id: req.params.category_id
-          }, function(err) {
-            if (err) res.send(err);
-
-            res.json({ message: 'category deleted' });
-          })
-        }
-      });
+      // MenuItem.count({
+      //   category: req.params.category_id
+      // }, function (err, count) {
+      //   if (count) {
+      //     if (err) res.send(err);
+      //
+      //     res.status(400).send({ message: 'cannot delete a category that being' +
+      //     'used in the menu. Remove all assignments before continuing.' });
+      //   } else {
+      //     Category.remove({
+      //       _id: req.params.category_id
+      //     }, function(err) {
+      //       if (err) res.send(err);
+      //
+      //       res.json({ message: 'category deleted' });
+      //     })
+      //   }
+      // });
 
     });
 };

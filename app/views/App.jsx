@@ -27,9 +27,11 @@ var Review   = require('./Review.jsx');
 var NotFound = require('./NotFound.jsx');
 
 // Admin Views
-var Login  = require('./Login.jsx');
-var Logout = require('./Logout.jsx');
-var CreateMenuItem = require('./CreateMenuItem.jsx');
+var Login      = require('./Login.jsx');
+var Logout     = require('./Logout.jsx');
+var ManageMenu = require('./ManageMenu.jsx');
+var CreateMenuItem     = require('./CreateMenuItem.jsx');
+var CreateMenuCategory = require('./CreateMenuCategory.jsx');
 
 
 
@@ -39,7 +41,8 @@ var App = React.createClass({
   getInitialState: function() {
     return {
       flashType:     '',
-      flashMessages: []
+      flashMessages: [],
+      authenticated: true
     };
   },
 
@@ -105,7 +108,7 @@ var App = React.createClass({
 
     if (state.authenticated) {
       authLinks = [
-        <li key={0}><Link to='createMenuItem'>Create Menu</Link></li>
+        <li key={0}><Link to='manageMenu'>Manage Menu</Link></li>
       ];
       loginOrLogout = <li className='auth-link logout'><Link to='logout'>Logout</Link></li>;
     } else {
@@ -192,13 +195,17 @@ var routes = (
 
       <Route name='logout' path={app.url.path +'/auth/logout'} handler={Logout} />
 
-      <Route name='createMenuItem' path={app.url.path +'/auth/create-menu'} handler={CreateMenuItem} />
+      <Route name='createMenuItem' path={app.url.path +'/auth/create-menu-item'} handler={CreateMenuItem} />
+
+      <Route name='createMenuCategory' path={app.url.path +'/auth/create-menu-category'} handler={CreateMenuCategory} />
+
+      <Route name='manageMenu' path={app.url.path +'/auth/manage-menu'} handler={ManageMenu} />
     </Route>
 
     <NotFoundRoute handler={NotFound} />
   </Route>
 );
-      // <Route name='logout' path='/auth/logout' handler={Logout} />
+
 
 module.exports = {
   App:    App,

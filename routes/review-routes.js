@@ -94,7 +94,6 @@ module.exports = function(router) {
       Order
         .find()
         .lean()
-        // .populate('items')
         .where({status: 'paid'})
         .sort({created: 'desc'})
         .exec(function(err, orders) {

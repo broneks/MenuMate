@@ -7,3 +7,38 @@
     margin-left: $s-general;
   }
 }
+
+.radio-wrapper {
+  label {
+    border: 1px solid $c-border;
+    border-radius: $r-general;
+    padding: $s-general / 2 $s-general;
+    margin-bottom: 1.5rem;
+  }
+
+  input[type="radio"] {
+    margin: 0;
+  }
+}
+
+.radio-label {
+  padding-right: $s-general;
+}
+
+.label {
+  display: inline-block;
+  margin-right: 10px;
+  color: $c-label;
+  letter-spacing: 1px;
+  font-weight: bold;
+  margin-bottom: .5rem;
+}
+
+.field-label {
+  @extend .label;
+  min-width: 100px;
+
+  &.label-width-auto {
+    min-width: inherit;
+  }
+}

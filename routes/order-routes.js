@@ -72,7 +72,7 @@ module.exports = function(router) {
       }
 
       order.save(function(err, order) {
-        if (err) res.send(err);
+        if (err) res.send('an unexpected error occurred');
 
         res.json({
           message: 'order created',
@@ -204,7 +204,7 @@ module.exports = function(router) {
         }
 
         order.save(function() {
-          if (err) res.send(err);
+          if (err) res.send('an unexpected error occurred');
 
           res.json({ message: 'order updated' });
         });
@@ -224,12 +224,12 @@ module.exports = function(router) {
       //   });
       // });
 
-      Order.remove({
-        _id: req.params.order_id
-      }, function(err) {
-        if (err) res.send(err);
-
-        res.json({ message: 'order deleted' });
-      });
+      // Order.remove({
+      //   _id: req.params.order_id
+      // }, function(err) {
+      //   if (err) res.send(err);
+      //
+      //   res.json({ message: 'order deleted' });
+      // });
     });
 };

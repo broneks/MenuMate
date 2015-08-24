@@ -20,6 +20,10 @@ var MenuItemSchema = new mongoose.Schema({
   description: String,
   image: String,
   price: Number,
+  onsale: {
+    type: Boolean,
+    default: true
+  },
   created: {
     type: Date,
     default: Date.now

@@ -8,7 +8,8 @@ var APIroutes = {
   category: require('./category-routes'),
   order:    require('./order-routes'),
   review:   require('./review-routes'),
-  auth:     require('./auth-routes')
+  auth:     require('./auth-routes'),
+  manage:   require('./manage-menu-routes')
 };
 
 var React  = require('react/addons');
