@@ -40,7 +40,7 @@ var RadioGroup = React.createClass({
   },
 
   render: function() {
-    var children = this.props.children.map(function(child) {
+    var children = React.Children.map(this.props.children, function(child) {
       child.props.onClick = this.onClick.bind(this, child.props.value);
       return child;
     }, this);

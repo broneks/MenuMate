@@ -17,6 +17,7 @@ var StripePayment  = require('../components/StripePayment.jsx');
 var DividingTitle  = require('../components/general/DividingTitle.jsx');
 var LoadingSpinner = require('../components/general/LoadingSpinner.jsx');
 var Modal          = require('../components/general/Modal.jsx');
+var ModalBody      = require('../components/general/ModalBody.jsx');
 
 
 var Checkout = React.createClass({
@@ -172,15 +173,16 @@ var Checkout = React.createClass({
                 buttonIcon='fa fa-money icon-spacing'
                 onClose={this.onCashModalClose}
                 title='Cash Payment'
-                body={
+              >
+                <ModalBody>
                   <CashCalculator
                     ref='cashCalculator'
                     onCancel={this.cancelCashPayment}
                     onSubmit={this.submitPayment}
                     infoMessage={infoMessage}
                   />
-                }
-              />
+                </ModalBody>
+              </Modal>
             </div>
 
             <div className='six columns payment-card v-margin'>

@@ -10,7 +10,10 @@ var api = require('../utility/api-endpoints');
 
 var util = require('../utility/util');
 
-var Modal  = require('./general/Modal.jsx');
+var Modal       = require('./general/Modal.jsx');
+var ModalBody   = require('./general/ModalBody.jsx');
+var ModalFooter = require('./general/ModalFooter.jsx');
+
 
 
 var BasketActions = React.createClass({
@@ -66,14 +69,16 @@ var BasketActions = React.createClass({
           <div className='three columns v-margin'>
             <Modal
               ref='cancelModal'
-              disabled={!this.props.items.length}
+              disabled={this.props.items.length === 0}
               buttonText='Cancel'
               buttonBlock={true}
-              body={<div className='cancel-order-message'>Cancel the current order?</div>}
               onOk={this.clearBasket}
-              okButtonText='Yes'
-              cancelButtonText='No'
-            />
+            >
+              <ModalBody>
+                <div className='cancel-order-message'>Cancel the current order?</div>
+              </ModalBody>
+              <ModalFooter okButtonText='Yes' cancelButtonText='No' />
+            </Modal>
           </div>
 
           <div className='five columns v-margin'>
