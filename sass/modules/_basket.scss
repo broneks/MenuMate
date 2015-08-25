@@ -12,6 +12,13 @@
   &.static-items {
     height: 25vh;
     max-height: 25vh;
+
+    .basket-item-category {
+      width: auto;
+    }
+    .basket-item-price {
+      width: 37.3333%;
+    }
   }
 
   select {

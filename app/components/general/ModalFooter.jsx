@@ -15,12 +15,12 @@ var ModalFooter = React.createClass({
     return {
       cancelButtonText: 'Cancel',
       okButtonText:     'Ok'
-    }
+    };
   },
 
   render: function() {
     var props = this.props;
-    
+
     return (
       <div className='modal-footer' role='footer'>
         <div className='row'>

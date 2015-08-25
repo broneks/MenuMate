@@ -62,32 +62,32 @@ var App = React.createClass({
 
   componentDidMount: function() {
     // initalize authenticated flag
-    this.isAuthenticated(function(res) {
-      this.setState({
-        authenticated: res
-      });
-    });
+    // this.isAuthenticated(function(res) {
+    //   this.setState({
+    //     authenticated: res
+    //   });
+    // });
   },
 
   componentWillReceiveProps: function() {
     // clear flash messages when switching routes
     this.flashMessageHide();
 
-    this.isAuthenticated(function(res) {
-      if (res) {
-        if (!this.state.authenticated) {
-          this.setState({
-            authenticated: true
-          });
-        }
-      } else {
-        if (this.state.authenticated) {
-          this.setState({
-            authenticated: false
-          });
-        }
-      }
-    });
+    // this.isAuthenticated(function(res) {
+    //   if (res) {
+    //     if (!this.state.authenticated) {
+    //       this.setState({
+    //         authenticated: true
+    //       });
+    //     }
+    //   } else {
+    //     if (this.state.authenticated) {
+    //       this.setState({
+    //         authenticated: false
+    //       });
+    //     }
+    //   }
+    // });
   },
 
   render: function() {
@@ -106,14 +106,14 @@ var App = React.createClass({
 
     Object.seal(global);
 
-    if (state.authenticated) {
+    // if (state.authenticated) {
       authLinks = [
         <li key={0}><Link to='manageMenu'>Manage Menu</Link></li>
       ];
       loginOrLogout = <li className='auth-link logout'><Link to='logout'>Logout</Link></li>;
-    } else {
-      loginOrLogout = <li className='auth-link login'><Link to='auth'>Login</Link></li>;
-    }
+    // } else {
+    //   loginOrLogout = <li className='auth-link login'><Link to='auth'>Login</Link></li>;
+    // }
 
     return (
       <div id='main-wrapper'>
@@ -150,11 +150,11 @@ var Auth = React.createClass({
   mixins: [authMixin, Navigation],
 
   checkAuth: function() {
-    this.isAuthenticated(function(res) {
-      if (!res) {
-        this.transitionTo('auth');
-      }
-    });
+    // this.isAuthenticated(function(res) {
+    //   if (!res) {
+    //     this.transitionTo('auth');
+    //   }
+    // });
   },
 
   componentDidMount: function() {

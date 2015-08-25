@@ -1,0 +1,71 @@
+.list-wrapper {
+  box-sizing: border-box;
+  position: relative;
+  border: 1px solid $c-border;
+  height: 60vh;
+  overflow: auto;
+
+  .manage-list-item {
+    box-sizing: border-box;
+    width: 100%;
+    display: table;
+    empty-cells: show;
+    padding: $s-general;
+    margin: 0;
+    border-bottom: 1px solid $c-border;
+
+    .bottom-row {
+      padding-top: $s-general;
+      margin-top: $s-general;
+      border-top: 1px dashed $c-light-gray;
+
+      @include clearfix;
+    }
+
+    &.is-active {
+      .item-status {
+        color: $c-green;
+      }
+    }
+
+    &:hover {
+      background-color: $c-hover;
+    }
+
+    .field {
+      display: table-cell;
+    }
+
+    .item-id,
+    .item-details {
+      width: 10%;
+    }
+    .item-details:empty {
+      content: "";
+      width: 100%;
+    }
+    .item-name {
+      max-width: 25%;
+      font-weight: bold;
+    }
+    .item-status {
+      float: right;
+      display: inline-block;
+      min-width: 60px;
+      text-align: center;
+      font-size: 0.85em;
+      font-weight: bold;
+      letter-spacing: 1px;
+      padding: 0 $s-general / 2;
+      margin: 0 $s-general;
+      border: 1px dashed $c-border;
+    }
+
+    .item-edit {
+      float: right;
+      padding: 0 $s-general * 2;
+      line-height: inherit;
+      height: auto;
+    }
+  }
+}
