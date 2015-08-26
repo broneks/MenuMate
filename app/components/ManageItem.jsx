@@ -37,7 +37,7 @@ var ManageItem = React.createClass({
 
         <div className='bottom-row'>
           <Link to={props.editLink} className='item-edit button'>Edit</Link>
-          <span className='item-status'>{props.status ? 'active' : 'inactive'}</span>
+          <span className='item-status'>{props.status ? 'visible' : 'hidden'}</span>
         </div>
       </li>
     );
