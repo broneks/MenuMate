@@ -41,16 +41,13 @@ var BasketActions = React.createClass({
     request
       .post(api.orders)
       .send(order)
-      .set('Accept', 'application/json')
       .end(function(err, res) {
         if (err) {
           console.log(err);
           return;
         }
 
-        var response = JSON.parse(res.text);
-
-        this.transitionTo('checkout', { id: response.context.id });
+        this.transitionTo('checkout', { id: res.body.context.id });
       }.bind(this));
   },
 
