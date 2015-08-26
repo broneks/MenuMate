@@ -16,9 +16,11 @@ module.exports = function(router) {
         .sort({'name': 'asc'})
         .populate('category')
         .exec(function (err, items) {
-          if (err) res.send(err);
-
-          res.json(items);
+          if (err) {
+            res.send(err);
+          } else {
+            res.json(items);
+          }
         });
     });
 

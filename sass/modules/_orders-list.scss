@@ -57,13 +57,17 @@ $title-marker-width: 15px;
   padding: $s-general;
   border: 1px solid $c-border;
   border-top: 0;
+
+  .orders-total {
+    font-size: 0.9em;
+  }
 }
 
 .orders-pages {
   a {
     cursor: pointer;
   }
-  
+
   a, span {
     display: inline-block;
     padding: $s-general / 2 12px;

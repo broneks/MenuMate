@@ -20,6 +20,7 @@ var ManageMenu = React.createClass({
     return {
       menuItems:  [],
       categories: [],
+      selected:   null,
       loading:    true
     };
   },
@@ -53,6 +54,16 @@ var ManageMenu = React.createClass({
       }.bind(this));
   },
 
+  getTotal: function(items, singular, plural) {
+    var total = 0;
+
+    if (util.isArray(items) && items.length) {
+      total = items.length;
+    }
+
+    return total + ' ' + (total === 1 ? singular : plural);
+  },
+
   componentDidMount: function() {
     this.getMenuItemsAndCategories();
   },
@@ -62,6 +73,7 @@ var ManageMenu = React.createClass({
     var usedCategories = [];
     var menuItems;
     var categories;
+    var menuResult = state.selected ? <MenuResult selected={state.selected} /> : null;
 
     if (state.loading) {
       return (
@@ -126,25 +138,23 @@ var ManageMenu = React.createClass({
           </div>
         </div>
 
-        <div className='result-wrapper row v-double-margin'>
-          Result
-        </div>
-
         <div className='menu-lists row'>
-          <div className='six columns'>
-            <div className='list-wrapper v-margin'>
+          <div className='six columns v-margin'>
+            <div className='list-wrapper'>
               <ul className='list-unstyled'>
                 {menuItems}
               </ul>
             </div>
+            <div className='list-wrapper-summary'>{this.getTotal(menuItems, 'Menu Item', 'Menu Items')}</div>
           </div>
 
-          <div className='six columns'>
-            <div className='list-wrapper v-margin'>
+          <div className='six columns v-margin'>
+            <div className='list-wrapper'>
               <ul className='list-unstyled'>
                 {categories}
               </ul>
             </div>
+            <div className='list-wrapper-summary'>{this.getTotal(categories, 'Category', 'Categories')}</div>
           </div>
         </div>
       </div>

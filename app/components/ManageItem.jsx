@@ -30,7 +30,7 @@ var ManageItem = React.createClass({
     return (
       <li className={'manage-list-item' + statusClass}>
         <div className='top-row'>
-          <span className='item-id field'>{props.id}</span>
+          <span className='item-id field text-clip'>{props.id}</span>
           <span className='item-name field text-clip'>{util.capitalize(props.name)}</span>
           <span className='item-details field text-clip'>{props.details}</span>
         </div>

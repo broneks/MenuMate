@@ -17,7 +17,7 @@
     .bottom-row {
       padding-top: $s-general;
       margin-top: $s-general;
-      border-top: 1px dashed $c-light-gray;
+      border-top: 1px dashed $c-border;
 
       @include clearfix;
     }
@@ -28,24 +28,23 @@
       }
     }
 
-    &:hover {
-      background-color: $c-hover;
-    }
-
     .field {
       display: table-cell;
+      max-width: 100 / 3 + %;
     }
 
     .item-id,
     .item-details {
       width: 10%;
+      max-width: 50px;
+      padding-right: $s-general;
     }
     .item-details:empty {
       content: "";
       width: 100%;
     }
     .item-name {
-      max-width: 25%;
+      width: 85%;
       font-weight: bold;
     }
     .item-status {
@@ -68,4 +67,11 @@
       height: auto;
     }
   }
+}
+
+.list-wrapper-summary {
+  padding: $s-general;
+  border: 1px solid $c-border;
+  border-top: 0;
+  font-size: 0.9em;
 }

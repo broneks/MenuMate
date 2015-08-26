@@ -18,10 +18,13 @@ module.exports = function(router) {
       Category
         .find()
         .lean()
+        .sort('name')
         .exec(function(err, categories) {
-          if (err) res.send(err);
-
-          res.json(categories);
+          if (err) {
+            res.send(err);
+          } else {
+            res.json(categories);
+          }
         });
     })
 
@@ -37,9 +40,11 @@ module.exports = function(router) {
       category.name = req.body.name;
 
       category.save(function(err) {
-        if (err) res.send('category could not be created. please try again.');
-
-        res.json({ message: 'category created' });
+        if (err) {
+          res.json({ message: 'category could not be created. please try again.' });
+        } else {
+          res.json({ message: 'category created' });
+        }
       });
     });
 
@@ -49,9 +54,11 @@ module.exports = function(router) {
         .findById(req.params.category_id)
         .lean()
         .exec(function(err, category) {
-          if (err) res.send(err);
-
-          res.json(category);
+          if (err) {
+            res.send(err);
+          } else {
+            res.json(category);
+          }
         });
     })
 
@@ -71,9 +78,11 @@ module.exports = function(router) {
 
 
         category.save(function() {
-          if (err) res.send('category could not be updated. please try again.');
-
-          res.json({ message: 'category updated' });
+          if (err) {
+            res.json({ message: 'category could not be updated. please try again.' });
+          } else {
+            res.json({ message: 'category updated' });
+          }
         });
       });
     })

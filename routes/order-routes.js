@@ -72,14 +72,16 @@ module.exports = function(router) {
       }
 
       order.save(function(err, order) {
-        if (err) res.send('an unexpected error occurred');
-
-        res.json({
-          message: 'order created',
-          context: {
-            id: order._id
-          }
-        });
+        if (err) {
+          res.send('an unexpected error occurred');
+        } else {
+          res.json({
+            message: 'order created',
+            context: {
+              id: order._id
+            }
+          });
+        }
       });
     });
 
@@ -204,9 +206,11 @@ module.exports = function(router) {
         }
 
         order.save(function() {
-          if (err) res.send('an unexpected error occurred');
-
-          res.json({ message: 'order updated' });
+          if (err) {
+            res.send('an unexpected error occurred');
+          } else {
+            res.json({ message: 'order updated' });
+          }
         });
       });
     })

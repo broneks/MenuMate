@@ -33,9 +33,11 @@ module.exports = function(router) {
         .sort({'name': 'asc'})
         .populate('category')
         .exec(function (err, items) {
-          if (err) res.send(err);
-
-          res.json(items);
+          if (err) {
+            res.send(err);
+          } else {
+            res.json(items);
+          }
         });
     })
 
@@ -54,9 +56,11 @@ module.exports = function(router) {
         item.onsale      = req.body.onsale === 'true';
 
         item.save(function(err) {
-          if (err) res.send('menu item could not be created. please try again.');
-
-          res.json({ message: 'menu item created' });
+          if (err) {
+            res.json({ message: 'menu item could not be created. please try again.' });
+          } else {
+            res.json({ message: 'menu item created' });
+          }
         });
       } else if (errors) {
         res.status(422).json({ 'errors': errors });
@@ -72,9 +76,11 @@ module.exports = function(router) {
         .lean()
         .populate('category')
         .exec(function(err, item) {
-          if (err) res.send(err);
-
-          res.json(item);
+          if (err) {
+            res.send(err);
+          } else {
+            res.json(item);
+          }
         });
     })
 
@@ -82,30 +88,34 @@ module.exports = function(router) {
       MenuItem.findById(req.params.item_id, function(err, item) {
         if (err) res.send(err);
 
-        var item      = new MenuItem();
         var imageFile = req.files.image;
         var errors    = validateMenuItems(req).validationErrors();
 
-        if (imageFile) {
-          item.image       = req.files.image.path.replace('public', '');
-          item.name        = req.body.name;
-          item.category    = req.body.category;
-          item.ingredients = req.body.ingredients;
-          item.description = req.body.description;
-          item.price       = parseFloat(req.body.price);
-          item.onsale      = req.body.onsale === 'true';
-
-          item.save(function(err) {
-            if (err) res.send('menu item could not be updated. please try again.');
-
-            res.json({ message: 'menu item updated' });
-          });
-        } else if (errors) {
+        if (errors) {
           res.status(422).json({ 'errors': errors });
-        } else {
-          res.end();
+          return;
         }
+
+        item.name        = req.body.name;
+        item.category    = req.body.category;
+        item.ingredients = req.body.ingredients;
+        item.description = req.body.description;
+        item.price       = parseFloat(req.body.price);
+        item.onsale      = req.body.onsale === 'true';
+
+        if (imageFile) {
+          item.image = req.files.image.path.replace('public', '');
+        }
+
+        item.save(function(err) {
+          if (err) {
+            res.json({ message: 'menu item could not be updated. please try again.' });
+          } else {
+            res.json({ message: 'menu item updated' });
+          }
+        });
       });
+      console.log('hello');
     })
 
     .delete(function(req, res) {

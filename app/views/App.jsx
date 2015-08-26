@@ -31,8 +31,9 @@ var Login      = require('./Login.jsx');
 var Logout     = require('./Logout.jsx');
 var ManageMenu = require('./ManageMenu.jsx');
 var CreateMenuItem     = require('./CreateMenuItem.jsx');
+var EditMenuItem       = require('./EditMenuItem.jsx');
 var CreateMenuCategory = require('./CreateMenuCategory.jsx');
-
+var EditMenuCategory   = require('./EditMenuCategory.jsx');
 
 
 var App = React.createClass({
@@ -62,32 +63,32 @@ var App = React.createClass({
 
   componentDidMount: function() {
     // initalize authenticated flag
-    // this.isAuthenticated(function(res) {
-    //   this.setState({
-    //     authenticated: res
-    //   });
-    // });
+    this.isAuthenticated(function(res) {
+      this.setState({
+        authenticated: res
+      });
+    });
   },
 
   componentWillReceiveProps: function() {
     // clear flash messages when switching routes
     this.flashMessageHide();
 
-    // this.isAuthenticated(function(res) {
-    //   if (res) {
-    //     if (!this.state.authenticated) {
-    //       this.setState({
-    //         authenticated: true
-    //       });
-    //     }
-    //   } else {
-    //     if (this.state.authenticated) {
-    //       this.setState({
-    //         authenticated: false
-    //       });
-    //     }
-    //   }
-    // });
+    this.isAuthenticated(function(res) {
+      if (res) {
+        if (!this.state.authenticated) {
+          this.setState({
+            authenticated: true
+          });
+        }
+      } else {
+        if (this.state.authenticated) {
+          this.setState({
+            authenticated: false
+          });
+        }
+      }
+    });
   },
 
   render: function() {
@@ -106,14 +107,14 @@ var App = React.createClass({
 
     Object.seal(global);
 
-    // if (state.authenticated) {
+    if (state.authenticated) {
       authLinks = [
         <li key={0}><Link to='manageMenu'>Manage Menu</Link></li>
       ];
       loginOrLogout = <li className='auth-link logout'><Link to='logout'>Logout</Link></li>;
-    // } else {
-    //   loginOrLogout = <li className='auth-link login'><Link to='auth'>Login</Link></li>;
-    // }
+    } else {
+      loginOrLogout = <li className='auth-link login'><Link to='auth'>Login</Link></li>;
+    }
 
     return (
       <div id='main-wrapper'>
@@ -150,11 +151,11 @@ var Auth = React.createClass({
   mixins: [authMixin, Navigation],
 
   checkAuth: function() {
-    // this.isAuthenticated(function(res) {
-    //   if (!res) {
-    //     this.transitionTo('auth');
-    //   }
-    // });
+    this.isAuthenticated(function(res) {
+      if (!res) {
+        this.transitionTo('auth');
+      }
+    });
   },
 
   componentDidMount: function() {
@@ -196,8 +197,10 @@ var routes = (
       <Route name='logout' path={app.url.path +'/auth/logout'} handler={Logout} />
 
       <Route name='createMenuItem' path={app.url.path +'/auth/create-menu-item'} handler={CreateMenuItem} />
+      <Route name='editMenuItem' path={app.url.path + '/auth/edit-menu-item/:id'} handler={EditMenuItem} />
 
       <Route name='createMenuCategory' path={app.url.path +'/auth/create-menu-category'} handler={CreateMenuCategory} />
+      <Route name='editMenuCategory' path={app.url.path + '/auth/edit-menu-category/:id'} handler={EditMenuCategory} />
 
       <Route name='manageMenu' path={app.url.path +'/auth/manage-menu'} handler={ManageMenu} />
     </Route>
