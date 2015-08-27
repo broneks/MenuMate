@@ -100,16 +100,7 @@ var Done = React.createClass({
     return (
       <div className="done">
         <div className='order-info'>
-          <div className='row'>
-            <div className='six columns'>
-              <div className='order-number'>Order #{state.order._id}</div>
-            </div>
-
-            <div className='six columns order-created v-margin'>
-              <span className='field-label label-width-auto'>Paid On:</span>
-              <span>{paidOn}</span>
-            </div>
-          </div>
+          <div className='order-number'>Order #{state.order._id}</div>
         </div>
 
         {this.showChangeDueSection()}

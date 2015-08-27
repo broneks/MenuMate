@@ -68,7 +68,7 @@ var BasketActions = React.createClass({
               ref='cancelModal'
               disabled={this.props.items.length === 0}
               buttonText='Cancel'
-              buttonBlock={true}
+              buttonClass='button-block'
               onOk={this.clearBasket}
             >
               <ModalBody>

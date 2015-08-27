@@ -50,7 +50,7 @@ var StripePayment = React.createClass({
 
   render: function() {
     return (
-      <button className='button button-block' onClick={this.submitPayment}>
+      <button className='button button-block button-primary' onClick={this.submitPayment}>
         <i className='fa fa-credit-card icon-spacing'></i>
         Debit / Credit
       </button>

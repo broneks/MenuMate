@@ -25,6 +25,7 @@ function groupAndCountWithId(curr) {
   this[name].count = (this[name].count || 0) + 1;
 }
 
+
 function analyzeOrderPatterns(orders) {
   if (!orders.length) return;
 
@@ -66,6 +67,19 @@ function analyzeOrderPatterns(orders) {
           return [item._id, item.name];
         })
         .forEach(groupAndCountWithId, itemsSold)
+    });
+  itemsSold = Object.keys(itemsSold)
+    .map(function(name) {
+      var obj = itemsSold[name];
+
+      return {
+        name:  name,
+        count: obj.count,
+        id:    obj.id
+      };
+    })
+    .sort(function(a, b) {
+      return a.count < b.count;
     });
 
   // payment methods

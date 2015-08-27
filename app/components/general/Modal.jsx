@@ -13,13 +13,14 @@ var Modal = React.createClass({
     onClose:     React.PropTypes.func,
     onOk:        React.PropTypes.func,
     buttonText:  React.PropTypes.string.isRequired,
-    buttonBlock: React.PropTypes.bool,
+    buttonClass: React.PropTypes.string,
     buttonIcon:  React.PropTypes.string
   },
 
   getDefaultProps: function() {
     return {
-      disabled: false
+      disabled:    false,
+      buttonClass: ''
     };
   },
 
@@ -78,12 +79,11 @@ var Modal = React.createClass({
       }
     }, this);
 
-    var buttonBlock = props.buttonBlock ? ' button-block' : '';
-    var buttonIcon  = props.buttonIcon ? <i className={props.buttonIcon}></i> : null;
+    var buttonIcon = props.buttonIcon ? <i className={props.buttonIcon}></i> : null;
 
     return (
       <div className='modal-group'>
-        <button className={'modal-button button' + buttonBlock} onClick={this.open} disabled={props.disabled}>
+        <button className={'modal-button button ' + props.buttonClass} onClick={this.open} disabled={props.disabled}>
           {buttonIcon}
           {props.buttonText}
         </button>

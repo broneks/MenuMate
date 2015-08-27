@@ -28,7 +28,7 @@ var Menu = React.createClass({
     return {
       items:    {},
       category: null,
-      listView: true,
+      listView: false,
       loading:  true
     };
   },

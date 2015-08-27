@@ -169,7 +169,7 @@ var Checkout = React.createClass({
               <Modal
                 ref='cashModal'
                 buttonText='Cash'
-                buttonBlock={true}
+                buttonClass='button-block button-primary'
                 buttonIcon='fa fa-money icon-spacing'
                 onClose={this.onCashModalClose}
                 title='Cash Payment'

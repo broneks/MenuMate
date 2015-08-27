@@ -101,7 +101,7 @@ var CashCalculator = React.createClass({
               <button className='button button-block' onClick={this.cancel}>Cancel</button>
             </div>
             <div className='eight columns v-margin'>
-              <button className='button button-block' onClick={this.submit}>Submit</button>
+              <button className='button button-block button-primary' onClick={this.submit}>Submit</button>
             </div>
           </div>
         </div>

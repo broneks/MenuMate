@@ -28,11 +28,11 @@ var OrdersInfo = React.createClass({
       }
     } else {
       itemsSold = props.orders.info.itemsSold;
-      itemsSold = util.keys(itemsSold).map(function(name, index) {
-        var item = itemsSold[name];
+      itemsSold = itemsSold.map(function(item, index) {
+        var bold = index === 0 ? 'text-bold' : '';
 
         return (
-          <div key={index} title={'ID: ' + item.id}>{util.capitalize(name)}: <span className='u-pull-right'>{item.count}</span></div>
+          <div key={index} title={'ID: ' + item.id} className={bold}>{util.capitalize(item.name)}: <span className='u-pull-right'>{item.count}</span></div>
         );
       });
 
