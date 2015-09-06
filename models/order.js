@@ -22,9 +22,11 @@ var OrderSchema = new mongoose.Schema({
   },
   method: String,
   payment: Number,
+  discount: {
+    type: Number,
+    default: 0
+  },
   change: Number,
-  email: String,
-  postal: String,
   created: {
     type: Date,
     default: Date.now

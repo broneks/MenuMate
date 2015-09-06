@@ -21,9 +21,21 @@
   }
 }
 
+.checkbox-wrapper {
+  label {
+    margin-bottom: 1.5rem;
+  }
+
+  input[type="checkbox"] {
+    margin: 0;
+  }
+}
+
+.checkbox-label,
 .radio-label {
   padding-right: $s-general;
 }
+
 
 .label {
   display: inline-block;
@@ -32,6 +44,11 @@
   letter-spacing: 1px;
   font-weight: bold;
   margin-bottom: .5rem;
+}
+
+.label-block {
+  display: block;
+  margin: 0;
 }
 
 .field-label {

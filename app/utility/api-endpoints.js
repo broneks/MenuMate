@@ -10,6 +10,12 @@ module.exports = {
     standard:   base + 'menu-items/',
     byCategory: base + 'by-category/menu-items/'
   },
+  customers:  {
+    standard: base + 'customers/',
+    byOrder:  base + 'by-order/customers/',
+    byCode:   base + 'by-code/customers/'
+  },
+  loyalty:    base + 'loyalty/',
   categories: base + 'categories/',
   orders:     base + 'orders/',
   pending:    base + 'orders/pending/',

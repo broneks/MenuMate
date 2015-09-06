@@ -144,7 +144,7 @@ module.exports = function(router) {
         .find()
         .lean()
         .where({status: 'paid'})
-        .where('created')
+        .where('updated')
           .gte(new Date(params.startDate))
           .lte(params.endDate ? new Date(params.endDate) : new Date())
         .populate('items')

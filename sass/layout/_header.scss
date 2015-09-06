@@ -1,35 +1,68 @@
 #main-header {
   border-bottom: 1px solid $c-border;
   margin-bottom: $s-general * 2;
+  @include clearfix;
+}
 
-  nav {
-    ul {
-      @include clearfix;
+.main-nav {
+  width: 100%;
+  @include clearfix;
+
+  ul {
+    @include clearfix;
+  }
+
+  li {
+    float: left;
+    margin: 0;
+
+    &.auth-link {
+      float: right;
+      padding: 0 $s-general;
+      border-left: 1px solid $c-border;
     }
+  }
 
-    li {
-      float: left;
-      margin: 0;
+  a {
+    display: block;
+    padding: $s-general;
+  }
 
-      &.auth-link {
-        float: right;
-        padding: 0 $s-general;
-        border-left: 1px solid $c-border;
-      }
-    }
-
-    a {
-      display: block;
-      padding: $s-general;
-    }
+  .main-links {
+    float: left;
+  }
+  .auth-links {
+    float: right;
   }
 }
 
 #logo {
-  float: left;
+  width: 100%;
   font-size: 2rem;
-  border-right: 1px solid $c-border;
+  border-bottom: 1px solid $c-border;
   margin: 0;
   padding: $s-general $s-general * 2;
   letter-spacing: 2px;
+  text-align: center;
+}
+
+#main-header,
+.main-nav,
+#logo {
+  box-sizing: border-box;
+}
+
+@media screen and (min-width: 750px) {
+  .main-nav {
+    float: right;
+    width: 80%;
+  }
+
+  #logo {
+    float: left;
+    width: 20%;
+    border-bottom: 0;
+    border-right: 1px solid $c-border;
+  }
+
 }

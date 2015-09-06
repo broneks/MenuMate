@@ -9,7 +9,8 @@ var APIroutes = {
   order:    require('./order-routes'),
   review:   require('./review-routes'),
   auth:     require('./auth-routes'),
-  manage:   require('./manage-menu-routes')
+  manage:   require('./manage-menu-routes'),
+  loyalty:  require('./customer-loyalty-routes')
 };
 
 var React  = require('react/addons');

@@ -16,7 +16,7 @@ var Login = React.createClass({
   mixins: [authMixin, Navigation],
 
   redirect: function() {
-    this.transitionTo('main');
+    this.transitionTo('manageMenu');
   },
 
   login: function() {

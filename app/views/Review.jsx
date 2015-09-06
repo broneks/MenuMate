@@ -11,7 +11,7 @@ var util = require('../utility/util');
 var LoadingSpinner  = require('../components/general/LoadingSpinner.jsx');
 var SelectDateRange = require('../components/general/SelectDateRange.jsx');
 var OrdersInfo      = require('../components/OrdersInfo.jsx');
-var CustomerInfo    = require('../components/CustomerInfo.jsx');
+var LoyaltyInfo     = require('../components/LoyaltyInfo.jsx');
 
 
 var Review = React.createClass({
@@ -132,7 +132,7 @@ var Review = React.createClass({
 
         <OrdersInfo orders={state.review.orders} />
 
-        <CustomerInfo orders={state.review.orders} />
+        <LoyaltyInfo orders={state.review.orders} />
       </div>
     );
   }

@@ -15,6 +15,7 @@ var Basket = React.createClass({
   propTypes: {
     order:              React.PropTypes.object,
     item:               React.PropTypes.object,
+    discount:           React.PropTypes.number,
     reactivateMenuItem: React.PropTypes.func,
     renderStaticItems:  React.PropTypes.bool
   },
@@ -160,7 +161,7 @@ var Basket = React.createClass({
             </div>
           </div>
 
-          <BasketSummary quantities={state.quantities} total={state.total} />
+          <BasketSummary quantities={state.quantities} total={state.total} discount={this.props.discount} />
         </div>
       );
     }

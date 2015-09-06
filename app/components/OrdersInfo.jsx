@@ -63,7 +63,7 @@ var OrdersInfo = React.createClass({
 
     return (
       <div className='order-review'>
-        <DividingTitle title='Order Info' dashed={true} />
+        <DividingTitle title='Orders Info' dashed={true} />
 
         {info}
       </div>

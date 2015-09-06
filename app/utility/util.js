@@ -9,7 +9,11 @@ var arraySlice = Array.prototype.slice;
 
 var util = {
   asCurrency: function(str) {
-    return '$' + parseFloat(Math.round(str * 100) / 100).toFixed(2);
+    var num = parseFloat(str);
+
+    if (!isNaN(num)) {
+      return '$' + parseFloat(Math.round(num * 100) / 100).toFixed(2);
+    }
   },
 
   getMonthName: (function() {
@@ -35,20 +39,28 @@ var util = {
       var month = util.getMonthName(date.getMonth());
       var year  = date.getFullYear();
 
-      var time = options.time ? precedingZero(date.getHours()) + ':' + precedingZero(date.getMinutes()) : '';
+      var time = options.time ? ' at ' + precedingZero(date.getHours()) + ':' + precedingZero(date.getMinutes()) : '';
 
-      return month + ' ' + day + ', ' + year + ' at ' + time;
+      return month + ' ' + day + ', ' + year + time;
     };
   })(),
 
   capitalize: function(str) {
-    return str.toLowerCase().replace(/\b\w/g, function(m) {
-      return m.toUpperCase();
-    });
+    if (util.isString(str)) {
+      return str.toLowerCase().replace(/\b\w/g, function(m) {
+        return m.toUpperCase();
+      });
+    }
   },
 
   uppercase: function(str) {
-    return str.toUpperCase();
+    if (util.isString(str)) {
+      return str.toUpperCase();
+    }
+  },
+
+  isString: function(value) {
+    return toString.call(value) === '[object String]';
   },
 
   isArray: (function() {
@@ -78,6 +90,8 @@ var util = {
   },
 
   isObjEmpty: function(obj) {
+    if (obj === null) return true;
+
     return keys(obj).length === 0;
   },
 
@@ -88,7 +102,7 @@ var util = {
 
       if (splitKey[0] === 'input') {
         node = refs[key].getDOMNode();
-        
+
         if (refs[key].getValue) {
           obj[splitKey[1]] = refs[key].getValue();
         } else if (node.value && node.type !== 'file') {

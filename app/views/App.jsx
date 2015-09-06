@@ -30,6 +30,7 @@ var NotFound = require('./NotFound.jsx');
 var Login      = require('./Login.jsx');
 var Logout     = require('./Logout.jsx');
 var ManageMenu = require('./ManageMenu.jsx');
+var ManageLoyalty      = require('./ManageLoyalty.jsx');
 var CreateMenuItem     = require('./CreateMenuItem.jsx');
 var EditMenuItem       = require('./EditMenuItem.jsx');
 var CreateMenuCategory = require('./CreateMenuCategory.jsx');
@@ -107,30 +108,36 @@ var App = React.createClass({
 
     Object.seal(global);
 
-    if (state.authenticated) {
+    // if (state.authenticated) {
       authLinks = [
-        <li key={0}><Link to='manageMenu'>Manage Menu</Link></li>
+        <ul key={0} className='list-unstyled auth-links'>
+          <li key={1}><Link to='manageMenu'>Manage Menu</Link></li>
+          <li key={2}><Link to='manageLoyalty'>Manage Loyalty</Link></li>
+          <li key={3} className='auth-link logout'><Link to='logout'>Logout</Link></li>
+        </ul>
       ];
-      loginOrLogout = <li className='auth-link logout'><Link to='logout'>Logout</Link></li>;
-    } else {
-      loginOrLogout = <li className='auth-link login'><Link to='auth'>Login</Link></li>;
-    }
+    // } else {
+      // authLinks = [
+      //   <ul key={0} className='list-unstyled auth-links'>
+      //     <li key={1} className='auth-link login'><Link to='auth'>Login</Link></li>
+      //   </ul>
+      // ];
+    // }
 
     return (
       <div id='main-wrapper'>
         <header id='main-header'>
           <h1 id='logo'>{app.name}</h1>
 
-          <nav>
-            <ul className='list-unstyled'>
+          <nav className='main-nav'>
+            <ul className='list-unstyled main-links'>
               <li><Link to='main'>Main</Link></li>
               <li><Link to='pending'>Pending</Link></li>
               <li><Link to='paid'>Paid</Link></li>
               <li><Link to='review'>Review</Link></li>
-
-              {authLinks}
-              {loginOrLogout}
             </ul>
+
+            {authLinks}
           </nav>
         </header>
 
@@ -151,11 +158,11 @@ var Auth = React.createClass({
   mixins: [authMixin, Navigation],
 
   checkAuth: function() {
-    this.isAuthenticated(function(res) {
-      if (!res) {
-        this.transitionTo('auth');
-      }
-    });
+    // this.isAuthenticated(function(res) {
+    //   if (!res) {
+    //     this.transitionTo('auth');
+    //   }
+    // });
   },
 
   componentDidMount: function() {
@@ -203,6 +210,7 @@ var routes = (
       <Route name='editMenuCategory' path={app.url.path + '/auth/edit-menu-category/:id'} handler={EditMenuCategory} />
 
       <Route name='manageMenu' path={app.url.path +'/auth/manage-menu'} handler={ManageMenu} />
+      <Route name='manageLoyalty' path={app.url.path +'/auth/manage-loyalty'} handler={ManageLoyalty} />
     </Route>
 
     <NotFoundRoute handler={NotFound} />

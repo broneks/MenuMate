@@ -18,6 +18,7 @@ var DividingTitle  = require('../components/general/DividingTitle.jsx');
 var LoadingSpinner = require('../components/general/LoadingSpinner.jsx');
 var Modal          = require('../components/general/Modal.jsx');
 var ModalBody      = require('../components/general/ModalBody.jsx');
+var CustomerInfo   = require('../components/CustomerInfo.jsx');
 
 
 var Checkout = React.createClass({
@@ -30,10 +31,38 @@ var Checkout = React.createClass({
     };
   },
 
+  setDiscount: function(value) {
+    if (value) {
+      request
+        .put(api.orders + this.getIdParam())
+        .send({discount: value})
+        .end(function(err, res) {
+          if (err) {
+            if (err.status === 422) {
+              this.props.APP.flashMessage.show('error', res.body.errors);
+            } else {
+              console.log(err);
+            }
+            return;
+          }
+
+          this.props.APP.flashMessage.show('info', res.body.message);
+
+          this.setState({
+            order: res.body.context.order
+          });
+        }.bind(this));
+    }
+  },
+
+  getTotal: function() {
+    return (this.state.order.total * this.props.APP.config.tax) - ('discount' in this.state.order ? this.state.order.discount : 0);
+  },
+
   submitPayment: function(payment, paymentMethod) {
-    var refs   = this.refs;
-    var method = paymentMethod || 'cash';
-    var total  = this.state.order.total * this.props.APP.config.tax;
+    var refs     = this.refs;
+    var method   = paymentMethod || 'cash';
+    var total    = this.getTotal();
     var checkoutDetails;
 
     if (payment) {
@@ -43,10 +72,10 @@ var Checkout = React.createClass({
         refs.cashCalculator.clearError();
 
         checkoutDetails = {
-          method  : method,
-          status  : 'paid',
-          payment : payment,
-          change  : payment - total
+          method   : method,
+          status   : 'paid',
+          payment  : payment,
+          change   : payment - total
         };
 
         util.addInputsToObj(checkoutDetails, refs);
@@ -54,7 +83,6 @@ var Checkout = React.createClass({
         request
           .put(api.orders + this.getIdParam())
           .send(checkoutDetails)
-          .set('Accept', 'application/json')
           .end(function(err, res) {
             if (err) {
               this.refs.cashModal.close();
@@ -73,66 +101,9 @@ var Checkout = React.createClass({
     }
   },
 
-  showCustomerInfo: function() {
-    var state = this.state;
-    var postal;
-    var email;
-
-    if (state.order.status === 'paid') {
-      if (state.order.postal || state.order.email) {
-        postal = state.order.postal ? (
-          <div className='six columns customer-postal v-margin'>
-            <span className='field-label'>Postal Code:</span>
-            <span>{state.order.postal}</span>
-          </div>
-        ) : null;
-
-        email = state.order.email ? (
-          <div className='six columns customer-email v-margin'>
-            <span className='field-label'>Email:</span>
-            <span>{state.order.email}</span>
-          </div>
-        ) : null;
-
-        return (
-          <div>
-            <DividingTitle dashed={true} title='Customer Info' />
-
-            <div className='customer-info v-margin'>
-              <div className='row'>
-                {postal}
-                {email}
-              </div>
-            </div>
-          </div>
-        );
-      }
-
-      return;
-    }
-
-    return (
-      <div>
-        <DividingTitle dashed={true} title='Customer Info' />
-
-        <div className='customer-info v-margin'>
-          <div className='row'>
-            <div className='six columns customer-postal v-margin'>
-              <input type='text' ref='input_postal' name='postal' placeholder='postal code' maxLength='6' onBlur={this.uppercase.bind(null, 'input_postal')} />
-            </div>
-
-            <div className='six columns customer-email v-margin'>
-              <input type='text' ref='input_email' name='email' placeholder='email' />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  },
-
   showPaymentSection: function() {
     var state = this.state;
-    var infoMessage = 'Total: ' + util.asCurrency(state.order.total * this.props.APP.config.tax);
+    var infoMessage = 'Total: ' + util.asCurrency(this.getTotal());
 
     if (state.order.status === 'paid') {
       return (
@@ -186,7 +157,7 @@ var Checkout = React.createClass({
             </div>
 
             <div className='six columns payment-card v-margin'>
-              <StripePayment total={this.state.order.total * this.props.APP.config.tax} onSuccess={this.submitPayment} />
+              <StripePayment total={this.getTotal()} onSuccess={this.submitPayment} />
             </div>
           </div>
         </div>
@@ -264,10 +235,11 @@ var Checkout = React.createClass({
 
         <Basket
           order={state.order}
+          discount={state.order.discount}
           renderStaticItems={true}
         />
 
-        {this.showCustomerInfo()}
+        <CustomerInfo order={state.order} APP={this.props.APP} setDiscount={this.setDiscount} />
 
         <DividingTitle dashed={true} title='Payment' />
 

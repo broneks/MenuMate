@@ -20,9 +20,6 @@ var validateOrderUpdate = function(req) {
   // req.checkBody('payment', 'payment must be a number').optional().isNumberStr();
   // req.checkBody('change', 'change must be a number').optional().isNumberStr();
 
-  req.checkBody('postal', 'postal code must be in the format of M1M1M1').optional().isPostal();
-  req.checkBody('email', 'email must be in the right format of abc@email.com').optional().isEmail();
-
   return req;
 };
 
@@ -64,8 +61,6 @@ module.exports = function(router) {
       order.method     = req.body.method  || '';
       order.payment    = req.body.payment || 0;
       order.change     = req.body.change  || 0;
-      order.postal     = req.body.postal  || '';
-      order.email      = req.body.email   || '';
 
       if (req.body.status) {
         order.status = req.body.status;
@@ -189,12 +184,12 @@ module.exports = function(router) {
         //
         // order.items      = req.body.items;
         // order.quantities = req.body.quantities;
-        // order.total      = req.body.total
-        order.method  = req.body.method || '';
-        order.postal  = req.body.postal || '';
-        order.email   = req.body.email  || '';
+        // order.total      = req.body.total`
         order.updated = Date.now();
 
+        if (req.body.method) {
+          order.method = req.body.method;
+        }
         if (req.body.status) {
           order.status = req.body.status;
         }
@@ -204,12 +199,20 @@ module.exports = function(router) {
         if (req.body.change) {
           order.change = req.body.change;
         }
+        if (req.body.discount) {
+          order.discount = req.body.discount;
+        }
 
         order.save(function() {
           if (err) {
             res.send('an unexpected error occurred');
           } else {
-            res.json({ message: 'order updated' });
+            res.json({
+              message: 'order updated',
+              context: {
+                order: order
+              }
+            });
           }
         });
       });

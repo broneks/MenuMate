@@ -11,7 +11,8 @@ var util = require('../utility/util');
 var BasketSummary = React.createClass({
   propTypes: {
     quantities: React.PropTypes.array.isRequired,
-    total:      React.PropTypes.number.isRequired
+    total:      React.PropTypes.number.isRequired,
+    discount:   React.PropTypes.number
   },
 
   getQuantitySum: function(quantities) {
@@ -34,13 +35,25 @@ var BasketSummary = React.createClass({
     var subtotal = util.asCurrency(props.total);
     var total    = util.asCurrency(props.total * APP.tax);
 
+    var discount        = this.props.discount;
+    var discountClass   = discount ? ' original-total': '';
+    var discountWrapper = discount ? (
+        <span className='discount-wrapper'>
+          <span className='discount'>&minus;&nbsp;{util.asCurrency(discount)}</span>
+          <div className='discounted-total'>{util.asCurrency((props.total * APP.tax) - discount)}</div>
+        </span>
+    ) : null;
+
     return (
       <div className='basket-summary-wrapper'>
         <div className='basket-summary'>
           <div className='basket-summary-quantity field'>{quantity} Item(s)</div>
           <div className='basket-summary-price field'>
             <span className='subtotal'>{subtotal}</span>
-            <span className='total'>{total}</span>
+            <span className='total'>
+              <span className={discountClass}>{total}</span>
+              {discountWrapper}
+            </span>
           </div>
         </div>
       </div>

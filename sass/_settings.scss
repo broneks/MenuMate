@@ -15,6 +15,7 @@ $c-blue: #1EAEDB;
 $c-blue-dark: darken($c-blue, 5%);
 $c-light-gray: #f9f9f9;
 $c-green: #27ae60;
+$c-discount: honeydew;
 
 
 // applied colors
@@ -38,7 +39,6 @@ $c-button-text-dark: $c-gray;
 $pending   : yellow;
 $paid      : $c-green;
 $cancelled : black;
-
 
 // spacing
 $s-general: 8px;

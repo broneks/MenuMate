@@ -112,6 +112,7 @@
     }
 
     .total {
+      position: relative;
       border-left: 1px solid $c-border;
     }
   }
@@ -126,4 +127,25 @@
   padding: $s-general * 2 0;
   text-align: center;
   letter-spacing: 1px;
+}
+
+.original-total {
+  text-decoration: line-through;
+}
+.discounted-total {
+  margin-top: $s-general;
+  color: $c-green;
+}
+.discount {
+  position: absolute;
+  height: 25px;
+  top: -26px;
+  right: 1px;
+  padding: 0 $s-general;
+  border-top-left-radius: $r-general;
+  background: $c-discount;
+  display: inline-block;
+  font-style: italic;
+  font-weight: normal;
+  color: $c-muted;
 }
