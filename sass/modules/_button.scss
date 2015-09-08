@@ -1,0 +1,10 @@
+.cash-button {
+  background-color: $c-green;
+  color: #fff;
+
+  &:hover,
+  &:focus {
+    background-color: darken($c-green, 5%);
+    color: #fff;
+  }
+}

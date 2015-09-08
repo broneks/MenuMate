@@ -4,6 +4,8 @@
 
 var React = require('react/addons');
 
+var util = require('../../utility/util');
+
 
 var Modal = React.createClass({
   propTypes: {
@@ -33,6 +35,8 @@ var Modal = React.createClass({
 
   open: function(e) {
     document.body.classList.add(this.state.openClass);
+
+    util.scrollToTop();
 
     this.setState({
       open: true

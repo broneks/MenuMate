@@ -6,6 +6,10 @@
   background: $c-light-gray;
 }
 
+.is-invalid-form {
+  @include animation(shake 1s ease);
+}
+
 button[disabled]:hover,
 button[disabled]:focus {
   border: 1px solid $c-button-border;

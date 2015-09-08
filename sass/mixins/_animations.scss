@@ -6,3 +6,25 @@
     opacity: 1;
   }
 }
+
+$shake-distance: 8px;
+
+@include keyframes(shake) {
+  0%   {
+    margin-left:  $shake-distance;
+    margin-right: -$shake-distance;
+  }
+  10%  {
+    margin-left:  -$shake-distance;
+    margin-right: $shake-distance;
+  }
+  30%  {
+    margin-left:  $shake-distance;
+    margin-right: -$shake-distance;
+  }
+  60%  {
+    margin-left:  -$shake-distance;
+    margin-right: $shake-distance;
+  }
+  100% { margin-left: 0;  }
+}

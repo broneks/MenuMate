@@ -107,7 +107,7 @@ var Checkout = React.createClass({
 
     if (state.order.status === 'paid') {
       return (
-        <div className='payment-wrapper'>
+        <div className='payment-wrapper v-double-margin'>
           <div className='field-group'>
             <span className='field-label'>Paid On:</span>
             <span>{util.formatDate(state.order.updated, { time: true })}</span>
@@ -140,7 +140,7 @@ var Checkout = React.createClass({
               <Modal
                 ref='cashModal'
                 buttonText='Cash'
-                buttonClass='button-block button-primary'
+                buttonClass='button-block cash-button'
                 buttonIcon='fa fa-money icon-spacing'
                 onClose={this.onCashModalClose}
                 title='Cash Payment'
