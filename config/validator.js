@@ -15,6 +15,11 @@ module.exports = {
       var validPostal = /^([a-zA-Z]\d[a-zA-Z]\d[a-zA-Z]\d)$/;
 
       return validPostal.test(param);
+    },
+    isCode: function(param) {
+      var validCode = /\b[0-9]{3}[A-Z]{3}\b/;
+
+      return validCode.test(param);
     }
   },
   errorFormatter: function(param, msg, value) {

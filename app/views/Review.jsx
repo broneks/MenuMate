@@ -11,7 +11,6 @@ var util = require('../utility/util');
 var LoadingSpinner  = require('../components/general/LoadingSpinner.jsx');
 var SelectDateRange = require('../components/general/SelectDateRange.jsx');
 var OrdersInfo      = require('../components/OrdersInfo.jsx');
-var LoyaltyInfo     = require('../components/LoyaltyInfo.jsx');
 
 
 var Review = React.createClass({
@@ -131,8 +130,6 @@ var Review = React.createClass({
         <SelectDateRange onChange={this.updateDateRange} yearsRange={state.review.orders.general.years} />
 
         <OrdersInfo orders={state.review.orders} />
-
-        <LoyaltyInfo orders={state.review.orders} />
       </div>
     );
   }

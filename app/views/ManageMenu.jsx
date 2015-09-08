@@ -90,15 +90,11 @@ var ManageMenu = React.createClass({
             key={index}
             id={menuItem._id}
             name={menuItem.name}
-            details={menuItem.category.name}
+            details={util.capitalize(menuItem.category.name)}
             status={menuItem.onsale}
             editLink={this.props.APP.config.url.path + '/auth/edit-menu-item/' + menuItem._id}
           />
         );
-      }, this);
-
-      usedCategories = state.menuItems.map(function(menuItem, index) {
-        return menuItem.category.name;
       }, this);
     } else {
       menuItems = <div className='message-center text-muted'>no menu items</div>;
@@ -111,7 +107,6 @@ var ManageMenu = React.createClass({
             key={index}
             id={category._id}
             name={category.name}
-            status={usedCategories.indexOf(category.name) > -1}
             editLink={this.props.APP.config.url.path + '/auth/edit-menu-category/' + category._id}
           />
         );
@@ -130,11 +125,11 @@ var ManageMenu = React.createClass({
 
         <div className='row'>
           <div className='six columns v-margin'>
-            <Link to='createMenuItem' className='button button-block'>Create Menu Item</Link>
+            <Link to='createMenuCategory' className='button button-block'>Create Menu Category</Link>
           </div>
 
           <div className='six columns v-margin'>
-            <Link to='createMenuCategory' className='button button-block'>Create Menu Category</Link>
+            <Link to='createMenuItem' className='button button-block'>Create Menu Item</Link>
           </div>
         </div>
 
@@ -142,19 +137,19 @@ var ManageMenu = React.createClass({
           <div className='six columns v-margin'>
             <div className='list-wrapper'>
               <ul className='list-unstyled'>
-                {menuItems}
+                {categories}
               </ul>
             </div>
-            <div className='list-wrapper-summary'>{this.getTotal(menuItems, 'Menu Item', 'Menu Items')}</div>
+            <div className='list-wrapper-summary'>{this.getTotal(categories, 'Category', 'Categories')}</div>
           </div>
 
           <div className='six columns v-margin'>
             <div className='list-wrapper'>
               <ul className='list-unstyled'>
-                {categories}
+                {menuItems}
               </ul>
             </div>
-            <div className='list-wrapper-summary'>{this.getTotal(categories, 'Category', 'Categories')}</div>
+            <div className='list-wrapper-summary'>{this.getTotal(menuItems, 'Menu Item', 'Menu Items')}</div>
           </div>
         </div>
       </div>

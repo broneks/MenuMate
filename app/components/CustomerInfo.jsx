@@ -67,53 +67,61 @@ var CustomerInfo = React.createClass({
     };
 
     if (this.state.isNewCustomer) {
-      request
-        .post(api.customers.standard)
-        .send(customerDetails)
-        .end(function(err, res) {
-          if (err) {
-            if (err.status === 422) {
-              this.props.APP.flashMessage.show('error', res.body.errors);
-            } else {
-              console.log(err);
-            }
-            return;
-          }
+      this.createCustomer(customerDetails);
+    } else {
+      this.updateCustomer(customerDetails);
+    }
+  },
 
+  createCustomer: function(customerDetails) {
+    request
+      .post(api.customers.standard)
+      .send(customerDetails)
+      .end(function(err, res) {
+        if (err) {
+          if (err.status === 422) {
+            this.props.APP.flashMessage.show('error', res.body.errors);
+          } else {
+            console.log(err);
+          }
+          return;
+        }
+
+        this.props.APP.flashMessage.show('info', res.body.message);
+
+        this.setState({
+          customer: res.body.context.customer
+        });
+
+      }.bind(this));
+  },
+
+  updateCustomer: function(customerDetails) {
+    request
+      .put(api.customers.byCode + customerDetails.code)
+      .send(customerDetails)
+      .end(function(err, res) {
+        if (err) {
+          if (err.status === 422) {
+            this.props.APP.flashMessage.show('error', res.body.errors);
+          } else {
+            console.log(err);
+          }
+          return;
+        }
+
+        if (res.body.message) {
           this.props.APP.flashMessage.show('info', res.body.message);
+        } else {
+          this.props.APP.flashMessage.hide();
 
           this.setState({
-            customer: res.body.context.customer
+            customer: res.body
+          }, function() {
+            this.setDiscount();
           });
-
-        }.bind(this));
-    } else {
-      request
-        .put(api.customers.byCode + customerDetails.code)
-        .send(customerDetails)
-        .end(function(err, res) {
-          if (err) {
-            if (err.status === 422) {
-              this.props.APP.flashMessage.show('error', res.body.errors);
-            } else {
-              console.log(err);
-            }
-            return;
-          }
-
-          if (res.body.message) {
-            this.props.APP.flashMessage.show('info', res.body.message);
-          } else {
-            this.props.APP.flashMessage.hide();
-
-            this.setState({
-              customer: res.body
-            }, function() {
-              this.setDiscount();
-            });
-          }
-        }.bind(this));
-    }
+        }
+      }.bind(this));
   },
 
   uppercase: function(ref) {
@@ -123,8 +131,6 @@ var CustomerInfo = React.createClass({
   },
 
   setWallet: function(wallet, callback) {
-    console.log(wallet);
-
     request
       .put(api.customers.byOrder + this.props.order._id)
       .send({wallet: wallet})
@@ -132,8 +138,7 @@ var CustomerInfo = React.createClass({
         if (err) {
           console.log(err);
         }
-
-        // callback.call(this);
+        callback.call(this);
       }.bind(this));
   },
 
@@ -151,9 +156,9 @@ var CustomerInfo = React.createClass({
         wallet          = wallet - total;
       }
 
-      this.setWallet(wallet);
-
-      // this.props.setDiscount(discountedTotal);
+      this.setWallet(wallet, function() {
+        this.props.setDiscount(discountedTotal);
+      });
     }
 
     return util.asCurrency(wallet);
@@ -170,7 +175,8 @@ var CustomerInfo = React.createClass({
     var toggleAdditional = this.state.isNewCustomer ? {display: 'block'} : {display: 'none'};
     var submitText       = this.state.isNewCustomer ? 'Create Customer' : 'Check Loyalty';
     var customerName;
-    var customerReward;
+    var customerDiscountExists;
+    var customerDiscount;
 
     if (state.customer) {
       customerName = state.customer.name ? (
@@ -182,30 +188,38 @@ var CustomerInfo = React.createClass({
         </div>
       ) : null;
 
+      customerDiscountExists = props.order._id in this.state.customer.rewards;
+      customerDiscount       = customerDiscountExists ? util.asCurrency(state.customer.rewards[props.order._id].reward) : 'none';
+
       return (
-        <div className='loyalty v-double-margin'>
+        <section className='loyalty v-double-margin'>
           <DividingTitle title='Customer Info' dashed={true} />
 
           <div className='row v-margin'>
             <div className='loyalty-code six columns v-margin'>
               <span className='label'>Loyalty Code:</span>
-              {state.customer.code}
+              <span className='value'>{state.customer.code}</span>
             </div>
 
-            <div className='loyalty-wallet six columns v-margin'>
-              <span className='label'>Loyalty Wallet:</span>
-              {util.asCurrency(this.state.customer.rewards.wallet)}
+            <div className={'loyalty-discount six columns v-margin' + (customerDiscountExists ? ' discount-received' : '')}>
+              <span className='label'>Loyalty Discount:</span>
+              <span className='value'>{customerDiscount}</span>
             </div>
           </div>
 
           {customerName}
-        </div>
+        </section>
       );
     }
 
+    if (props.order.status !== 'pending') {
+      return (
+        <section className='loyalty'></section>
+      );
+    }
 
     return (
-      <div className='loyalty v-double-margin'>
+      <section className='loyalty v-double-margin'>
         <DividingTitle title='Customer Info' dashed={true} />
 
         <div className='row'>
@@ -232,7 +246,7 @@ var CustomerInfo = React.createClass({
             <button className='button button-block' onClick={this.submitCustomer}>{submitText}</button>
           </div>
         </div>
-      </div>
+      </section>
     );
   }
 });

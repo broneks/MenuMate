@@ -1,25 +1,5 @@
-#marker-map {
-  height: 100%;
-  border: 1px solid $c-border;
-}
-
-.postal-and-email-info > .columns {
-  height: 300px + $s-general * 2;
-}
-
-.postal-email-list {
-  border: 1px solid $c-border;
-  margin-bottom: 0;
-  padding: $s-general;
-  list-style: none;
-  height: 300px;
-  overflow-y: auto;
-
-  li {
-    margin-bottom: $s-general;
-    padding-bottom: $s-general;
-    border-bottom: 1px solid $c-border;
-
-    @include clearfix;
+.discount-received {
+  .value {
+    color: $c-green;
   }
 }

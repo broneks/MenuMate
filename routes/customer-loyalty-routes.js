@@ -21,6 +21,10 @@ var getMonthName = (function() {
 var validateNewCustomer = function(req) {
   req.checkBody('code', 'loyalty code is required').notEmpty();
 
+  if (req.body.code) {
+    req.checkBody('code', 'loyalty code must be in the format of 123ABC').isCode();
+  }
+
   if (req.body.postal) {
     req.checkBody('postal', 'postal code must be in the format of M1M1M1').isPostal();
   } else {
@@ -32,6 +36,10 @@ var validateNewCustomer = function(req) {
 
 var validateCustomer = function(req) {
   req.checkBody('code', 'loyalty code is required').notEmpty();
+
+  if (req.body.code) {
+    req.checkBody('code', 'loyalty code must be in the format of 123ABC').isCode();
+  }
 
   return req;
 };
@@ -154,6 +162,7 @@ module.exports = function(router) {
         loyalty.reward    = req.body.reward;
         loyalty.startdate = req.body.startdate;
         loyalty.goal      = req.body.goal;
+        loyalty.updated   = Date.now();
 
         if (req.body.description) {
           loyalty.description = req.body.description;
@@ -245,15 +254,10 @@ module.exports = function(router) {
     })
 
     .put(function(req, res) {
-      console.log(req.body.wallet);
-
       Customer
-        .find()
+        .findOne({'orders': {$in: [req.params.order_id]}})
         .exec(function(err, customer) {
           var rewardsClone;
-
-          console.log(err);
-          return;
 
           if (err) {
             res.send(err);

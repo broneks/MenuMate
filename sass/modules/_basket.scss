@@ -138,14 +138,27 @@
 }
 .discount {
   position: absolute;
-  height: 25px;
-  top: -26px;
+  text-align: center;
   right: 1px;
+  left: 0;
+  top: -26px;
+  height: 25px;
   padding: 0 $s-general;
-  border-top-left-radius: $r-general;
   background: $c-discount;
-  display: inline-block;
+  border-top-left-radius: $r-general;
+  display: block;
   font-style: italic;
   font-weight: normal;
   color: $c-muted;
+}
+
+@media screen and (min-width: 750px) {
+  .discount {
+    top: 0;
+    left: auto;
+    height: auto;
+    padding: $s-general;
+    border-bottom-left-radius: $r-general;
+    border-top-left-radius: 0;
+  }
 }
