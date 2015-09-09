@@ -48,17 +48,6 @@ function analyzeOrderPatterns(orders) {
       return prev + curr;
     }) / orders.length;
 
-  var customerInfo = orders
-    .filter(function(order) {
-      return (order.postal || order.email);
-    })
-    .map(function(order) {
-      return {
-        postal: order.postal,
-        email:  order.email
-      };
-    });
-
   // items sold
   orders
     .map(function(order) {
@@ -94,8 +83,7 @@ function analyzeOrderPatterns(orders) {
     revenue:        revenue,
     averagePayment: averagePayment,
     itemsSold:      itemsSold,
-    paymentMethods: paymentMethods,
-    customerInfo:   customerInfo
+    paymentMethods: paymentMethods
   };
 
   return data;
@@ -140,13 +128,16 @@ module.exports = function(router) {
         endDate:   swapDashWithSpace(req.params.endDate)
       };
 
+      var startDate = new Date(params.startDate);
+      var endDate   = params.endDate ? new Date(params.endDate) : new Date();
+
       Order
         .find()
         .lean()
         .where({status: 'paid'})
         .where('updated')
-          .gte(new Date(params.startDate))
-          .lte(params.endDate ? new Date(params.endDate) : new Date())
+          .gte(startDate)
+          .lte(endDate)
         .populate('items')
         .sort({created: 'desc'})
         .exec(function(err, orders) {
@@ -159,7 +150,63 @@ module.exports = function(router) {
           if (data) {
             res.json(data);
           } else {
-            res.json({ 'message': 'No Orders Were Retrieved' });
+            res.json({ 'message': 'No orders were retrieved' });
+          }
+        });
+    });
+
+  router.route('/review/traffic/dates/:startDate/:endDate?')
+    .get(function(req, res) {
+      var params = {
+        startDate: swapDashWithSpace(req.params.startDate),
+        endDate:   swapDashWithSpace(req.params.endDate)
+      };
+
+      var startDate = new Date(params.startDate);
+      var endDate   = params.endDate ? new Date(params.endDate) : new Date();
+
+      Order
+        .aggregate([
+          {
+            $match: {
+              $and: [
+                {status: 'paid'},
+                {updated: {$gte: startDate}},
+                {updated: {$lte: endDate}}
+              ]
+            }
+          },
+          {
+            $sort: { created: 1 }
+          },
+          {
+            $project: {
+              year:  { $year:       "$created" },
+              month: { $month:      "$created" },
+              day:   { $dayOfMonth: "$created" },
+              hour:  { $hour:       "$created" }
+            }
+          },
+          {
+            $group: {
+              _id: {
+                year:  "$year",
+                month: "$month",
+                day:   "$day"
+              },
+              count: { $sum: 1 }
+            }
+          }
+
+        ], function(err, traffic) {
+          if (err) {
+            console.log(err);
+          } else {
+            if (!traffic || !traffic.length) {
+              res.json({ 'message': 'No traffic info was retrieved' });
+            } else {
+              res.json(traffic);
+            }
           }
         });
     });

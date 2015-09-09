@@ -175,8 +175,9 @@ var CustomerInfo = React.createClass({
     var toggleAdditional = this.state.isNewCustomer ? {display: 'block'} : {display: 'none'};
     var submitText       = this.state.isNewCustomer ? 'Create Customer' : 'Check Loyalty';
     var customerName;
-    var customerDiscountExists;
-    var customerDiscount;
+    var customerRewardExists;
+    var customerReward;
+    var customerRewardType;
 
     if (state.customer) {
       customerName = state.customer.name ? (
@@ -188,8 +189,9 @@ var CustomerInfo = React.createClass({
         </div>
       ) : null;
 
-      customerDiscountExists = props.order._id in this.state.customer.rewards;
-      customerDiscount       = customerDiscountExists ? util.asCurrency(state.customer.rewards[props.order._id].reward) : 'none';
+      customerRewardExists = props.order._id in this.state.customer.rewards;
+      customerReward       = customerRewardExists ? util.asCurrency(state.customer.rewards[props.order._id].reward) : 'none';
+      customerRewardType   = customerRewardExists ? '(' + state.customer.rewards[props.order._id].type + ')' : null;
 
       return (
         <section className='loyalty v-double-margin'>
@@ -201,9 +203,10 @@ var CustomerInfo = React.createClass({
               <span className='value'>{state.customer.code}</span>
             </div>
 
-            <div className={'loyalty-discount six columns v-margin' + (customerDiscountExists ? ' discount-received' : '')}>
-              <span className='label'>Loyalty Discount:</span>
-              <span className='value'>{customerDiscount}</span>
+            <div className={'loyalty-reward six columns v-margin' + (customerRewardExists ? ' reward-received' : '')}>
+              <span className='label'>Loyalty Reward:</span>
+              <span className='value'>{customerReward}</span>
+              <div className='type text-muted'>{customerRewardType}</div>
             </div>
           </div>
 

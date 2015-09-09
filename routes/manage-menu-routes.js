@@ -30,7 +30,7 @@ module.exports = function(router) {
       MenuItem
         .find()
         .lean()
-        .sort({'name': 'asc'})
+        .sort({'category': 'desc', 'name': 'asc'})
         .populate('category')
         .exec(function (err, items) {
           if (err) {

@@ -24,7 +24,8 @@ module.exports = {
     orders: {
       general:    base + 'review/orders/general/',
       dateRange:  base + 'review/orders/dates/'
-    }
+    },
+    traffic: base + 'traffic/orders/dates/'
   },
   manage: {
     menuItems: {

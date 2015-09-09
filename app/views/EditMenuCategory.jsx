@@ -49,7 +49,6 @@ var EditMenuCategory = React.createClass({
           return;
         }
 
-        util.clearInputs(refs);
         this.props.APP.flashMessage.show('info', res.body.message);
       }.bind(this));
   },

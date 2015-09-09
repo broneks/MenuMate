@@ -16,13 +16,12 @@ var OrdersInfo      = require('../components/OrdersInfo.jsx');
 var Review = React.createClass({
   getInitialState: function() {
     return {
-      review: {
-        orders: null
-      },
+      general: null,
       dateRange: {
         from: null,
         to:   null
       },
+      dateString: '',
       loading: true
     };
   },
@@ -38,11 +37,7 @@ var Review = React.createClass({
 
         if (this.isMounted()) {
           this.setState({
-            review: {
-              orders: {
-                general: res.body
-              }
-            },
+            general: res.body,
             loading: false
           });
         }
@@ -55,54 +50,16 @@ var Review = React.createClass({
     }, this).join('-');
   },
 
-  getOrdersReviewByRange: function() {
-    var dateFrom   = this.buildDateString(this.state.dateRange.from);
-    var dateTo     = this.buildDateString(this.state.dateRange.to);
-    var dateParams = dateFrom + '/' + dateTo;
-
-    request
-      .get(api.review.orders.dateRange + dateParams)
-      .end(function(err, res) {
-        if (err) {
-          console.log(err);
-          return;
-        }
-
-        var updated;
-
-        if (res.body.message) {
-          this.props.APP.flashMessage.show('info', res.body.message);
-
-          updated = React.addons.update(this.state.review, {
-            orders: {
-              info: {$set: null}
-            }
-          });
-        } else {
-          this.props.APP.flashMessage.hide();
-
-          updated = React.addons.update(this.state.review, {
-            orders: {
-              info: {$set: res.body}
-            }
-          });
-        }
-
-        this.setState({
-          review: updated
-        });
-      }.bind(this));
-  },
-
   updateDateRange: function(from, to) {
-    var updated = {
+    var dateString = this.buildDateString(from) + '/' + this.buildDateString(to);
+
+    this.setState({
       dateRange: {
         from: from,
         to:   to
-      }
-    };
-
-    this.setState(updated, this.getOrdersReviewByRange);
+      },
+      dateString: dateString
+    });
   },
 
   componentDidMount: function() {
@@ -113,7 +70,7 @@ var Review = React.createClass({
     var state = this.state;
     var message;
 
-    if (!state.review.orders) {
+    if (!state.general) {
       if (state.loading) {
         message = <div className='message-center'><LoadingSpinner /></div>;
       } else {
@@ -127,9 +84,9 @@ var Review = React.createClass({
 
     return (
       <div className='review'>
-        <SelectDateRange onChange={this.updateDateRange} yearsRange={state.review.orders.general.years} />
+        <SelectDateRange onChange={this.updateDateRange} yearsRange={state.general.years} />
 
-        <OrdersInfo orders={state.review.orders} />
+        <OrdersInfo dateString={state.dateString} />
       </div>
     );
   }

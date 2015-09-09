@@ -45,8 +45,6 @@ var ManageLoyalty = React.createClass({
 
     util.addInputsToObj(loyaltyDetails, refs);
 
-    console.log(loyaltyDetails);
-
     if (loyaltyId) {
       request
         .put(api.loyalty + loyaltyId)

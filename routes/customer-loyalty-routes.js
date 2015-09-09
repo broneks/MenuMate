@@ -69,14 +69,30 @@ var validateLoyalty = function(req) {
 };
 
 var calculateCustomerReward = function(loyalty, customer, order) {
-  var loyaltyDate = Date.parse(loyalty.startdate);
-  var lastReward  = !isNaN(Date.parse(customer.lastreward)) ? Date.parse(customer.lastreward) : 0;
-  var cutOffDate  = Math.max(loyaltyDate, lastReward);
-  var rewardsClone;
+  var loyaltyDate  = Date.parse(loyalty.startdate);
+  var lastReward   = !isNaN(Date.parse(customer.lastreward)) ? Date.parse(customer.lastreward) : 0;
+  var cutOffDate   = Math.max(loyaltyDate, lastReward);
+  var rewardsClone = JSON.parse(JSON.stringify(customer.rewards));;
+  var now          = new Date();
   var totalSpent;
-  var now;
 
   if (!customer.orders.length) return;
+
+  // if previous rewards remain in customer's wallet
+  // then the amount must be used up before they re-enter
+  // the loyalty reward process
+  if (customer.rewards.wallet) {
+    rewardsClone[order.id] = {
+      type:   'left over from previous reward',
+      reward: customer.rewards.wallet,
+      date:   now
+    };
+
+    customer.rewards    = rewardsClone;
+    customer.lastreward = now;
+
+    return;
+  }
 
   totalSpent = customer.orders
     .filter(function(o) {
@@ -90,11 +106,9 @@ var calculateCustomerReward = function(loyalty, customer, order) {
   totalSpent += order.total * TAX;
 
   if (totalSpent >= loyalty.goal) {
-    rewardsClone = JSON.parse(JSON.stringify(customer.rewards));
-    now          = new Date();
-
     rewardsClone.wallet += loyalty.reward;
     rewardsClone[order.id] = {
+      type:   loyalty.name,
       reward: loyalty.reward,
       date:   now
     };
