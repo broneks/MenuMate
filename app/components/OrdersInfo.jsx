@@ -35,7 +35,7 @@ var OrdersInfo = React.createClass({
 
         var orders;
 
-        if (res.body.message) {
+        if (res.body && 'message' in res.body) {
           orders = null;
         } else {
           orders = res.body;

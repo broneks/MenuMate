@@ -45,7 +45,12 @@ gulp.task('fontfiles', function() {
     .pipe(gulp.dest('public/fonts/'));
 });
 
-gulp.task('default', ['scripts', 'sass', 'normalize', 'fontstyles', 'fontfiles'], function() {
+gulp.task('d3files', function() {
+  gulp.src('node_modules/d3/d3.min.js')
+    .pipe(gulp.dest('public/js/'));
+});
+
+gulp.task('default', ['scripts', 'sass', 'normalize', 'fontstyles', 'fontfiles', 'd3files'], function() {
   gulp.watch(['app/**/*.jsx', 'app/**/*.js', 'config/app.json'], ['scripts']);
 
   gulp.watch(['sass/**/*.scss'], ['sass']);

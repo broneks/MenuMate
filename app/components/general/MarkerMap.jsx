@@ -76,7 +76,7 @@ var MarkerMap = React.createClass({
 
   render: function() {
     return (
-      <div id='marker-map'></div>
+      <div id='marker-map' style={{height: '100%'}}></div>
     );
   }
 });

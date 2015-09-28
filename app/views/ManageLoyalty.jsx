@@ -11,6 +11,8 @@ var util = require('../utility/util');
 var ClearForm      = require('../components/general/ClearForm.jsx');
 var LoadingSpinner = require('../components/general/LoadingSpinner.jsx');
 var ItemSummary    = require('../components/ItemSummary.jsx');
+var DividingTitle  = require('../components/general/DividingTitle.jsx');
+var MarkerMap      = require('../components/general/MarkerMap.jsx');
 
 
 var ManageLoyalty = React.createClass({
@@ -68,7 +70,7 @@ var ManageLoyalty = React.createClass({
         }
 
         request
-          .get(api.customers)
+          .get(api.customers.standard)
           .end(function(err, r) {
             this.setState({
               loyalty:   res.body,
@@ -86,6 +88,7 @@ var ManageLoyalty = React.createClass({
   render: function() {
     var state         = this.state;
     var loyaltyExists = !util.isObjEmpty(state.loyalty);
+    var list;
 
     if (!state.loyalty) {
       if (state.loading) {
@@ -96,6 +99,19 @@ var ManageLoyalty = React.createClass({
         );
       }
     }
+
+    list = state.customers.map(function(customer, index) {
+      return (
+        <li key={index} className='row customer'>
+          <div className='columns three'>{customer.code}</div>
+          <div className='columns three'>
+            <a className='postal-link'>{customer.postal}</a>
+          </div>
+          <div className='columns three'>{util.asCurrency(customer.rewards.wallet)}</div>
+          <div className='columns three'>{customer.name}</div>
+        </li>
+      );
+    }, this);
 
     return (
       <div className='manage-loyalty'>
@@ -145,6 +161,20 @@ var ManageLoyalty = React.createClass({
             </div>
           </div>
         </form>
+
+        <DividingTitle title="Customers" dashed={true} />
+
+        <div className='row manage-customers v-margin'>
+          <div className='columns six'>
+            <ul className='customers-list list-unstyled'>
+              {list}
+            </ul>
+          </div>
+
+          <div className='columns six'>
+            <MarkerMap data={state.customers || []} dataItem='postal' center={this.props.APP.config.coords} />
+          </div>
+        </div>
       </div>
     );
   }

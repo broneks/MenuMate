@@ -3,3 +3,18 @@
     color: $c-green;
   }
 }
+
+.manage-customers {
+  height: 50vh;
+  overflow: auto;
+
+  .columns:last-of-type {
+    height: 100%;
+  }
+
+  .customer + .customer {
+    margin-top: $s-general / 2;
+    padding-top: $s-general / 2;
+    border-top: 1px solid $c-border;
+  }
+}
