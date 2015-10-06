@@ -115,7 +115,6 @@ module.exports = function(router) {
           }
         });
       });
-      console.log('hello');
     })
 
     .delete(function(req, res) {

@@ -69,7 +69,7 @@ var OrdersInfo = React.createClass({
         var bold = index === 0 ? 'text-bold' : '';
 
         return (
-          <div key={index} title={'ID: ' + item.id} className={bold}>{util.capitalize(item.name)}: <span className='u-pull-right'>{item.count}</span></div>
+          <div key={index} title={'ID: ' + item.id} className={'item-sold ' + bold}>{util.capitalize(item.name)} <span className='u-pull-right'>{item.count}</span></div>
         );
       });
 
@@ -77,20 +77,20 @@ var OrdersInfo = React.createClass({
         <table className='v-margin'>
           <tbody>
             <tr>
-              <td><span className='label'>Number of Orders:</span></td>
+              <td><span className='label'>Number of Orders</span></td>
               <td>{state.orders.quantity}</td>
             </tr>
             <tr>
-              <td><span className='label'>Revenue:</span></td>
+              <td><span className='label'>Revenue</span></td>
               <td>{util.asCurrency(state.orders.revenue)}</td>
             </tr>
             <tr>
-              <td><span className='label'>Average Payment:</span></td>
+              <td><span className='label'>Average Payment</span></td>
               <td>{util.asCurrency(state.orders.averagePayment)}</td>
             </tr>
 
             <tr>
-              <td><span className='label'>Menu Items Sold:</span></td>
+              <td><span className='label'>Menu Items Sold</span></td>
               <td>{itemsSold}</td>
             </tr>
           </tbody>
@@ -100,7 +100,7 @@ var OrdersInfo = React.createClass({
 
     return (
       <div className='order-review'>
-        <DividingTitle title='Orders Info' dashed={true} />
+        <DividingTitle title='Orders Info' />
 
         {info}
       </div>

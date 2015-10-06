@@ -10,11 +10,12 @@ var util = require('../../utility/util');
 var SelectDateRange = React.createClass({
   propTypes: {
     onChange:   React.PropTypes.func.isRequired,
-    yearsRange: React.PropTypes.array.isRequired
+    yearsRange: React.PropTypes.array.isRequired,
+    latest:     React.PropTypes.string
   },
 
   getInitialState: function() {
-    var d = new Date();
+    var d = this.props.latest ? new Date(this.props.latest) : new Date();
     var today = {
       day:   d.getDate().toString(),
       month: util.getMonthName(d.getMonth()),
@@ -121,12 +122,15 @@ var SelectDateRange = React.createClass({
 
   render: function() {
     var hideToClass = this.state.hideTo ? 'hide' : null;
+    var first  = this.props.latest ? 'Latest' : 'Today';
+    var second = this.props.latest ? 'Next' : 'Tomorrow';
+
     return (
       <div className='select-date-range-wrapper'>
         <div className='date-from u-pull-left'>
           <a className='set-date set-date-today' onClick={this.setDateSelect.bind(null, 'from')}>
             <i className='fa fa-calendar icon-spacing'></i>
-            Set As Today
+            Set As {first}
           </a>
 
           <div className='date-select-wrapper'>
@@ -139,7 +143,7 @@ var SelectDateRange = React.createClass({
         <div className='date-to u-pull-left'>
           <a className='set-date set-date-tomorrow' onClick={this.setDateSelect.bind(null, 'to')}>
             <i className='fa fa-calendar icon-spacing'></i>
-            Set As Tomorrow
+            Set As {second}
           </a>
 
           <div className='date-select-wrapper'>

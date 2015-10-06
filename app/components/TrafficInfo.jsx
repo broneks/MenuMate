@@ -111,6 +111,21 @@ var TrafficInfo = React.createClass({
       .attr('fill', 'none');
   },
 
+  getTrafficInfoLabel: function(date) {
+    var label = util.capitalize(util.keys(date._id)[0]);
+    var num   = date._id[this.state.traffic.meta.dateKey];
+
+    if (label === 'Hour') {
+      num = (num < 10 ? '0' + num : num) + ':00';
+    } else if (label === 'Month') {
+      num = util.getMonthName(num);
+    } else if (label === 'Dayofmonth') {
+      label = 'Day of month';
+    }
+
+    return label + ' - ' + num;
+  },
+
   componentWillReceiveProps: function(nextProps) {
     this.getTrafficByDateRange(nextProps);
   },
@@ -133,8 +148,10 @@ var TrafficInfo = React.createClass({
       info = state.traffic.data.map(function(date, index) {
         return (
           <li key={index}>
-            <span className="label">{util.keys(date._id)} {date._id[state.traffic.meta.dateKey]}</span>
-            <span>{date.count}</span>
+            <span className="label">
+              <span className="label-text">{this.getTrafficInfoLabel(date)}</span>
+            </span>
+            <span>{date.count + (date.count === 1 ? ' Customer' : ' Customers')}</span>
           </li>
         );
       }, this);
@@ -142,7 +159,7 @@ var TrafficInfo = React.createClass({
 
     return (
       <div className='traffic-review'>
-        <DividingTitle title='Traffic Info' dashed={true} />
+        <DividingTitle title='Traffic Info' />
 
         <ul>{info}</ul>
       </div>

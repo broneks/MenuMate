@@ -1,0 +1,71 @@
+.order-review {
+  tr td:first-child {
+    .label {
+      display: inline-block;
+      background-color: #fff;
+      padding-right: $s-general;
+    }
+
+    position: relative;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: -1;
+      border-top: 1px dashed $c-border;
+    }
+  }
+
+  .item-sold {
+    & > span:first-child,
+    & > span:last-child {
+      display: inline-block;
+      background-color: #fff;
+      padding-right: $s-general;
+    }
+
+    & > span:last-child {
+      padding-left: $s-general;
+    }
+
+    position: relative;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: -1;
+      border-top: 1px dashed $c-border;
+    }
+  }
+}
+
+.traffic-review {
+  .label-text {
+    display: inline-block;
+    background-color: #fff;
+    padding-right: $s-general;
+  }
+
+  .label {
+    position: relative;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: -1;
+      border-top: 1px dashed $c-border;
+    }
+  }
+}

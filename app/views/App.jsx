@@ -108,7 +108,7 @@ var App = React.createClass({
 
     Object.seal(global);
 
-    // if (state.authenticated) {
+    if (state.authenticated) {
       authLinks = [
         <ul key={0} className='list-unstyled auth-links'>
           <li key={1}><Link to='manageMenu'>Manage Menu</Link></li>
@@ -116,13 +116,13 @@ var App = React.createClass({
           <li key={3} className='auth-link logout'><Link to='logout'>Logout</Link></li>
         </ul>
       ];
-    // } else {
-    //   authLinks = [
-    //     <ul key={0} className='list-unstyled auth-links'>
-    //       <li key={1} className='auth-link login'><Link to='auth'>Login</Link></li>
-    //     </ul>
-    //   ];
-    // }
+    } else {
+      authLinks = [
+        <ul key={0} className='list-unstyled auth-links'>
+          <li key={1} className='auth-link login'><Link to='auth'>Login</Link></li>
+        </ul>
+      ];
+    }
 
     return (
       <div id='main-wrapper'>
@@ -158,11 +158,11 @@ var Auth = React.createClass({
   mixins: [authMixin, Navigation],
 
   checkAuth: function() {
-    // this.isAuthenticated(function(res) {
-    //   if (!res) {
-    //     this.transitionTo('auth');
-    //   }
-    // });
+    this.isAuthenticated(function(res) {
+      if (!res) {
+        this.transitionTo('auth');
+      }
+    });
   },
 
   componentDidMount: function() {

@@ -91,6 +91,10 @@
     box-sizing: border-box;
   }
 
+  .tab-rows {
+    line-height: 0.8;
+  }
+
   .tab-row {
     border: 1px solid $c-border;
     border-bottom: 0;

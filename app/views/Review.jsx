@@ -85,7 +85,7 @@ var Review = React.createClass({
 
     return (
       <div className='review'>
-        <SelectDateRange onChange={this.updateDateRange} yearsRange={state.general.years} />
+        <SelectDateRange onChange={this.updateDateRange} yearsRange={state.general.years} latest={state.general.latest} />
 
         <OrdersInfo dateString={state.dateString} />
 
